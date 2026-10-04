@@ -1,16 +1,15 @@
 using System.Collections.Generic;
 using AssemblyInspect.Scanners;
-using Mono.Cecil;
 
 namespace AssemblyInspect.Sources;
 
 public abstract class Source<T> : Source
 {
   public List<IScanner<T>> Scanners = [];
-  public abstract T[] GetSourceData(AssemblyDefinition assembly);
-  public override void RunAllScanners(AssemblyDefinition assembly)
+  public abstract T[] GetSourceData(ScanContext context);
+  public override void RunAllScanners(ScanContext context)
   {
     foreach (var scanner in Scanners)
-      scanner.ScanSource(assembly, this);
+      scanner.ScanSource(context, this);
   }
 }

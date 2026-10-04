@@ -5,5 +5,5 @@ namespace AssemblyInspect.Scanners;
 
 public interface IScanner<T>
 {
-  public void ScanSource(AssemblyDefinition assembly, Source<T> Source);
+  public void ScanSource(ScanContext context, Source<T> Source);
 }
