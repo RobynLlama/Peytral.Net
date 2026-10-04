@@ -17,10 +17,13 @@ string assemblyPath = Path.Combine(Environment.CurrentDirectory, assemblyPathRaw
 AssemblyInspector inspector = new(assemblyPath);
 var testSource = new FullCodeSource();
 var testSource2 = new PInvokeRefsSource();
+var extSource = new ManifestReferenceSource();
 testSource.Scanners.Add(new FakeSourceScanner());
 testSource2.Scanners.Add(new SystemExternsScanner());
+extSource.Scanners.Add(new BasicReferencesScanner());
 inspector.Sources.Add(testSource);
 inspector.Sources.Add(testSource2);
+inspector.Sources.Add(extSource);
 
 var ctx = inspector.ScanAllSources();
 
