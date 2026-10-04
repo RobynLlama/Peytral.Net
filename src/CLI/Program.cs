@@ -22,4 +22,7 @@ testSource2.Scanners.Add(new MethodEchoScanner());
 inspector.Sources.Add(testSource);
 inspector.Sources.Add(testSource2);
 
-inspector.ScanAllSources();
+var ctx = inspector.ScanAllSources();
+
+foreach (var item in ctx.Observations)
+  Console.WriteLine(item);
