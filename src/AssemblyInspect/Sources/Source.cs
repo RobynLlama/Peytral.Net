@@ -1,5 +1,3 @@
-using Mono.Cecil;
-
 namespace AssemblyInspect.Sources;
 
 public abstract class Source

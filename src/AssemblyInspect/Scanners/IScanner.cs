@@ -1,5 +1,4 @@
 using AssemblyInspect.Sources;
-using Mono.Cecil;
 
 namespace AssemblyInspect.Scanners;
 
