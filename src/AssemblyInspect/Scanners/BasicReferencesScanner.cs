@@ -11,7 +11,7 @@ public class BasicReferencesScanner : IScanner<string>
   {
     ["System.Security"] = (SeverityLevel.Warning, "Assembly references cryptography/security APIs. May be used for payload decryption."),
     ["System.Security.Cryptography"] = (SeverityLevel.Warning, "Assembly references standard .NET cryptography primitives."),
-    ["System.Diagnostics.Process"] = (SeverityLevel.Alert, "Assembly references OS process management APIs (e.g. Process.Start)."),
+    ["System.Diagnostics"] = (SeverityLevel.Warning, "Assembly references Diagnostic tools (most commonly used for Process.Start / ProcessStartInfo)"),
     ["System.Management"] = (SeverityLevel.Critical, "Assembly references Windows Management Instrumentation (WMI)."),
     ["System.Reflection.Emit"] = (SeverityLevel.Alert, "Assembly references dynamic IL generation capabilities."),
     ["System.CodeDom.Compiler"] = (SeverityLevel.Alert, "Assembly references runtime C# code compilation APIs."),
