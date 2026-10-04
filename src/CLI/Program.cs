@@ -18,8 +18,8 @@ AssemblyInspector inspector = new(assemblyPath);
 var testSource = new ExternMemberRefsSource();
 var testSource2 = new PInvokeRefsSource();
 testSource.Scanners.Add(new MethodEchoScanner());
-testSource2.Scanners.Add(new MethodEchoScanner());
-inspector.Sources.Add(testSource);
+testSource2.Scanners.Add(new SystemExternsScanner());
+//inspector.Sources.Add(testSource);
 inspector.Sources.Add(testSource2);
 
 var ctx = inspector.ScanAllSources();
