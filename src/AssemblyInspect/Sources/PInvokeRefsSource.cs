@@ -4,9 +4,9 @@ using Mono.Cecil.Rocks;
 
 namespace AssemblyInspect.Sources;
 
-public class PInvokeRefsSource : Source<MethodReference>
+public class PInvokeRefsSource : Source<MethodDefinition>
 {
-  public override MethodReference[] GetSourceData(ScanContext context)
+  public override MethodDefinition[] GetSourceData(ScanContext context)
     => [.. context.Assembly.Modules
         .SelectMany(module => module.GetAllTypes())
         .SelectMany(type => type.GetMethods())
