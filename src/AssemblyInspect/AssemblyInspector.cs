@@ -19,9 +19,13 @@ public class AssemblyInspector
     _assembly = AssemblyDefinition.ReadAssembly(_assemblyPath);
   }
 
-  public void ScanAllSources()
+  public ScanContext ScanAllSources()
   {
+    ScanContext ctx = new(_assembly, _assemblyPath);
+
     foreach (var source in Sources)
-      source.RunAllScanners(_assembly);
+      source.RunAllScanners(ctx);
+
+    return ctx;
   }
 }
