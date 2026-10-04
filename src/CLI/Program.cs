@@ -15,11 +15,11 @@ string assemblyPathRaw = args[0];
 string assemblyPath = Path.Combine(Environment.CurrentDirectory, assemblyPathRaw);
 
 AssemblyInspector inspector = new(assemblyPath);
-var testSource = new ExternMemberRefsSource();
+var testSource = new FullCodeSource();
 var testSource2 = new PInvokeRefsSource();
-testSource.Scanners.Add(new MethodEchoScanner());
+testSource.Scanners.Add(new FakeSourceScanner());
 testSource2.Scanners.Add(new SystemExternsScanner());
-//inspector.Sources.Add(testSource);
+inspector.Sources.Add(testSource);
 inspector.Sources.Add(testSource2);
 
 var ctx = inspector.ScanAllSources();
