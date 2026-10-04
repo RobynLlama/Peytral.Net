@@ -1,7 +1,8 @@
 using System;
 using System.IO;
-using AssemblyInspect.Extensions;
-using AssemblyInspect.Inspectors;
+using AssemblyInspect;
+using AssemblyInspect.Scanners;
+using AssemblyInspect.Sources;
 
 if (args.Length == 0)
 {
@@ -13,9 +14,12 @@ if (args.Length == 0)
 string assemblyPathRaw = args[0];
 string assemblyPath = Path.Combine(Environment.CurrentDirectory, assemblyPathRaw);
 
-var inspector = new ExternInspector(assemblyPath);
+AssemblyInspector inspector = new(assemblyPath);
+var testSource = new ExternMemberRefsSource();
+var testSource2 = new PInvokeRefsSource();
+testSource.Scanners.Add(new MethodEchoScanner());
+testSource2.Scanners.Add(new MethodEchoScanner());
+inspector.Sources.Add(testSource);
+inspector.Sources.Add(testSource2);
 
-foreach (var item in inspector.GetExtMemberRefs())
-  Console.WriteLine(item.Describe());
-foreach (var item in inspector.GetPInvokes())
-  Console.WriteLine(item.DescribePInvoke());
+inspector.ScanAllSources();
