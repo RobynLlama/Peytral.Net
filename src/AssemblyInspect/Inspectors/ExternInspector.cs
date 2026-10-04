@@ -6,9 +6,9 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
 
-namespace AssemblyInspector.Inspectors;
+namespace AssemblyInspect.Inspectors;
 
-public class Inspector
+public class ExternInspector
 {
 
   protected AssemblyDefinition assembly;
@@ -17,7 +17,7 @@ public class Inspector
   protected IEnumerable<TypeDefinition> TypeDefs;
   protected IEnumerable<MethodDefinition> MethodDefs;
 
-  public Inspector(string assemblyPath)
+  public ExternInspector(string assemblyPath)
   {
     Console.WriteLine($"Attempting to read: {Path.GetFileName(assemblyPath)}");
 
