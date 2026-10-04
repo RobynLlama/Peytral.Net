@@ -6,8 +6,8 @@ namespace AssemblyInspect.Sources;
 
 public class PInvokeRefsSource : Source<MethodReference>
 {
-  public override MethodReference[] GetSourceData(AssemblyDefinition assembly)
-    => [.. assembly.Modules
+  public override MethodReference[] GetSourceData(ScanContext context)
+    => [.. context.Assembly.Modules
         .SelectMany(module => module.GetAllTypes())
         .SelectMany(type => type.GetMethods())
         .Where(method => (method.Attributes & MethodAttributes.PInvokeImpl) != 0)];
