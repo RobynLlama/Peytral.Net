@@ -14,16 +14,18 @@ if (args.Length == 0)
 string assemblyPathRaw = args[0];
 string assemblyPath = Path.Combine(Environment.CurrentDirectory, assemblyPathRaw);
 
-AssemblyInspector inspector = new(assemblyPath);
 var testSource = new FullCodeSource();
 var testSource2 = new PInvokeRefsSource();
 var extSource = new ManifestReferenceSource();
+var memberSource = new MemberReferenceSource();
 testSource.Scanners.Add(new FakeSourceScanner());
 testSource2.Scanners.Add(new BasicPInvokeScanner());
 extSource.Scanners.Add(new BasicReferencesScanner());
-inspector.Sources.Add(testSource);
-inspector.Sources.Add(testSource2);
-inspector.Sources.Add(extSource);
+memberSource.Scanners.Add(new BasicMemberReferenceScanner());
+AssemblyInspector inspector = new(assemblyPath, [
+  testSource, testSource2, extSource,
+  memberSource
+  ]);
 
 var ctx = inspector.ScanAllSources();
 
