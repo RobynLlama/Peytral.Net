@@ -7,6 +7,8 @@ namespace AssemblyInspect.Scanners;
 
 public class BasicReferencesScanner : IAssemblyScanner
 {
+
+  public string ScannerName => "Basic Reference Scanner";
   private static readonly Dictionary<string, (SeverityLevel Severity, string Reason)> ReferenceRules = new(StringComparer.OrdinalIgnoreCase)
   {
     ["System.Security"] = (SeverityLevel.Warning, "Assembly references cryptography/security APIs. May be used for payload decryption."),
@@ -40,7 +42,7 @@ public class BasicReferencesScanner : IAssemblyScanner
     foreach (var item in data)
     {
       if (ReferenceRules.TryGetValue(item, out var rule))
-        context.Observations.Add(new(nameof(BasicReferencesScanner), rule.Severity, $"Reference: {item}", rule.Reason, "Assembly Metadata"));
+        context.Observations.Add(new(ScannerName, rule.Severity, $"Reference: {item}", rule.Reason, "Assembly Metadata"));
     }
   }
 }

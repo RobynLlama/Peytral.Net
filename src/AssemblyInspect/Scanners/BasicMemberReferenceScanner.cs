@@ -9,6 +9,8 @@ namespace AssemblyInspect.Scanners;
 public class BasicMemberReferenceScanner : IAssemblyScanner
 {
 
+  public string ScannerName => "Basic Member Reference Scanner";
+
   private static readonly Dictionary<string, (SeverityLevel Severity, string Reason)> Detections = new(StringComparer.OrdinalIgnoreCase)
   {
     //Critical
@@ -88,7 +90,7 @@ public class BasicMemberReferenceScanner : IAssemblyScanner
     foreach (var item in data)
     {
       if (Detections.TryGetValue(item.ShortSignature(), out var det))
-        context.Observations.Add(new(nameof(BasicMemberReferenceScanner), det.Severity, $"{item.ShortSignature()} use", det.Reason, "Assembly Member References"));
+        context.Observations.Add(new(ScannerName, det.Severity, $"{item.ShortSignature()} use", det.Reason, "Assembly Member References"));
     }
   }
 }
