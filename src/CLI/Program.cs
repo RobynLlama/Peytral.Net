@@ -13,11 +13,16 @@ if (args.Length == 0)
 string assemblyPathRaw = args[0];
 string assemblyPath = Path.Combine(Environment.CurrentDirectory, assemblyPathRaw);
 
+var regexScan = new RegexSourceScanner();
+regexScan.RegexRules.Add(
+  new(@"using.*;", "Example Regex Rule", "Using statement detected", AssemblyInspect.Observations.SeverityLevel.Message)
+);
+
 AssemblyInspector inspector = new(assemblyPath, [
   new BasicMemberReferenceScanner(),
   new BasicPInvokeScanner(),
   new BasicReferencesScanner(),
-  new FakeSourceScanner(),
+  regexScan,
 ]);
 var ctx = inspector.ScanAssembly();
 
