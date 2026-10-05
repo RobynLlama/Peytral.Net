@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AssemblyInspect.Observations;
-using AssemblyInspect.Sources;
 using Mono.Cecil;
+using Mono.Cecil.Rocks;
 
 namespace AssemblyInspect.Scanners;
 
-public class BasicPInvokeScanner : IScanner<MethodDefinition>
+public class BasicPInvokeScanner : IAssemblyScanner
 {
 
   private static readonly Dictionary<string, (SeverityLevel Severity, string Reason)> Detections = new(StringComparer.OrdinalIgnoreCase)
@@ -29,11 +30,15 @@ public class BasicPInvokeScanner : IScanner<MethodDefinition>
     ["user32.dll::MessageBox"] = (SeverityLevel.Message, "Displays native OS dialog boxes, often used by lazy devs for debugging and not a concern on its own"),
   };
 
-  public void ScanSource(ScanContext context, Source<MethodDefinition> Source)
+  public void Scan(ScanContext context)
   {
     bool genericWarning = false;
+    var data = context.Assembly.Modules
+      .SelectMany(module => module.GetAllTypes())
+      .SelectMany(type => type.GetMethods())
+      .Where(method => (method.Attributes & MethodAttributes.PInvokeImpl) != 0);
 
-    foreach (var item in Source.GetSourceData(context))
+    foreach (var item in data)
     {
       if (!genericWarning)
       {

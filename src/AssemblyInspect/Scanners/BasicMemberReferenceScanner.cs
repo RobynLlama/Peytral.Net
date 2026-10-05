@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AssemblyInspect.Extensions;
 using AssemblyInspect.Observations;
-using AssemblyInspect.Sources;
-using Mono.Cecil;
 
 namespace AssemblyInspect.Scanners;
 
-public class BasicMemberReferenceScanner : IScanner<MemberReference>
+public class BasicMemberReferenceScanner : IAssemblyScanner
 {
 
   private static readonly Dictionary<string, (SeverityLevel Severity, string Reason)> Detections = new(StringComparer.OrdinalIgnoreCase)
@@ -81,9 +80,12 @@ public class BasicMemberReferenceScanner : IScanner<MemberReference>
         (SeverityLevel.Message, "File system access: Directory removal")
   };
 
-  public void ScanSource(ScanContext context, Source<MemberReference> Source)
+  public void Scan(ScanContext context)
   {
-    foreach (var item in Source.GetSourceData(context))
+    var data = context.Assembly.Modules
+      .SelectMany(module => module.GetMemberReferences());
+
+    foreach (var item in data)
     {
       if (Detections.TryGetValue(item.ShortSignature(), out var det))
         context.Observations.Add(new(nameof(BasicMemberReferenceScanner), det.Severity, $"{item.ShortSignature()} use", det.Reason, "Assembly Member References"));

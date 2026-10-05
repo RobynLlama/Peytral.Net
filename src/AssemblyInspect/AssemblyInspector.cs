@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using AssemblyInspect.Sources;
+using AssemblyInspect.Scanners;
 using Mono.Cecil;
 
 namespace AssemblyInspect;
@@ -8,23 +8,23 @@ public class AssemblyInspector
 {
   protected string _assemblyPath;
   protected AssemblyDefinition _assembly;
-  public List<Source> Sources = [];
+  public List<IAssemblyScanner> Scanners = [];
 
-  public AssemblyInspector(string path, Source[]? sources = null)
+  public AssemblyInspector(string path, IEnumerable<IAssemblyScanner>? scanners = null)
   {
-    if (sources is not null)
-      Sources = [.. sources];
+    if (scanners is not null)
+      Scanners = [.. scanners];
 
     _assemblyPath = path;
     _assembly = AssemblyDefinition.ReadAssembly(_assemblyPath);
   }
 
-  public ScanContext ScanAllSources()
+  public ScanContext ScanAssembly()
   {
     ScanContext ctx = new(_assembly, _assemblyPath);
 
-    foreach (var source in Sources)
-      source.RunAllScanners(ctx);
+    foreach (var scanner in Scanners)
+      scanner.Scan(ctx);
 
     return ctx;
   }

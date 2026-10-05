@@ -1,16 +1,21 @@
-using AssemblyInspect.Sources;
+using ICSharpCode.Decompiler;
+using ICSharpCode.Decompiler.CSharp;
 
 namespace AssemblyInspect.Scanners;
 
-public class FakeSourceScanner : IScanner<string>
+public class FakeSourceScanner : IAssemblyScanner
 {
-  public void ScanSource(ScanContext context, Source<string> Source)
+  public void Scan(ScanContext context)
   {
-    int size = 0;
+    var settings = new DecompilerSettings(LanguageVersion.Latest)
+    {
+      ThrowOnAssemblyResolveErrors = false,
+      ShowXmlDocumentation = true
+    };
 
-    foreach (var item in Source.GetSourceData(context))
-      size += item.Length;
+    var decompiler = new CSharpDecompiler(context.AssemblyLocation, settings);
+    var data = decompiler.DecompileWholeModuleAsString();
 
-    context.Observations.Add(new(nameof(FakeSourceScanner), Observations.SeverityLevel.Message, "Assembly Decompiled", $"Total size: {size}", "Nowhere"));
+    context.Observations.Add(new(nameof(FakeSourceScanner), Observations.SeverityLevel.Message, "Assembly Decompiled", $"Total size: {data.Length}", "Nowhere"));
   }
 }

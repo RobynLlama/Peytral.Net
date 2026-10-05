@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AssemblyInspect.Observations;
-using AssemblyInspect.Sources;
 
 namespace AssemblyInspect.Scanners;
 
-public class BasicReferencesScanner : IScanner<string>
+public class BasicReferencesScanner : IAssemblyScanner
 {
   private static readonly Dictionary<string, (SeverityLevel Severity, string Reason)> ReferenceRules = new(StringComparer.OrdinalIgnoreCase)
   {
@@ -19,9 +19,25 @@ public class BasicReferencesScanner : IScanner<string>
     ["System.Net.Sockets"] = (SeverityLevel.Warning, "Assembly references socket networking.")
   };
 
-  public void ScanSource(ScanContext context, Source<string> Source)
+  public void Scan(ScanContext context)
   {
-    foreach (var item in Source.GetSourceData(context))
+    //we snag all the references for types and members just to cover
+    //everything in every module
+
+    var typeRefs = context.Assembly.Modules
+      .SelectMany(x => x.GetTypeReferences()
+        .Select(t => t.Namespace)
+        .Where(ns => !string.IsNullOrEmpty(ns)));
+
+    var memberRefNamespaces = context.Assembly.Modules
+      .SelectMany(x => x.GetMemberReferences()
+        .Select(m => m.DeclaringType?.Namespace)
+        .OfType<string>()
+        .Where(ns => ns.Length > 0));
+
+    var data = typeRefs.Concat(memberRefNamespaces).Distinct(StringComparer.OrdinalIgnoreCase);
+
+    foreach (var item in data)
     {
       if (ReferenceRules.TryGetValue(item, out var rule))
         context.Observations.Add(new(nameof(BasicReferencesScanner), rule.Severity, $"Reference: {item}", rule.Reason, "Assembly Metadata"));
