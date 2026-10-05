@@ -19,7 +19,7 @@ var testSource = new FullCodeSource();
 var testSource2 = new PInvokeRefsSource();
 var extSource = new ManifestReferenceSource();
 testSource.Scanners.Add(new FakeSourceScanner());
-testSource2.Scanners.Add(new SystemExternsScanner());
+testSource2.Scanners.Add(new BasicPInvokeScanner());
 extSource.Scanners.Add(new BasicReferencesScanner());
 inspector.Sources.Add(testSource);
 inspector.Sources.Add(testSource2);

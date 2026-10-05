@@ -6,7 +6,7 @@ using Mono.Cecil;
 
 namespace AssemblyInspect.Scanners;
 
-public class SystemExternsScanner : IScanner<MethodDefinition>
+public class BasicPInvokeScanner : IScanner<MethodDefinition>
 {
 
   private static readonly Dictionary<string, (SeverityLevel Severity, string Reason)> Detections = new(StringComparer.OrdinalIgnoreCase)
@@ -38,15 +38,15 @@ public class SystemExternsScanner : IScanner<MethodDefinition>
       if (!genericWarning)
       {
         genericWarning = true;
-        context.Observations.Add(new(nameof(SystemExternsScanner), SeverityLevel.Warning, "Module loads native libraries", "The given module loads native libraries. There are some legitimate reasons for this but any native library use should be scrutinized.", "Assembly Metadata"));
+        context.Observations.Add(new(nameof(BasicPInvokeScanner), SeverityLevel.Warning, "Module loads native libraries", "The given module loads native libraries. There are some legitimate reasons for this but any native library use should be scrutinized.", "Assembly Metadata"));
       }
 
       string key = $"{item.PInvokeInfo.Module.Name}::{item.PInvokeInfo.EntryPoint}";
 
       if (Detections.TryGetValue(key, out var detection))
-        context.Observations.Add(new(nameof(SystemExternsScanner), detection.Severity, $"Native Library ({key})", detection.Reason, "Assembly Metadata"));
+        context.Observations.Add(new(nameof(BasicPInvokeScanner), detection.Severity, $"Native Library ({key})", detection.Reason, "Assembly Metadata"));
       else
-        context.Observations.Add(new(nameof(SystemExternsScanner), SeverityLevel.Message, $"Native library use ({key})", "A native library is being used, there is no specific detection information for this library but it should be examined carefully anyway.", "Assembly Metadata"));
+        context.Observations.Add(new(nameof(BasicPInvokeScanner), SeverityLevel.Message, $"Native library use ({key})", "A native library is being used, there is no specific detection information for this library but it should be examined carefully anyway.", "Assembly Metadata"));
     }
   }
 }
