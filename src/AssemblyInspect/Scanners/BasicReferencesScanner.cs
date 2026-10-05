@@ -13,10 +13,10 @@ public class BasicReferencesScanner : IScanner<string>
     ["System.Security.Cryptography"] = (SeverityLevel.Warning, "Assembly references standard .NET cryptography primitives."),
     ["System.Diagnostics"] = (SeverityLevel.Warning, "Assembly references Diagnostic tools (most commonly used for Process.Start / ProcessStartInfo)"),
     ["System.Management"] = (SeverityLevel.Critical, "Assembly references Windows Management Instrumentation (WMI)."),
-    ["System.Reflection.Emit"] = (SeverityLevel.Alert, "Assembly references dynamic IL generation capabilities."),
+    ["System.Reflection.Emit"] = (SeverityLevel.Warning, "Assembly references dynamic IL generation capabilities."),
     ["System.CodeDom.Compiler"] = (SeverityLevel.Alert, "Assembly references runtime C# code compilation APIs."),
     ["Microsoft.Win32.Registry"] = (SeverityLevel.Alert, "Assembly references Windows Registry access APIs."),
-    ["System.Net.Sockets"] = (SeverityLevel.Warning, "Assembly references raw TCP/UDP socket networking.")
+    ["System.Net.Sockets"] = (SeverityLevel.Warning, "Assembly references socket networking.")
   };
 
   public void ScanSource(ScanContext context, Source<string> Source)
