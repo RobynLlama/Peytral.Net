@@ -7,7 +7,7 @@ namespace AssemblyInspect;
 public class AssemblyInspector
 {
   protected string _assemblyPath;
-  protected AssemblyDefinition _assembly;
+  public AssemblyDefinition AssemblyDef { get; }
   public List<IAssemblyScanner> Scanners = [];
 
   public AssemblyInspector(string path, IEnumerable<IAssemblyScanner>? scanners = null)
@@ -16,12 +16,12 @@ public class AssemblyInspector
       Scanners = [.. scanners];
 
     _assemblyPath = path;
-    _assembly = AssemblyDefinition.ReadAssembly(_assemblyPath);
+    AssemblyDef = AssemblyDefinition.ReadAssembly(_assemblyPath);
   }
 
   public ScanContext ScanAssembly()
   {
-    ScanContext ctx = new(_assembly, _assemblyPath);
+    ScanContext ctx = new(AssemblyDef, _assemblyPath);
 
     foreach (var scanner in Scanners)
       scanner.Scan(ctx);
