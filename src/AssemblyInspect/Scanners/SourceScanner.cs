@@ -20,16 +20,7 @@ public class SourceScanner : IRegexMatcher, IPlaintextMatcher
 
   public void Scan(ScanContext context)
   {
-    var settings = new DecompilerSettings(LanguageVersion.Latest)
-    {
-      ThrowOnAssemblyResolveErrors = false,
-      ShowXmlDocumentation = true
-    };
-
-    var decompiler = new CSharpDecompiler(context.AssemblyLocation, settings);
-    var data = decompiler.DecompileWholeModuleAsString();
-
-    this.RunRegexMatches(context, data);
-    this.RunPlaintextMatching(context, data);
+    this.RunRegexMatches(context, context.FullSourceBlob);
+    this.RunPlaintextMatching(context, context.FullSourceBlob);
   }
 }
