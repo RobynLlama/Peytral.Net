@@ -1,25 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using AssemblyInspect.Observations;
 
 namespace AssemblyInspect.Scanners;
-
-public abstract class RegexScannerBase : IAssemblyScanner
-{
-  public readonly List<RegexRule> RegexRules = [];
-  public abstract string ScannerName { get; }
-  public void RunAllRules(ScanContext context, string input)
-  {
-    foreach (var item in RegexRules)
-    {
-      if (item.Evaluate(input))
-        context.Observations.Add(new(ScannerName, item.Severity, item.Summary, item.Description, string.Empty));
-    }
-  }
-  public abstract void Scan(ScanContext context);
-}
 
 public class RegexRule(string pattern, string summary, string description, SeverityLevel severity)
 {
