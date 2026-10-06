@@ -1,37 +1,54 @@
 [gd_scene format=3 uid="uid://dh3142w6jm11o"]
 
 [ext_resource type="Texture2D" uid="uid://dj7xsk33q74ua" path="res://icon.png" id="1_glv2v"]
+[ext_resource type="Script" uid="uid://dldo3mpee32qx" path="res://Scripts/Main.cs" id="1_trn2v"]
 [ext_resource type="Texture2D" uid="uid://c1uqq425a2se7" path="res://Quickbar/New.png" id="2_cm0pq"]
+[ext_resource type="Script" uid="uid://d017xxjrscj36" path="res://Scripts/QuickbarPanel.cs" id="2_fos0i"]
 [ext_resource type="Texture2D" uid="uid://livm6aligcix" path="res://Quickbar/Save.png" id="3_fos0i"]
 [ext_resource type="Texture2D" uid="uid://1qnnuq2yx43i" path="res://Quickbar/Close.png" id="4_3dxm6"]
+[ext_resource type="CodeHighlighter" uid="uid://ddj0p5gdb4vw1" path="res://CSharpCodeHighlighter.tres" id="6_3dxm6"]
+[ext_resource type="FontFile" uid="uid://deyreublkhtr6" path="res://Fonts/SemiCoderT.ttf" id="6_lgr22"]
+[ext_resource type="Script" uid="uid://4sxxsnx728nw" path="res://Scripts/AssemblyMeta.cs" id="7_03owx"]
+[ext_resource type="Script" uid="uid://b4yjre132nlnf" path="res://Scripts/ScanResults.cs" id="8_wkp8b"]
+[ext_resource type="PackedScene" uid="uid://b87vckx4a4yud" path="res://ObservationPrefab.tscn" id="9_20pc6"]
+[ext_resource type="Script" uid="uid://m8aabpexbjde" path="res://Scripts/SourceView.cs" id="12_5vvyt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03owx"]
+bg_color = Color(1.92523e-07, 0.23557103, 0.34189105, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_glv2v"]
 font_size = 32
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
-[node name="Main" type="PanelContainer" unique_id=774995434]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trn2v"]
+bg_color = Color(0, 0, 0, 0.5019608)
+
+[node name="Main" type="PanelContainer" unique_id=774995434 node_paths=PackedStringArray("Selector")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_03owx")
+script = ExtResource("1_trn2v")
+Selector = NodePath("FileDialog")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=556872354]
+[node name="Layout" type="VBoxContainer" parent="." unique_id=556872354]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="TitleBox" type="MarginContainer" parent="VBoxContainer" unique_id=681835809]
+[node name="TitleBox" type="MarginContainer" parent="Layout" unique_id=681835809]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TitleBox" unique_id=368564319]
+[node name="HBoxContainer" type="HBoxContainer" parent="Layout/TitleBox" unique_id=368564319]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="VBoxContainer/TitleBox/HBoxContainer" unique_id=1919655464]
+[node name="TitleLabel" type="Label" parent="Layout/TitleBox/HBoxContainer" unique_id=1919655464]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Peytral.Net Assembly Inspector"
@@ -39,48 +56,55 @@ label_settings = SubResource("LabelSettings_glv2v")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CenteredIcon" type="CenterContainer" parent="VBoxContainer/TitleBox/HBoxContainer" unique_id=2007371026]
+[node name="CenteredIcon" type="CenterContainer" parent="Layout/TitleBox/HBoxContainer" unique_id=2007371026]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 
-[node name="IconTexture" type="TextureRect" parent="VBoxContainer/TitleBox/HBoxContainer/CenteredIcon" unique_id=651549162]
+[node name="IconTexture" type="TextureRect" parent="Layout/TitleBox/HBoxContainer/CenteredIcon" unique_id=651549162]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("1_glv2v")
 expand_mode = 1
 
-[node name="TopSep" type="HSeparator" parent="VBoxContainer" unique_id=1008174510]
+[node name="TopSep" type="HSeparator" parent="Layout" unique_id=1008174510]
 layout_mode = 2
 
-[node name="MainSpace" type="HBoxContainer" parent="VBoxContainer" unique_id=1357746282]
+[node name="MainSpace" type="HBoxContainer" parent="Layout" unique_id=1357746282]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="QuickbarPanel" type="PanelContainer" parent="VBoxContainer/MainSpace" unique_id=517897130]
+[node name="QuickbarPanel" type="PanelContainer" parent="Layout/MainSpace" unique_id=517897130 node_paths=PackedStringArray("BtnHide", "BtnNew", "BtnSave", "BtnClose", "HidePanel", "Selector")]
+layout_mode = 2
+script = ExtResource("2_fos0i")
+BtnHide = NodePath("QuickbarLayout/BtnHide")
+BtnNew = NodePath("QuickbarLayout/Quickbar/BtnNew")
+BtnSave = NodePath("QuickbarLayout/Quickbar/BtnSave")
+BtnClose = NodePath("QuickbarLayout/Quickbar/BtnClose")
+HidePanel = NodePath("QuickbarLayout/Quickbar")
+Selector = NodePath("../../../FileDialog")
+
+[node name="QuickbarLayout" type="HBoxContainer" parent="Layout/MainSpace/QuickbarPanel" unique_id=2046457227]
 layout_mode = 2
 
-[node name="QuickbarLayout" type="HBoxContainer" parent="VBoxContainer/MainSpace/QuickbarPanel" unique_id=2046457227]
-layout_mode = 2
-
-[node name="Quickbar" type="VBoxContainer" parent="VBoxContainer/MainSpace/QuickbarPanel/QuickbarLayout" unique_id=220788789]
+[node name="Quickbar" type="VBoxContainer" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout" unique_id=220788789]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 
-[node name="BtnNew" type="Button" parent="VBoxContainer/MainSpace/QuickbarPanel/QuickbarLayout/Quickbar" unique_id=109242442]
+[node name="BtnNew" type="Button" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout/Quickbar" unique_id=109242442]
 custom_minimum_size = Vector2(64, 32)
 layout_mode = 2
 text = "Open"
 icon = ExtResource("2_cm0pq")
 expand_icon = true
 
-[node name="BtnSave" type="Button" parent="VBoxContainer/MainSpace/QuickbarPanel/QuickbarLayout/Quickbar" unique_id=58204791]
+[node name="BtnSave" type="Button" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout/Quickbar" unique_id=58204791]
 custom_minimum_size = Vector2(64, 32)
 layout_mode = 2
 text = "Save"
 icon = ExtResource("3_fos0i")
 expand_icon = true
 
-[node name="BtnClose" type="Button" parent="VBoxContainer/MainSpace/QuickbarPanel/QuickbarLayout/Quickbar" unique_id=1957160517]
+[node name="BtnClose" type="Button" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout/Quickbar" unique_id=1957160517]
 custom_minimum_size = Vector2(96, 32)
 layout_mode = 2
 text = "Close
@@ -88,19 +112,126 @@ text = "Close
 icon = ExtResource("4_3dxm6")
 expand_icon = true
 
-[node name="BtnHide" type="Button" parent="VBoxContainer/MainSpace/QuickbarPanel/QuickbarLayout" unique_id=1237973164]
+[node name="BtnHide" type="Button" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout" unique_id=1237973164]
 layout_mode = 2
 text = "::"
+flat = true
 
-[node name="AssemblyDisplay" type="TabContainer" parent="VBoxContainer/MainSpace" unique_id=194780704]
+[node name="AssemblyDisplay" type="TabContainer" parent="Layout/MainSpace" unique_id=194780704]
 layout_mode = 2
 size_flags_horizontal = 3
+current_tab = 0
 
-[node name="BotSep" type="HSeparator" parent="VBoxContainer" unique_id=1146123679]
+[node name="Assembly Meta" type="MarginContainer" parent="Layout/MainSpace/AssemblyDisplay" unique_id=1281956109 node_paths=PackedStringArray("MetaLabel")]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("7_03owx")
+MetaLabel = NodePath("Layout/LabelAssemblyMeta")
+metadata/_tab_index = 0
+
+[node name="Layout" type="VBoxContainer" parent="Layout/MainSpace/AssemblyDisplay/Assembly Meta" unique_id=2047838635]
+layout_mode = 2
+
+[node name="LabelAssemblyMeta" type="Label" parent="Layout/MainSpace/AssemblyDisplay/Assembly Meta/Layout" unique_id=1341879939]
+layout_mode = 2
+text = "Name
+Version
+Culture
+
+Location
+Size"
+
+[node name="Scan Results" type="MarginContainer" parent="Layout/MainSpace/AssemblyDisplay" unique_id=1562233187 node_paths=PackedStringArray("ObsContainer")]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("8_wkp8b")
+ObservationPrefab = ExtResource("9_20pc6")
+ObsContainer = NodePath("Layout/ScrollContainer/ObservationList")
+metadata/_tab_index = 1
+
+[node name="Layout" type="VBoxContainer" parent="Layout/MainSpace/AssemblyDisplay/Scan Results" unique_id=1349254907]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Layout/MainSpace/AssemblyDisplay/Scan Results/Layout" unique_id=296985013]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 4
+
+[node name="ObservationList" type="VBoxContainer" parent="Layout/MainSpace/AssemblyDisplay/Scan Results/Layout/ScrollContainer" unique_id=402458146]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Resource View" type="MarginContainer" parent="Layout/MainSpace/AssemblyDisplay" unique_id=2126868579]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/_tab_index = 2
+
+[node name="Source View" type="CodeEdit" parent="Layout/MainSpace/AssemblyDisplay" unique_id=731604418]
+visible = false
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_lgr22")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/read_only = SubResource("StyleBoxFlat_trn2v")
+text = "using System;
+
+namespace NothingHere.Yet;
+
+//comment
+
+/*
+block comment
+*/
+
+public static void NoCode(bool decomp = false)
+{
+    var bingus = 44L;	
+    Console.WriteLine(\"Decompilation has not completed yet\");
+}"
+placeholder_text = "using System;
+
+namespace NothingHere.Yet;
+
+//comment
+
+/*
+block comment
+*/
+
+public static void NoCode(bool decomp = false)
+{
+    var bingus = 44L;	
+    Console.WriteLine(\"Decompilation has not completed yet\");
+}"
+editable = false
+emoji_menu_enabled = false
+virtual_keyboard_enabled = false
+scroll_smooth = true
+minimap_draw = true
+syntax_highlighter = ExtResource("6_3dxm6")
+gutters_draw_line_numbers = true
+gutters_line_numbers_min_digits = 2
+indent_use_spaces = true
+script = ExtResource("12_5vvyt")
+metadata/_tab_index = 3
+
+[node name="BotSep" type="HSeparator" parent="Layout" unique_id=1146123679]
 visible = false
 layout_mode = 2
 
-[node name="StatusContainer" type="MarginContainer" parent="VBoxContainer" unique_id=882682368]
+[node name="StatusContainer" type="MarginContainer" parent="Layout" unique_id=882682368]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
@@ -109,12 +240,24 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="StatusBar" type="HBoxContainer" parent="VBoxContainer/StatusContainer" unique_id=1311092164]
+[node name="StatusBar" type="HBoxContainer" parent="Layout/StatusContainer" unique_id=1311092164]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="StatusLabel" type="Label" parent="VBoxContainer/StatusContainer/StatusBar" unique_id=1804152717]
+[node name="StatusLabel" type="Label" parent="Layout/StatusContainer/StatusBar" unique_id=1804152717]
 layout_mode = 2
 size_flags_horizontal = 10
 text = "Ready"
-horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=1874533269]
+oversampling_override = 1.0
+title = "Open a File"
+initial_position = 2
+size = Vector2i(1200, 720)
+dialog_hide_on_ok = true
+file_mode = 0
+display_mode = 1
+access = 2
+filters = PackedStringArray("*.dll", "*.exe")
+use_native_dialog = true
