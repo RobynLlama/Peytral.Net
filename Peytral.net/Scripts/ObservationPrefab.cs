@@ -3,7 +3,7 @@ using AssemblyInspect.Observations;
 using Godot;
 
 [GlobalClass]
-public partial class ObservationPrefab : VBoxContainer
+public partial class ObservationPrefab : Control
 {
   [Export, ExportGroup("Text")]
   public Label SummaryLabel;
