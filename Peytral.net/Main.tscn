@@ -1,0 +1,120 @@
+[gd_scene format=3 uid="uid://dh3142w6jm11o"]
+
+[ext_resource type="Texture2D" uid="uid://dj7xsk33q74ua" path="res://icon.png" id="1_glv2v"]
+[ext_resource type="Texture2D" uid="uid://c1uqq425a2se7" path="res://Quickbar/New.png" id="2_cm0pq"]
+[ext_resource type="Texture2D" uid="uid://livm6aligcix" path="res://Quickbar/Save.png" id="3_fos0i"]
+[ext_resource type="Texture2D" uid="uid://1qnnuq2yx43i" path="res://Quickbar/Close.png" id="4_3dxm6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_glv2v"]
+font_size = 32
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Main" type="PanelContainer" unique_id=774995434]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=556872354]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="TitleBox" type="MarginContainer" parent="VBoxContainer" unique_id=681835809]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TitleBox" unique_id=368564319]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer/TitleBox/HBoxContainer" unique_id=1919655464]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Peytral.Net Assembly Inspector"
+label_settings = SubResource("LabelSettings_glv2v")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CenteredIcon" type="CenterContainer" parent="VBoxContainer/TitleBox/HBoxContainer" unique_id=2007371026]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="IconTexture" type="TextureRect" parent="VBoxContainer/TitleBox/HBoxContainer/CenteredIcon" unique_id=651549162]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("1_glv2v")
+expand_mode = 1
+
+[node name="TopSep" type="HSeparator" parent="VBoxContainer" unique_id=1008174510]
+layout_mode = 2
+
+[node name="MainSpace" type="HBoxContainer" parent="VBoxContainer" unique_id=1357746282]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="QuickbarPanel" type="PanelContainer" parent="VBoxContainer/MainSpace" unique_id=517897130]
+layout_mode = 2
+
+[node name="QuickbarLayout" type="HBoxContainer" parent="VBoxContainer/MainSpace/QuickbarPanel" unique_id=2046457227]
+layout_mode = 2
+
+[node name="Quickbar" type="VBoxContainer" parent="VBoxContainer/MainSpace/QuickbarPanel/QuickbarLayout" unique_id=220788789]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="BtnNew" type="Button" parent="VBoxContainer/MainSpace/QuickbarPanel/QuickbarLayout/Quickbar" unique_id=109242442]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+text = "Open"
+icon = ExtResource("2_cm0pq")
+expand_icon = true
+
+[node name="BtnSave" type="Button" parent="VBoxContainer/MainSpace/QuickbarPanel/QuickbarLayout/Quickbar" unique_id=58204791]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+text = "Save"
+icon = ExtResource("3_fos0i")
+expand_icon = true
+
+[node name="BtnClose" type="Button" parent="VBoxContainer/MainSpace/QuickbarPanel/QuickbarLayout/Quickbar" unique_id=1957160517]
+custom_minimum_size = Vector2(96, 32)
+layout_mode = 2
+text = "Close
+"
+icon = ExtResource("4_3dxm6")
+expand_icon = true
+
+[node name="BtnHide" type="Button" parent="VBoxContainer/MainSpace/QuickbarPanel/QuickbarLayout" unique_id=1237973164]
+layout_mode = 2
+text = "::"
+
+[node name="AssemblyDisplay" type="TabContainer" parent="VBoxContainer/MainSpace" unique_id=194780704]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BotSep" type="HSeparator" parent="VBoxContainer" unique_id=1146123679]
+visible = false
+layout_mode = 2
+
+[node name="StatusContainer" type="MarginContainer" parent="VBoxContainer" unique_id=882682368]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="StatusBar" type="HBoxContainer" parent="VBoxContainer/StatusContainer" unique_id=1311092164]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="VBoxContainer/StatusContainer/StatusBar" unique_id=1804152717]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Ready"
+horizontal_alignment = 2
