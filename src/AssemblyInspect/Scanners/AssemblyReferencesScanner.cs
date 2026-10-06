@@ -14,21 +14,15 @@ public class AssemblyReferencesScanner : IRegexMatcher, IPlaintextMatcher
 
   public void Scan(ScanContext context)
   {
-    //we snag all the references for types and members just to cover
-    //everything in every module
+    //turns out every member ref is also recorded in a
+    //typedef so this is safe and faster
 
-    var typeRefs = context.Assembly.Modules
-      .SelectMany(x => x.GetTypeReferences()
-        .Select(t => t.Namespace)
-        .Where(ns => !string.IsNullOrEmpty(ns)));
-
-    var memberRefNamespaces = context.Assembly.Modules
-      .SelectMany(x => x.GetMemberReferences()
-        .Select(m => m.DeclaringType?.Namespace)
-        .OfType<string>()
-        .Where(ns => ns.Length > 0));
-
-    var data = typeRefs.Concat(memberRefNamespaces).Distinct(StringComparer.OrdinalIgnoreCase);
+    var data = context.Assembly.Modules
+      .SelectMany(m => m.GetTypeReferences())
+      .Select(t => t.Namespace)
+      .Where(ns => !string.IsNullOrEmpty(ns))
+      .Distinct(StringComparer.OrdinalIgnoreCase)
+      .ToHashSet();
 
     foreach (var item in data)
     {
