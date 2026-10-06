@@ -1,0 +1,39 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using AssemblyInspect.Observations;
+using Mono.Cecil;
+using Mono.Cecil.Rocks;
+
+namespace AssemblyInspect.Scanners;
+
+public class PInvokeScanner : IRegexMatcher, IPlaintextMatcher
+{
+
+  public string ScannerName => "P/Invoke Scanner";
+  public IEnumerable<RegexRule> RegexRules { get; set; } = [];
+  public IEnumerable<PlainTextRule> PlainTextRules { get; set; } = [];
+
+  public void Scan(ScanContext context)
+  {
+    bool genericWarning = false;
+    var data = context.Assembly.Modules
+      .SelectMany(module => module.GetAllTypes())
+      .SelectMany(type => type.GetMethods())
+      .Where(method => (method.Attributes & MethodAttributes.PInvokeImpl) != 0);
+
+    foreach (var item in data)
+    {
+      if (!genericWarning)
+      {
+        genericWarning = true;
+        context.Observations.Add(new(ScannerName, SeverityLevel.Warning, "Module loads native libraries", "The given module loads native libraries. There are some legitimate reasons for this but any native library use should be scrutinized.", "Assembly Metadata"));
+      }
+
+      string key = $"{item.PInvokeInfo.Module.Name}::{item.PInvokeInfo.EntryPoint}";
+
+      this.RunRegexMatches(context, key);
+      this.RunPlaintextMatching(context, key);
+    }
+  }
+}
