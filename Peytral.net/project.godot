@@ -12,8 +12,14 @@ config_version=5
 
 config/name="Peytral.Net"
 run/main_scene="uid://dh3142w6jm11o"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
+boot_splash/show_image=false
 config/icon="uid://dj7xsk33q74ua"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
 
 [dotnet]
 
