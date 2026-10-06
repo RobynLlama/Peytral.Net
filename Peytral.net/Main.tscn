@@ -14,15 +14,14 @@
 [ext_resource type="Script" uid="uid://m8aabpexbjde" path="res://Scripts/SourceView.cs" id="12_5vvyt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03owx"]
-bg_color = Color(1.92523e-07, 0.23557103, 0.34189105, 1)
+bg_color = Color(0.23762324, 0.21453625, 0.2729698, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_glv2v"]
 font_size = 32
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trn2v"]
-bg_color = Color(0, 0, 0, 0.5019608)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5vvyt"]
 
 [node name="Main" type="PanelContainer" unique_id=774995434 node_paths=PackedStringArray("Selector")]
 anchors_preset = 15
@@ -77,34 +76,41 @@ size_flags_vertical = 3
 layout_mode = 2
 script = ExtResource("2_fos0i")
 BtnHide = NodePath("QuickbarLayout/BtnHide")
-BtnNew = NodePath("QuickbarLayout/Quickbar/BtnNew")
-BtnSave = NodePath("QuickbarLayout/Quickbar/BtnSave")
-BtnClose = NodePath("QuickbarLayout/Quickbar/BtnClose")
-HidePanel = NodePath("QuickbarLayout/Quickbar")
+BtnNew = NodePath("QuickbarLayout/MarginContainer/Quickbar/BtnNew")
+BtnSave = NodePath("QuickbarLayout/MarginContainer/Quickbar/BtnSave")
+BtnClose = NodePath("QuickbarLayout/MarginContainer/Quickbar/BtnClose")
+HidePanel = NodePath("QuickbarLayout/MarginContainer/Quickbar")
 Selector = NodePath("../../../FileDialog")
 
 [node name="QuickbarLayout" type="HBoxContainer" parent="Layout/MainSpace/QuickbarPanel" unique_id=2046457227]
 layout_mode = 2
 
-[node name="Quickbar" type="VBoxContainer" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout" unique_id=220788789]
+[node name="MarginContainer" type="MarginContainer" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout" unique_id=554427073]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 4
+
+[node name="Quickbar" type="VBoxContainer" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout/MarginContainer" unique_id=220788789]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 
-[node name="BtnNew" type="Button" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout/Quickbar" unique_id=109242442]
+[node name="BtnNew" type="Button" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout/MarginContainer/Quickbar" unique_id=109242442]
 custom_minimum_size = Vector2(64, 32)
 layout_mode = 2
 text = "Open"
 icon = ExtResource("2_cm0pq")
 expand_icon = true
 
-[node name="BtnSave" type="Button" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout/Quickbar" unique_id=58204791]
+[node name="BtnSave" type="Button" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout/MarginContainer/Quickbar" unique_id=58204791]
 custom_minimum_size = Vector2(64, 32)
 layout_mode = 2
 text = "Save"
 icon = ExtResource("3_fos0i")
 expand_icon = true
 
-[node name="BtnClose" type="Button" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout/Quickbar" unique_id=1957160517]
+[node name="BtnClose" type="Button" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout/MarginContainer/Quickbar" unique_id=1957160517]
 custom_minimum_size = Vector2(96, 32)
 layout_mode = 2
 text = "Close
@@ -184,7 +190,7 @@ visible = false
 layout_mode = 2
 theme_override_fonts/font = ExtResource("6_lgr22")
 theme_override_font_sizes/font_size = 18
-theme_override_styles/read_only = SubResource("StyleBoxFlat_trn2v")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5vvyt")
 text = "using System;
 
 namespace NothingHere.Yet;
@@ -215,14 +221,15 @@ public static void NoCode(bool decomp = false)
     var bingus = 44L;	
     Console.WriteLine(\"Decompilation has not completed yet\");
 }"
-editable = false
 emoji_menu_enabled = false
 virtual_keyboard_enabled = false
 scroll_smooth = true
 minimap_draw = true
 syntax_highlighter = ExtResource("6_3dxm6")
+line_folding = true
 gutters_draw_line_numbers = true
 gutters_line_numbers_min_digits = 2
+gutters_draw_fold_gutter = true
 indent_use_spaces = true
 script = ExtResource("12_5vvyt")
 metadata/_tab_index = 3
