@@ -1,14 +1,25 @@
 using System;
+using System.Linq;
 using AssemblyInspect;
 using AssemblyInspect.Scanners;
+using Godot;
 
 namespace Peytral;
 
-public static class DocumentManager
+[GlobalClass]
+public partial class DocumentManager : Node
 {
+  [Export]
+  public ScannerData[] Scanners;
+  public static DocumentManager Instance;
   private static AssemblyInspector OpenDocument;
   public static event Action<AssemblyInspector> OnDocumentLoaded;
   public static event Action<ScanContext> OnDocumentScanned;
+
+  public override void _Ready()
+  {
+    Instance = this;
+  }
 
   public static void OpenNewDocument(string path)
   {
@@ -28,6 +39,7 @@ public static class DocumentManager
 
     try
     {
+      OpenDocument.Scanners = [.. Instance.Scanners.Select(x => x.BuildScanner())];
       ctx = OpenDocument.ScanAssembly();
     }
     catch (Exception)

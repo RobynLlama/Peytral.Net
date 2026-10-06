@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 boot_splash/show_image=false
 config/icon="uid://dj7xsk33q74ua"
 
+[autoload]
+
+Document="*uid://dhmo178eaea7m"
+
 [display]
 
 window/size/viewport_width=1280
