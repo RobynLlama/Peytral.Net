@@ -18,7 +18,7 @@ public partial class AssemblyMeta : MarginContainer
     var culture = string.IsNullOrEmpty(context.Assembly.Name.Culture) ? "Neutral" : context.Assembly.Name.Culture;
 
     MetaLabel.Text = $"""
-    Name: {context.Assembly.Name}
+    Name: {context.Assembly.Name.Name}
     Version: {context.Assembly.MainModule.RuntimeVersion}
     Culture: {culture}
 
