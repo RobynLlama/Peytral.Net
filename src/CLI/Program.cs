@@ -22,7 +22,19 @@ AssemblyInspector inspector = new(assemblyPath, [
     PlainTextRules = [
       new(@"System.", "Example Plaintext Rule", "System.* detected", AssemblyInspect.Observations.SeverityLevel.Message)
     ],
-  }
+  },
+  new MemberReferenceScanner()
+  {
+    PlainTextRules = DemoLists.MemberRefPlainTextRules,
+  },
+  new PInvokeScanner()
+  {
+    PlainTextRules = DemoLists.PInvokePlainTextRules,
+  },
+  new AssemblyReferencesScanner()
+  {
+    PlainTextRules = DemoLists.AssemblyReferencePlainTextRules,
+  },
 ]);
 var ctx = inspector.ScanAssembly();
 
