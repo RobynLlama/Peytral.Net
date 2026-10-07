@@ -7,5 +7,5 @@
 
 [node name="Document" type="Node" unique_id=219492380]
 script = ExtResource("1_yks5t")
-Scanners = Array[Resource]([ExtResource("2_jnxnq"), ExtResource("3_ylapu"), ExtResource("4_cfb0y")])
+Scanners = Array[Resource]([ExtResource("4_cfb0y"), ExtResource("3_ylapu"), ExtResource("2_jnxnq")])
 metadata/_custom_type_script = "uid://b50hngs6ebld"

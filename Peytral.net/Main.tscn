@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://4sxxsnx728nw" path="res://Scripts/AssemblyMeta.cs" id="7_03owx"]
 [ext_resource type="Script" uid="uid://b4yjre132nlnf" path="res://Scripts/ScanResults.cs" id="8_wkp8b"]
 [ext_resource type="PackedScene" uid="uid://b87vckx4a4yud" path="res://ObservationPrefab.tscn" id="9_20pc6"]
+[ext_resource type="Script" uid="uid://c353ggng73bh7" path="res://Scripts/ResourceView.cs" id="10_c6i3y"]
 [ext_resource type="Script" uid="uid://m8aabpexbjde" path="res://Scripts/SourceView.cs" id="12_5vvyt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03owx"]
@@ -126,9 +127,10 @@ flat = true
 [node name="AssemblyDisplay" type="TabContainer" parent="Layout/MainSpace" unique_id=194780704]
 layout_mode = 2
 size_flags_horizontal = 3
-current_tab = 0
+current_tab = 2
 
 [node name="Assembly Meta" type="MarginContainer" parent="Layout/MainSpace/AssemblyDisplay" unique_id=1281956109 node_paths=PackedStringArray("MetaLabel")]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
@@ -176,14 +178,24 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Resource View" type="MarginContainer" parent="Layout/MainSpace/AssemblyDisplay" unique_id=2126868579]
-visible = false
+[node name="Resource View" type="MarginContainer" parent="Layout/MainSpace/AssemblyDisplay" unique_id=2126868579 node_paths=PackedStringArray("ResourcesLabel")]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
+script = ExtResource("10_c6i3y")
+ResourcesLabel = NodePath("VBoxContainer/ResourcesLabel")
 metadata/_tab_index = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Layout/MainSpace/AssemblyDisplay/Resource View" unique_id=472343198]
+layout_mode = 2
+
+[node name="ResourcesLabel" type="Label" parent="Layout/MainSpace/AssemblyDisplay/Resource View/VBoxContainer" unique_id=937724524]
+custom_minimum_size = Vector2(240, 64)
+layout_mode = 2
+size_flags_vertical = 3
+autowrap_mode = 3
 
 [node name="Source View" type="CodeEdit" parent="Layout/MainSpace/AssemblyDisplay" unique_id=731604418]
 visible = false
