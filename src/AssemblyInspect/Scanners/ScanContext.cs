@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AssemblyInspect.Observations;
+using AssemblyInspect.VirtualTree;
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.CSharp;
 using Mono.Cecil;
@@ -39,6 +40,20 @@ public class ScanContext(AssemblyDefinition assembly, string location = "")
         //do something about it?
       }
       return _fullSrcBlob = blob;
+    }
+  }
+
+  private VTree? _virtualProject;
+
+  public VTree VirtualProject
+  {
+    get
+    {
+      if (_virtualProject is not null)
+        return _virtualProject;
+
+      var decompiler = TreeProjectWriter.CreateFromPath(AssemblyLocation);
+      return _virtualProject = decompiler.DecompileProject();
     }
   }
 }
