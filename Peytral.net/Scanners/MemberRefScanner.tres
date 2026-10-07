@@ -126,7 +126,7 @@ metadata/_custom_type_script = "uid://cbfuchmij41oy"
 [sub_resource type="Resource" id="Resource_dq2q6"]
 script = ExtResource("1_k3ksl")
 Pattern = "UnityEngine.TextAsset::get_bytes"
-Summary = "Text Asset Use"
+Summary = "Binary Text Asset Use"
 Description = "Reading binary content from a text asset can be used to hide assemblies inside asset bundles"
 Severity = 1
 metadata/_custom_type_script = "uid://cbfuchmij41oy"
@@ -134,7 +134,7 @@ metadata/_custom_type_script = "uid://cbfuchmij41oy"
 [sub_resource type="Resource" id="Resource_41q35"]
 script = ExtResource("1_k3ksl")
 Pattern = "UnityEngine.TextAsset::get_text"
-Summary = "Binary Text Asset Use"
+Summary = "Text Asset Use"
 Description = "Reading text content from a text asset can be used to hide assemblies inside asset bundles"
 Severity = 1
 metadata/_custom_type_script = "uid://cbfuchmij41oy"
