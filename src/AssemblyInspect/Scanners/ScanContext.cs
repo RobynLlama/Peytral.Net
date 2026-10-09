@@ -56,4 +56,17 @@ public class ScanContext(AssemblyDefinition assembly, string location = "")
       return _virtualProject = decompiler.DecompileProject();
     }
   }
+
+  private DocumentLineMap? _lineMap;
+
+  public DocumentLineMap DocumentMap
+  {
+    get
+    {
+      if (_lineMap is not null)
+        return _lineMap;
+
+      return _lineMap = new(FullSourceBlob);
+    }
+  }
 }
