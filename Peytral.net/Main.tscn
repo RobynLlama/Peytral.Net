@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://b87vckx4a4yud" path="res://ObservationPrefab.tscn" id="9_20pc6"]
 [ext_resource type="Script" uid="uid://c353ggng73bh7" path="res://Scripts/ResourceView.cs" id="10_c6i3y"]
 [ext_resource type="Script" uid="uid://m8aabpexbjde" path="res://Scripts/SourceView.cs" id="12_5vvyt"]
+[ext_resource type="Script" uid="uid://mhewxl5u1e07" path="res://Scripts/CodeSearchBar.cs" id="14_c2ibq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03owx"]
 bg_color = Color(0.23762324, 0.21453625, 0.2729698, 1)
@@ -23,6 +24,8 @@ outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5vvyt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c6i3y"]
 
 [node name="Main" type="PanelContainer" unique_id=774995434 node_paths=PackedStringArray("Selector")]
 anchors_preset = 15
@@ -127,10 +130,9 @@ flat = true
 [node name="AssemblyDisplay" type="TabContainer" parent="Layout/MainSpace" unique_id=194780704]
 layout_mode = 2
 size_flags_horizontal = 3
-current_tab = 2
+current_tab = 0
 
 [node name="Assembly Meta" type="MarginContainer" parent="Layout/MainSpace/AssemblyDisplay" unique_id=1281956109 node_paths=PackedStringArray("MetaLabel")]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
@@ -179,6 +181,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Resource View" type="MarginContainer" parent="Layout/MainSpace/AssemblyDisplay" unique_id=2126868579 node_paths=PackedStringArray("ResourcesLabel")]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
@@ -197,9 +200,24 @@ layout_mode = 2
 size_flags_vertical = 3
 autowrap_mode = 3
 
-[node name="Source View" type="CodeEdit" parent="Layout/MainSpace/AssemblyDisplay" unique_id=731604418]
+[node name="Source View" type="MarginContainer" parent="Layout/MainSpace/AssemblyDisplay" unique_id=500175961]
 visible = false
 layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 8
+metadata/_tab_index = 3
+
+[node name="Layout" type="VBoxContainer" parent="Layout/MainSpace/AssemblyDisplay/Source View" unique_id=1180182650]
+layout_mode = 2
+
+[node name="Code Editor" type="CodeEdit" parent="Layout/MainSpace/AssemblyDisplay/Source View/Layout" unique_id=731604418 node_paths=PackedStringArray("SearchBar")]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/search_result_color = Color(0.3019608, 0.3019608, 0.3019608, 0.5019608)
+theme_override_colors/search_result_border_color = Color(0.5686275, 0.5686275, 0.5686275, 1)
+theme_override_colors/selection_color = Color(0.5121419, 0.5322684, 0.62611085, 1)
 theme_override_fonts/font = ExtResource("6_lgr22")
 theme_override_font_sizes/font_size = 18
 theme_override_styles/focus = SubResource("StyleBoxEmpty_5vvyt")
@@ -244,7 +262,18 @@ gutters_line_numbers_min_digits = 2
 gutters_draw_fold_gutter = true
 indent_use_spaces = true
 script = ExtResource("12_5vvyt")
-metadata/_tab_index = 3
+SearchBar = NodePath("../Search Bar")
+
+[node name="Search Bar" type="LineEdit" parent="Layout/MainSpace/AssemblyDisplay/Source View/Layout" unique_id=210556436 node_paths=PackedStringArray("Editor")]
+visible = false
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_c6i3y")
+placeholder_text = "Type to search document"
+keep_editing_on_text_submit = true
+clear_button_enabled = true
+select_all_on_focus = true
+script = ExtResource("14_c2ibq")
+Editor = NodePath("../Code Editor")
 
 [node name="BotSep" type="HSeparator" parent="Layout" unique_id=1146123679]
 visible = false
