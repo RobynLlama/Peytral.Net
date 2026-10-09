@@ -72,60 +72,50 @@ expand_mode = 1
 [node name="TopSep" type="HSeparator" parent="Layout" unique_id=1008174510]
 layout_mode = 2
 
-[node name="MainSpace" type="HBoxContainer" parent="Layout" unique_id=1357746282]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="QuickbarPanel" type="PanelContainer" parent="Layout/MainSpace" unique_id=517897130 node_paths=PackedStringArray("BtnHide", "BtnNew", "BtnSave", "BtnClose", "HidePanel", "Selector")]
-layout_mode = 2
-script = ExtResource("2_fos0i")
-BtnHide = NodePath("QuickbarLayout/BtnHide")
-BtnNew = NodePath("QuickbarLayout/MarginContainer/Quickbar/BtnNew")
-BtnSave = NodePath("QuickbarLayout/MarginContainer/Quickbar/BtnSave")
-BtnClose = NodePath("QuickbarLayout/MarginContainer/Quickbar/BtnClose")
-HidePanel = NodePath("QuickbarLayout/MarginContainer/Quickbar")
-Selector = NodePath("../../../FileDialog")
-
-[node name="QuickbarLayout" type="HBoxContainer" parent="Layout/MainSpace/QuickbarPanel" unique_id=2046457227]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout" unique_id=554427073]
+[node name="QuickbarPanel" type="MarginContainer" parent="Layout" unique_id=165251123 node_paths=PackedStringArray("BtnNew", "BtnSave", "BtnClose", "Selector")]
 layout_mode = 2
 theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 8
+script = ExtResource("2_fos0i")
+BtnNew = NodePath("QuickbarLayout/BtnNew")
+BtnSave = NodePath("QuickbarLayout/BtnSave")
+BtnClose = NodePath("QuickbarLayout/BtnClose")
+Selector = NodePath("../../FileDialog")
+metadata/_custom_type_script = "uid://d017xxjrscj36"
 
-[node name="Quickbar" type="VBoxContainer" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout/MarginContainer" unique_id=220788789]
-custom_minimum_size = Vector2(32, 0)
+[node name="QuickbarLayout" type="HBoxContainer" parent="Layout/QuickbarPanel" unique_id=881613037]
 layout_mode = 2
 
-[node name="BtnNew" type="Button" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout/MarginContainer/Quickbar" unique_id=109242442]
-custom_minimum_size = Vector2(64, 32)
+[node name="BtnNew" type="Button" parent="Layout/QuickbarPanel/QuickbarLayout" unique_id=109242442]
+custom_minimum_size = Vector2(96, 48)
 layout_mode = 2
 text = "Open"
 icon = ExtResource("2_cm0pq")
 expand_icon = true
 
-[node name="BtnSave" type="Button" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout/MarginContainer/Quickbar" unique_id=58204791]
-custom_minimum_size = Vector2(64, 32)
+[node name="BtnSave" type="Button" parent="Layout/QuickbarPanel/QuickbarLayout" unique_id=58204791]
+custom_minimum_size = Vector2(96, 48)
 layout_mode = 2
 text = "Save"
 icon = ExtResource("3_fos0i")
 expand_icon = true
 
-[node name="BtnClose" type="Button" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout/MarginContainer/Quickbar" unique_id=1957160517]
-custom_minimum_size = Vector2(96, 32)
+[node name="BtnClose" type="Button" parent="Layout/QuickbarPanel/QuickbarLayout" unique_id=1957160517]
+custom_minimum_size = Vector2(96, 48)
 layout_mode = 2
 text = "Close
 "
 icon = ExtResource("4_3dxm6")
 expand_icon = true
 
-[node name="BtnHide" type="Button" parent="Layout/MainSpace/QuickbarPanel/QuickbarLayout" unique_id=1237973164]
+[node name="TopSep2" type="HSeparator" parent="Layout" unique_id=1785035904]
 layout_mode = 2
-text = "::"
-flat = true
+
+[node name="MainSpace" type="HBoxContainer" parent="Layout" unique_id=1357746282]
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="AssemblyDisplay" type="TabContainer" parent="Layout/MainSpace" unique_id=194780704]
 layout_mode = 2
