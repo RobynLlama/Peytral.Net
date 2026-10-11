@@ -1,0 +1,35 @@
+using System;
+using AssemblyInspect.Observations;
+using Godot;
+using Mono.Cecil;
+
+[GlobalClass]
+public partial class ResourceViewPrefab : PanelContainer
+{
+
+  [Export]
+  public Button SaveButton;
+  [Export, ExportGroup("Text")]
+  public Label LblName;
+  [Export]
+  public Label LblSize;
+  [Export]
+  public Label LblAnalysis;
+
+  public Action<ResourceObservation> SaveResourceCallback;
+
+  public override void _Ready()
+  {
+    SaveButton.Pressed += () => SaveResourceCallback?.Invoke(CurrentResource);
+  }
+
+  private ResourceObservation CurrentResource;
+
+  public void DisplayResource(ResourceObservation resource)
+  {
+    CurrentResource = resource;
+    LblName.Text = $"Name: {resource.ResourceName}";
+    LblSize.Text = $"Size: {resource.ResourceData.Length:N0} bytes";
+    LblAnalysis.Text = $"Analysis: [{resource.Severity}] {resource.Analysis}";
+  }
+}

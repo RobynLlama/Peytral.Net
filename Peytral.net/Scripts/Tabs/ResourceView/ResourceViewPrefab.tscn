@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://bbpfrweboh2rr"]
+
+[ext_resource type="Texture2D" uid="uid://livm6aligcix" path="res://Quickbar/Save.png" id="1_3xq87"]
+[ext_resource type="Script" uid="uid://cjf1dvvt4m8fr" path="res://Scripts/Tabs/ResourceView/ResourceViewPrefab.cs" id="1_wi3rh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jggjo"]
+bg_color = Color(0.6, 0.6, 0.6, 0.09411765)
+border_width_left = 2
+border_width_top = 4
+border_width_right = 2
+border_width_bottom = 4
+border_color = Color(0.5019608, 0.5019608, 0.5019608, 0.5019608)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_jggjo"]
+font_size = 20
+
+[node name="ResourceItem" type="PanelContainer" unique_id=497786864 node_paths=PackedStringArray("SaveButton", "LblName", "LblSize", "LblAnalysis")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jggjo")
+script = ExtResource("1_wi3rh")
+SaveButton = NodePath("MainLayout/SaveBtn")
+LblName = NodePath("MainLayout/InfoLayout/NameLabel")
+LblSize = NodePath("MainLayout/InfoLayout/SizeLabel")
+LblAnalysis = NodePath("MainLayout/InfoLayout/AnalysisLabel")
+
+[node name="MainLayout" type="HBoxContainer" parent="." unique_id=1895925159]
+layout_mode = 2
+
+[node name="SaveBtn" type="Button" parent="MainLayout" unique_id=1066535493]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+text = "Save"
+icon = ExtResource("1_3xq87")
+flat = true
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InfoLayout" type="VBoxContainer" parent="MainLayout" unique_id=1913309569]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NameLabel" type="Label" parent="MainLayout/InfoLayout" unique_id=1457555811]
+layout_mode = 2
+text = "Resource Name"
+label_settings = SubResource("LabelSettings_jggjo")
+
+[node name="SizeLabel" type="Label" parent="MainLayout/InfoLayout" unique_id=1364222558]
+layout_mode = 2
+text = "Resource Size"
+
+[node name="AnalysisLabel" type="Label" parent="MainLayout/InfoLayout" unique_id=1347834104]
+layout_mode = 2
+text = "ResourceAnalysis"
