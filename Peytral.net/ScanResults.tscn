@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://da0yt3ttuljon"]
+
+[ext_resource type="Script" uid="uid://b4yjre132nlnf" path="res://Scripts/ScanResults.cs" id="1_rssam"]
+[ext_resource type="PackedScene" uid="uid://b87vckx4a4yud" path="res://ObservationPrefab.tscn" id="2_weaon"]
+
+[node name="Scan Results" type="MarginContainer" unique_id=335934787 node_paths=PackedStringArray("ObsContainer")]
+visible = false
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("1_rssam")
+ObservationPrefab = ExtResource("2_weaon")
+ObsContainer = NodePath("Layout/ScrollContainer/ObservationList")
+metadata/_tab_index = 1
+
+[node name="Layout" type="VBoxContainer" parent="." unique_id=1630132632]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Layout" unique_id=875102721]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 4
+
+[node name="ObservationList" type="VBoxContainer" parent="Layout/ScrollContainer" unique_id=152084052]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

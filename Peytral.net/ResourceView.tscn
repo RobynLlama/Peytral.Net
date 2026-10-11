@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://gsyf4s8pr4dd"]
+
+[ext_resource type="Script" uid="uid://c353ggng73bh7" path="res://Scripts/ResourceView.cs" id="1_yhbbn"]
+
+[node name="Resource View" type="MarginContainer" unique_id=1939364646 node_paths=PackedStringArray("ResourcesLabel")]
+visible = false
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("1_yhbbn")
+ResourcesLabel = NodePath("VBoxContainer/ResourcesLabel")
+metadata/_tab_index = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1112721381]
+layout_mode = 2
+
+[node name="ResourcesLabel" type="Label" parent="VBoxContainer" unique_id=505704308]
+custom_minimum_size = Vector2(240, 64)
+layout_mode = 2
+size_flags_vertical = 3
+autowrap_mode = 3
