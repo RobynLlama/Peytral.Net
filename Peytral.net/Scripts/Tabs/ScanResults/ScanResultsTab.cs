@@ -4,7 +4,7 @@ using AssemblyInspect.Scanners;
 using Godot;
 using Peytral;
 
-public partial class ScanResults : MarginContainer
+public partial class ScanResultsTab : MarginContainer
 {
 
   [Export]

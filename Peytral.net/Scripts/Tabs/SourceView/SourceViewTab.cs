@@ -8,7 +8,7 @@ using Godot;
 using Peytral;
 
 [GlobalClass]
-public partial class SourceView : CodeEdit
+public partial class SourceViewTab : CodeEdit
 {
 
   [Export]
@@ -32,7 +32,7 @@ public partial class SourceView : CodeEdit
   public int GutterID { get; private set; }
   private ObservationWithLineInfo[] LastInHighlights = [];
 
-  public static SourceView Instance;
+  public static SourceViewTab Instance;
 
   public override void _Ready()
   {

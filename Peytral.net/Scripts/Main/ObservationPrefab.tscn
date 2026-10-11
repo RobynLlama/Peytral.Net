@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b87vckx4a4yud"]
 
 [ext_resource type="Texture2D" uid="uid://bnltb53m5oe1w" path="res://LevelIcons/Alert.png" id="1_knfhc"]
-[ext_resource type="Script" uid="uid://bbj28dr3it5l8" path="res://Scripts/ObservationPrefab.cs" id="1_mjor6"]
+[ext_resource type="Script" uid="uid://bbj28dr3it5l8" path="res://Scripts/Main/ObservationPrefab.cs" id="1_mjor6"]
 [ext_resource type="Texture2D" uid="uid://duxm44sbgjwu1" path="res://LevelIcons/Warning.png" id="2_mjor6"]
 [ext_resource type="Texture2D" uid="uid://dsyfarv0l5vvr" path="res://LevelIcons/Message.png" id="3_34tl6"]
 

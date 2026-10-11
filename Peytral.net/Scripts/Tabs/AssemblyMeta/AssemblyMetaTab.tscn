@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://in37prkorqly"]
 
-[ext_resource type="Script" uid="uid://4sxxsnx728nw" path="res://Scripts/AssemblyMeta.cs" id="1_cy53t"]
+[ext_resource type="Script" uid="uid://4sxxsnx728nw" path="res://Scripts/Tabs/AssemblyMeta/AssemblyMetaTab.cs" id="1_cy53t"]
 
 [node name="Assembly Meta" type="MarginContainer" unique_id=1159870531 node_paths=PackedStringArray("MetaLabel")]
 theme_override_constants/margin_left = 8

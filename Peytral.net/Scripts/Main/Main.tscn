@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://dh3142w6jm11o"]
 
-[ext_resource type="Texture2D" uid="uid://dj7xsk33q74ua" path="res://icon.png" id="1_glv2v"]
-[ext_resource type="Script" uid="uid://dldo3mpee32qx" path="res://Scripts/Main.cs" id="1_trn2v"]
-[ext_resource type="Texture2D" uid="uid://c1uqq425a2se7" path="res://Quickbar/New.png" id="2_cm0pq"]
-[ext_resource type="Script" uid="uid://d017xxjrscj36" path="res://Scripts/QuickbarPanel.cs" id="2_fos0i"]
-[ext_resource type="Texture2D" uid="uid://livm6aligcix" path="res://Quickbar/Save.png" id="3_fos0i"]
-[ext_resource type="Texture2D" uid="uid://1qnnuq2yx43i" path="res://Quickbar/Close.png" id="4_3dxm6"]
-[ext_resource type="PackedScene" uid="uid://in37prkorqly" path="res://AssemblyMeta.tscn" id="7_wkp8b"]
-[ext_resource type="PackedScene" uid="uid://da0yt3ttuljon" path="res://ScanResults.tscn" id="8_20pc6"]
-[ext_resource type="PackedScene" uid="uid://gsyf4s8pr4dd" path="res://ResourceView.tscn" id="9_5vvyt"]
-[ext_resource type="PackedScene" uid="uid://bu5ioy27taofa" path="res://SourceView.tscn" id="10_c6i3y"]
+[ext_resource type="Script" uid="uid://dldo3mpee32qx" path="res://Scripts/Main/Main.cs" id="1_5dj6k"]
+[ext_resource type="Texture2D" uid="uid://dj7xsk33q74ua" path="res://icon.png" id="2_t0ywk"]
+[ext_resource type="Script" uid="uid://d017xxjrscj36" path="res://Scripts/Main/QuickbarPanel.cs" id="3_i4n7x"]
+[ext_resource type="Texture2D" uid="uid://c1uqq425a2se7" path="res://Quickbar/New.png" id="4_5ddhp"]
+[ext_resource type="Texture2D" uid="uid://livm6aligcix" path="res://Quickbar/Save.png" id="5_fe4io"]
+[ext_resource type="Texture2D" uid="uid://1qnnuq2yx43i" path="res://Quickbar/Close.png" id="6_flh1d"]
+[ext_resource type="PackedScene" uid="uid://in37prkorqly" path="res://Scripts/Tabs/AssemblyMeta/AssemblyMetaTab.tscn" id="7_wi1qe"]
+[ext_resource type="PackedScene" uid="uid://da0yt3ttuljon" path="res://Scripts/Tabs/ScanResults/ScanResultsTab.tscn" id="8_s7fxr"]
+[ext_resource type="PackedScene" uid="uid://gsyf4s8pr4dd" path="res://Scripts/Tabs/ResourceView/ResourceViewTab.tscn" id="9_cw5qt"]
+[ext_resource type="PackedScene" uid="uid://bu5ioy27taofa" path="res://Scripts/Tabs/SourceView/SourceViewTab.tscn" id="10_ygs31"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03owx"]
 bg_color = Color(0.23921569, 0.21568628, 0.27450982, 1)
@@ -26,7 +26,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_03owx")
-script = ExtResource("1_trn2v")
+script = ExtResource("1_5dj6k")
 Selector = NodePath("FileDialog")
 
 [node name="Layout" type="VBoxContainer" parent="." unique_id=556872354]
@@ -58,7 +58,7 @@ layout_mode = 2
 [node name="IconTexture" type="TextureRect" parent="Layout/TitleBox/HBoxContainer/CenteredIcon" unique_id=651549162]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-texture = ExtResource("1_glv2v")
+texture = ExtResource("2_t0ywk")
 expand_mode = 1
 
 [node name="TopSep" type="HSeparator" parent="Layout" unique_id=1008174510]
@@ -70,12 +70,11 @@ theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 8
-script = ExtResource("2_fos0i")
+script = ExtResource("3_i4n7x")
 BtnNew = NodePath("QuickbarLayout/BtnNew")
 BtnSave = NodePath("QuickbarLayout/BtnSave")
 BtnClose = NodePath("QuickbarLayout/BtnClose")
 Selector = NodePath("../../FileDialog")
-metadata/_custom_type_script = "uid://d017xxjrscj36"
 
 [node name="QuickbarLayout" type="HBoxContainer" parent="Layout/QuickbarPanel" unique_id=881613037]
 layout_mode = 2
@@ -84,14 +83,14 @@ layout_mode = 2
 custom_minimum_size = Vector2(96, 48)
 layout_mode = 2
 text = "Open"
-icon = ExtResource("2_cm0pq")
+icon = ExtResource("4_5ddhp")
 expand_icon = true
 
 [node name="BtnSave" type="Button" parent="Layout/QuickbarPanel/QuickbarLayout" unique_id=58204791]
 custom_minimum_size = Vector2(96, 48)
 layout_mode = 2
 text = "Save"
-icon = ExtResource("3_fos0i")
+icon = ExtResource("5_fe4io")
 expand_icon = true
 
 [node name="BtnClose" type="Button" parent="Layout/QuickbarPanel/QuickbarLayout" unique_id=1957160517]
@@ -99,7 +98,7 @@ custom_minimum_size = Vector2(96, 48)
 layout_mode = 2
 text = "Close
 "
-icon = ExtResource("4_3dxm6")
+icon = ExtResource("6_flh1d")
 expand_icon = true
 
 [node name="TopSep2" type="HSeparator" parent="Layout" unique_id=1785035904]
@@ -114,16 +113,16 @@ layout_mode = 2
 size_flags_horizontal = 3
 current_tab = 0
 
-[node name="Assembly Meta" parent="Layout/MainSpace/AssemblyDisplay" unique_id=1159870531 instance=ExtResource("7_wkp8b")]
+[node name="Assembly Meta" parent="Layout/MainSpace/AssemblyDisplay" unique_id=1159870531 instance=ExtResource("7_wi1qe")]
 layout_mode = 2
 
-[node name="Scan Results" parent="Layout/MainSpace/AssemblyDisplay" unique_id=335934787 instance=ExtResource("8_20pc6")]
+[node name="Scan Results" parent="Layout/MainSpace/AssemblyDisplay" unique_id=335934787 instance=ExtResource("8_s7fxr")]
 layout_mode = 2
 
-[node name="Resource View" parent="Layout/MainSpace/AssemblyDisplay" unique_id=1939364646 instance=ExtResource("9_5vvyt")]
+[node name="Resource View" parent="Layout/MainSpace/AssemblyDisplay" unique_id=1939364646 instance=ExtResource("9_cw5qt")]
 layout_mode = 2
 
-[node name="Source View" parent="Layout/MainSpace/AssemblyDisplay" unique_id=1483884746 instance=ExtResource("10_c6i3y")]
+[node name="Source View" parent="Layout/MainSpace/AssemblyDisplay" unique_id=1483884746 instance=ExtResource("10_ygs31")]
 layout_mode = 2
 
 [node name="BotSep" type="HSeparator" parent="Layout" unique_id=1146123679]

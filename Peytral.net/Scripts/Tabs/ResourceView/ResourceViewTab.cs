@@ -7,7 +7,7 @@ using Godot;
 using Mono.Cecil;
 using Peytral;
 
-public partial class ResourceView : MarginContainer
+public partial class ResourceViewTab : MarginContainer
 {
   [Export]
   public Label ResourcesLabel;

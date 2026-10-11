@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://da0yt3ttuljon"]
 
-[ext_resource type="Script" uid="uid://b4yjre132nlnf" path="res://Scripts/ScanResults.cs" id="1_rssam"]
-[ext_resource type="PackedScene" uid="uid://b87vckx4a4yud" path="res://ObservationPrefab.tscn" id="2_weaon"]
+[ext_resource type="Script" uid="uid://b4yjre132nlnf" path="res://Scripts/Tabs/ScanResults/ScanResultsTab.cs" id="1_rssam"]
+[ext_resource type="PackedScene" uid="uid://b87vckx4a4yud" path="res://Scripts/Main/ObservationPrefab.tscn" id="2_weaon"]
 
 [node name="Scan Results" type="MarginContainer" unique_id=335934787 node_paths=PackedStringArray("ObsContainer")]
 visible = false

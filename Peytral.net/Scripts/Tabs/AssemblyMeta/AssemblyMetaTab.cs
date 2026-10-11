@@ -6,7 +6,7 @@ using AssemblyInspect.Scanners;
 using Godot;
 using Peytral;
 
-public partial class AssemblyMeta : MarginContainer
+public partial class AssemblyMetaTab : MarginContainer
 {
   [Export]
   public Label MetaLabel;

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://gsyf4s8pr4dd"]
 
-[ext_resource type="Script" uid="uid://c353ggng73bh7" path="res://Scripts/ResourceView.cs" id="1_yhbbn"]
+[ext_resource type="Script" uid="uid://c353ggng73bh7" path="res://Scripts/Tabs/ResourceView/ResourceViewTab.cs" id="1_yhbbn"]
 
 [node name="Resource View" type="MarginContainer" unique_id=1939364646 node_paths=PackedStringArray("ResourcesLabel")]
 visible = false

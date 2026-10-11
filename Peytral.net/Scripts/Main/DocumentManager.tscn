@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dhmo178eaea7m"]
 
-[ext_resource type="Script" uid="uid://b50hngs6ebld" path="res://Scripts/DocumentManager.cs" id="1_yks5t"]
+[ext_resource type="Script" uid="uid://b50hngs6ebld" path="res://Scripts/Main/DocumentManager.cs" id="1_yks5t"]
 [ext_resource type="Resource" uid="uid://dagma7vj65m32" path="res://Scanners/AssemblyRefScanner.tres" id="2_jnxnq"]
 [ext_resource type="Resource" uid="uid://dkb0fbn1thodo" path="res://Scanners/SourceBlobScanner.tres" id="2_p5je4"]
 [ext_resource type="Resource" uid="uid://bfd2i5m0mc8cx" path="res://Scanners/PInvokeScanner.tres" id="3_ylapu"]
