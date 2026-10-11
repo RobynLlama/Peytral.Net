@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
+using System.IO;
 using System.Linq;
-using System.Text;
-using AssemblyInspect;
+using System.Resources;
+using AssemblyInspect.Observations;
 using AssemblyInspect.Scanners;
 using Godot;
 using Mono.Cecil;
@@ -12,61 +14,51 @@ public partial class ResourceViewTab : MarginContainer
   [Export]
   public Label ResourcesLabel;
   [Export]
-  public string PlaceholderText;
+  public VBoxContainer ResourceList;
+  [Export]
+  public PackedScene ResourcePrefab;
+  [Export]
+  public FileDialog ResourceFileSelector;
+
+  private ResourceObservation CurrentResource;
 
   public override void _Ready()
   {
     DocumentManager.OnDocumentClosed += ResetTab;
     DocumentManager.OnDocumentScanned += NewScan;
+    ResourceFileSelector.FileSelected += FileSelected;
     ResetTab();
   }
 
+  private void RequestSaveResource(ResourceObservation resource)
+  {
+    CurrentResource = resource;
+    ResourceFileSelector.CurrentDir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+    ResourceFileSelector.CurrentFile = resource.ResourceName;
+    ResourceFileSelector.PopupCentered();
+  }
+
+  private void FileSelected(string path) =>
+    File.WriteAllBytes(path, CurrentResource.ResourceData);
+
   private void NewScan(ScanContext context)
   {
-    StringBuilder sb = new("""
-    Resources Found (
-    """);
-
-    Mono.Cecil.Resource[] resources = [.. context.Assembly.Modules.SelectMany(x => x.Resources)];
-    sb.Append(resources.Length);
-    sb.AppendLine(")\n");
-
-    foreach (var item in resources)
+    var items = context.Observations.OfType<ResourceObservation>();
+    ResourcesLabel.Text = $"Total Resources: {items.Count()}";
+    foreach (var item in items)
     {
-      sb.Append(item.Name);
-
-      if (item is EmbeddedResource emb)
-      {
-        sb.Append("""
-         [Embedded]
-          Size: 
-        """);
-        sb.Append(emb.GetResourceData().Length);
-        sb.AppendLine("bytes");
-      }
-      else if (item is AssemblyLinkedResource asm)
-      {
-        sb.Append("""
-         [Assembly Linked]
-          Target:
-        """);
-        sb.AppendLine(asm.Assembly.FullName);
-      }
-      else if (item is LinkedResource link)
-      {
-        sb.Append("""
-         [File Linked]
-          Target:
-        """);
-        sb.AppendLine(link.File);
-      }
+      var child = ResourcePrefab.Instantiate<ResourceViewPrefab>();
+      child.DisplayResource(item);
+      child.SaveResourceCallback = RequestSaveResource;
+      ResourceList.AddChild(child);
     }
-
-    ResourcesLabel.Text = sb.ToString();
   }
 
   private void ResetTab()
   {
-    ResourcesLabel.Text = PlaceholderText;
+    ResourcesLabel.Text = "Total Resources: 0";
+
+    foreach (var child in ResourceList.GetChildren())
+      child.QueueFree();
   }
 }
