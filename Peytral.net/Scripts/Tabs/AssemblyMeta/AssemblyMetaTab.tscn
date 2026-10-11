@@ -9,6 +9,7 @@ theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 script = ExtResource("1_cy53t")
 MetaLabel = NodePath("Layout/LabelAssemblyMeta")
+PlaceholderText = "No Assembly Loaded, use the Open button to load an assembly"
 metadata/_tab_index = 0
 
 [node name="Layout" type="VBoxContainer" parent="." unique_id=1622577543]
@@ -17,4 +18,3 @@ layout_mode = 2
 [node name="LabelAssemblyMeta" type="Label" parent="Layout" unique_id=1600466153]
 layout_mode = 2
 size_flags_vertical = 3
-text = "No Assembly Loaded, use the Open button to load an assembly"

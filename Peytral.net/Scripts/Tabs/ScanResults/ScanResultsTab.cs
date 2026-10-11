@@ -15,7 +15,7 @@ public partial class ScanResultsTab : MarginContainer
 
   public override void _Ready()
   {
-    DocumentManager.OnDocumentLoaded += NewDocument;
+    DocumentManager.OnDocumentClosed += ResetTab;
     DocumentManager.OnDocumentScanned += ScannedDocument;
   }
 
@@ -29,7 +29,7 @@ public partial class ScanResultsTab : MarginContainer
     }
   }
 
-  private void NewDocument(AssemblyInspector inspector)
+  private void ResetTab()
   {
     //todo object pooling here
     foreach (var child in ObsContainer.GetChildren())

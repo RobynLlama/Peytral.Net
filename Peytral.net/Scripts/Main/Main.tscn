@@ -64,7 +64,7 @@ expand_mode = 1
 [node name="TopSep" type="HSeparator" parent="Layout" unique_id=1008174510]
 layout_mode = 2
 
-[node name="QuickbarPanel" type="MarginContainer" parent="Layout" unique_id=165251123 node_paths=PackedStringArray("BtnNew", "BtnSave", "BtnClose", "Selector")]
+[node name="QuickbarPanel" type="MarginContainer" parent="Layout" unique_id=165251123 node_paths=PackedStringArray("BtnNew", "BtnSave", "BtnClose", "OpenFileSelector")]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 8
@@ -74,7 +74,7 @@ script = ExtResource("3_i4n7x")
 BtnNew = NodePath("QuickbarLayout/BtnNew")
 BtnSave = NodePath("QuickbarLayout/BtnSave")
 BtnClose = NodePath("QuickbarLayout/BtnClose")
-Selector = NodePath("../../FileDialog")
+OpenFileSelector = NodePath("../../FileDialog")
 
 [node name="QuickbarLayout" type="HBoxContainer" parent="Layout/QuickbarPanel" unique_id=881613037]
 layout_mode = 2

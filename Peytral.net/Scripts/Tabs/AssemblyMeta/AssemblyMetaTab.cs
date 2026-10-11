@@ -10,9 +10,18 @@ public partial class AssemblyMetaTab : MarginContainer
 {
   [Export]
   public Label MetaLabel;
+  [Export]
+  public string PlaceholderText;
   public override void _Ready()
   {
     DocumentManager.OnDocumentScanned += ScannedDocument;
+    DocumentManager.OnDocumentClosed += ResetTab;
+    ResetTab();
+  }
+
+  private void ResetTab()
+  {
+    MetaLabel.Text = PlaceholderText;
   }
 
   private void ScannedDocument(ScanContext context)

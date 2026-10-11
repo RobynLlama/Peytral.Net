@@ -1,4 +1,5 @@
 using Godot;
+using Peytral;
 
 [GlobalClass]
 public partial class QuickbarPanel : MarginContainer
@@ -10,14 +11,10 @@ public partial class QuickbarPanel : MarginContainer
   [Export]
   public Button BtnClose;
   [Export, ExportGroup("Other")]
-  public FileDialog Selector;
+  public FileDialog OpenFileSelector;
   public override void _Ready()
   {
-    BtnNew.Pressed += NewDocument;
-  }
-
-  private void NewDocument()
-  {
-    Selector.PopupCentered();
+    BtnNew.Pressed += () => OpenFileSelector.PopupCentered();
+    BtnClose.Pressed += DocumentManager.CloseDocument;
   }
 }

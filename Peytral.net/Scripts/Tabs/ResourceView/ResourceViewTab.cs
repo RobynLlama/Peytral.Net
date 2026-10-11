@@ -11,11 +11,14 @@ public partial class ResourceViewTab : MarginContainer
 {
   [Export]
   public Label ResourcesLabel;
+  [Export]
+  public string PlaceholderText;
 
   public override void _Ready()
   {
-    DocumentManager.OnDocumentLoaded += NewDocument;
+    DocumentManager.OnDocumentClosed += ResetTab;
     DocumentManager.OnDocumentScanned += NewScan;
+    ResetTab();
   }
 
   private void NewScan(ScanContext context)
@@ -62,8 +65,8 @@ public partial class ResourceViewTab : MarginContainer
     ResourcesLabel.Text = sb.ToString();
   }
 
-  private void NewDocument(AssemblyInspector inspector)
+  private void ResetTab()
   {
-    ResourcesLabel.Text = string.Empty;
+    ResourcesLabel.Text = PlaceholderText;
   }
 }
