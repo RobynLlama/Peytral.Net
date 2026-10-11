@@ -35,6 +35,7 @@ AssemblyInspector inspector = new(assemblyPath, [
   {
     PlainTextRules = DemoLists.AssemblyReferencePlainTextRules,
   },
+  new ResourceScanner(),
 ]);
 var ctx = inspector.ScanAssembly();
 
