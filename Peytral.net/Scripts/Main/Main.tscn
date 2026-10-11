@@ -146,6 +146,7 @@ vertical_alignment = 1
 
 [node name="FileDialog" type="FileDialog" parent="." unique_id=1874533269]
 oversampling_override = 1.0
+mode = 2
 title = "Open a File"
 initial_position = 2
 size = Vector2i(1200, 720)
