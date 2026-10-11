@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using AssemblyInspect.Observations;
 using AssemblyInspect.VirtualTree;
 using ICSharpCode.Decompiler;
@@ -11,7 +12,7 @@ namespace AssemblyInspect.Scanners;
 public class ScanContext(AssemblyDefinition assembly, string location = "")
 {
   public readonly AssemblyDefinition Assembly = assembly;
-  public readonly string AssemblyLocation = location;
+  public readonly FileInfo Info = new(location);
   public readonly List<Observation> Observations = [];
 
   private string? _fullSrcBlob;
@@ -28,7 +29,7 @@ public class ScanContext(AssemblyDefinition assembly, string location = "")
         ShowXmlDocumentation = true
       };
 
-      var decompiler = new CSharpDecompiler(AssemblyLocation, settings);
+      var decompiler = new CSharpDecompiler(Info.FullName, settings);
       string blob = string.Empty;
 
       try
@@ -52,7 +53,7 @@ public class ScanContext(AssemblyDefinition assembly, string location = "")
       if (_virtualProject is not null)
         return _virtualProject;
 
-      var decompiler = TreeProjectWriter.CreateFromPath(AssemblyLocation);
+      var decompiler = TreeProjectWriter.CreateFromPath(Info.FullName);
       return _virtualProject = decompiler.DecompileProject();
     }
   }
