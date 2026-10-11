@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using Peytral;
 
@@ -14,7 +15,13 @@ public partial class QuickbarPanel : MarginContainer
   public FileDialog OpenFileSelector;
   public override void _Ready()
   {
-    BtnNew.Pressed += () => OpenFileSelector.PopupCentered();
+    BtnNew.Pressed += OpenDialogue;
     BtnClose.Pressed += DocumentManager.CloseDocument;
+  }
+
+  private void OpenDialogue()
+  {
+    OpenFileSelector.CurrentDir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+    OpenFileSelector.PopupCentered();
   }
 }
