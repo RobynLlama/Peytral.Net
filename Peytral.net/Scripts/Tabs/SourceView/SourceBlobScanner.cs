@@ -29,22 +29,24 @@ public class SourceBlobScanner : IRegexMatcher, IPlaintextMatcher
     }
   }
 
-  public void Scan(ScanContext context)
+  public IReadOnlyCollection<Observation> Scan(ScanContext context)
   {
     var map = context.DocumentMap;
     var blob = context.FullSourceBlob;
+    List<Observation> obs = [];
 
     foreach (var rule in RegexRules)
       foreach (var match in rule.CompiledRegex.EnumerateMatches(blob))
-        context.Observations.Add(new ObservationWithLineInfo(ScannerName, rule.Severity, rule.Summary, rule.Description, "Source Blob", map.GetLineIndex(match.Index)));
+        obs.Add(new ObservationWithLineInfo(ScannerName, rule.Severity, rule.Summary, rule.Description, "Source Blob", map.GetLineIndex(match.Index)));
 
 
     //todo allow configuring the string comparer in the resource and pass
     //it in here
     foreach (var rule in PlainTextRules)
       foreach (var match in FindAllOffsets(blob, rule.Pattern, StringComparison.OrdinalIgnoreCase))
-        context.Observations.Add(new ObservationWithLineInfo(ScannerName, rule.Severity, rule.Summary, rule.Description, "Source Blob", map.GetLineIndex(match)));
+        obs.Add(new ObservationWithLineInfo(ScannerName, rule.Severity, rule.Summary, rule.Description, "Source Blob", map.GetLineIndex(match)));
 
+    return obs;
   }
 }
 
