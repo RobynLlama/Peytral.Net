@@ -37,7 +37,8 @@ AssemblyInspector inspector = new(assemblyPath, [
   },
   new ResourceScanner(),
 ]);
-var ctx = inspector.ScanAssembly();
+
+var ctx = await inspector.ScanAssemblyAsync();
 
 foreach (var item in ctx.Observations)
   Console.WriteLine(item);
