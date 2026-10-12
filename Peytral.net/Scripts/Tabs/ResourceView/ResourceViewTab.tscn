@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c353ggng73bh7" path="res://Scripts/Tabs/ResourceView/ResourceViewTab.cs" id="1_yhbbn"]
 [ext_resource type="PackedScene" uid="uid://bbpfrweboh2rr" path="res://Scripts/Tabs/ResourceView/ResourceViewPrefab.tscn" id="2_jggjo"]
+[ext_resource type="Script" uid="uid://cd2fpxad0x3e6" path="res://Scripts/Tabs/ResourceView/ResourceListBox.cs" id="3_a25lw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yw06a"]
 bg_color = Color(0.6, 0.6, 0.6, 0.09411765)
@@ -13,7 +14,7 @@ corner_radius_top_right = 4
 [sub_resource type="LabelSettings" id="LabelSettings_a25lw"]
 font_size = 22
 
-[node name="Resource View" type="MarginContainer" unique_id=1939364646 node_paths=PackedStringArray("ResourcesLabel", "ResourceList", "ResourceFileSelector")]
+[node name="Resource View" type="MarginContainer" unique_id=1939364646 node_paths=PackedStringArray("ResourcesLabel", "ResourceList")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -26,8 +27,6 @@ theme_override_constants/margin_bottom = 8
 script = ExtResource("1_yhbbn")
 ResourcesLabel = NodePath("Layout/Header/PanelSep/Toptions/CountLabel")
 ResourceList = NodePath("Layout/ResourceScrollBox/ResourceListBox")
-ResourcePrefab = ExtResource("2_jggjo")
-ResourceFileSelector = NodePath("FileDialog")
 metadata/_tab_index = 2
 
 [node name="Layout" type="VBoxContainer" parent="." unique_id=2123384490]
@@ -64,10 +63,14 @@ text = "Save All Resources with Results"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ResourceListBox" type="VBoxContainer" parent="Layout/ResourceScrollBox" unique_id=1244759540]
+[node name="ResourceListBox" type="VBoxContainer" parent="Layout/ResourceScrollBox" unique_id=1148735733 node_paths=PackedStringArray("ResourceFileSelector")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("3_a25lw")
+ResourcePrefab = ExtResource("2_jggjo")
+ResourceFileSelector = NodePath("../../../FileDialog")
+metadata/_custom_type_script = "uid://cd2fpxad0x3e6"
 
 [node name="PanelSep" type="PanelContainer" parent="Layout" unique_id=2070082331]
 custom_minimum_size = Vector2(0, 12)
