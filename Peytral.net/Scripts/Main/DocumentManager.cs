@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using AssemblyInspect;
 using AssemblyInspect.Scanners;
 using Godot;
@@ -12,6 +13,7 @@ public partial class DocumentManager : Node
 {
   [Export]
   public ScannerData[] Scanners;
+
   public static DocumentManager Instance { get; private set; }
   private static AssemblyInspector OpenDocument;
   private static ScanContext LastScanResult;
@@ -25,7 +27,7 @@ public partial class DocumentManager : Node
     Instance = this;
   }
 
-  public static void OpenNewDocument(string path)
+  public static async Task OpenNewDocument(string path)
   {
 
     CloseDocument();
@@ -46,16 +48,15 @@ public partial class DocumentManager : Node
     try
     {
       OpenDocument.Scanners = [.. Instance.Scanners.Select(x => x.BuildScanner())];
-      ctx = OpenDocument.ScanAssembly();
+      ctx = await OpenDocument.ScanAssemblyAsync();
+      OnDocumentScanned?.Invoke(ctx);
+      LastScanResult = ctx;
     }
     catch (Exception)
     {
       //todo scream here
       return;
     }
-
-    OnDocumentScanned?.Invoke(ctx);
-    LastScanResult = ctx;
   }
 
   public static void CloseDocument()
