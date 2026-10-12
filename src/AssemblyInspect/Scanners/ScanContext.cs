@@ -9,11 +9,11 @@ using Mono.Cecil;
 
 namespace AssemblyInspect.Scanners;
 
-public class ScanContext(AssemblyDefinition assembly, string location = "")
+public class ScanContext(AssemblyDefinition assembly, string location, IEnumerable<Observation> observations)
 {
   public readonly AssemblyDefinition Assembly = assembly;
   public readonly FileInfo Info = new(location);
-  public readonly List<Observation> Observations = [];
+  public readonly IEnumerable<Observation> Observations = observations;
 
   private string? _fullSrcBlob;
   public string FullSourceBlob
