@@ -1,4 +1,3 @@
-using System;
 using AssemblyInspect.Scanners;
 using Godot;
 

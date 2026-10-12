@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using AssemblyInspect.Observations;
 using AssemblyInspect.Scanners;
-using Godot;
 
 public class SourceBlobScanner : IRegexMatcher, IPlaintextMatcher
 {

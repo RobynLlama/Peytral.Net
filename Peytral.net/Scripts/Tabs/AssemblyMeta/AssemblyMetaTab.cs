@@ -1,7 +1,5 @@
 using System;
-using System.IO;
 using System.Linq;
-using AssemblyInspect;
 using AssemblyInspect.Scanners;
 using Godot;
 using Peytral;

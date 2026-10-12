@@ -1,7 +1,6 @@
 using System;
 using AssemblyInspect.Observations;
 using Godot;
-using Mono.Cecil;
 
 [GlobalClass]
 public partial class ResourceViewPrefab : PanelContainer
