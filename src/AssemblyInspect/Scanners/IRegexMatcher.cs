@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AssemblyInspect.Observations;
 
 namespace AssemblyInspect.Scanners;
 
@@ -9,12 +10,12 @@ public interface IRegexMatcher : IAssemblyScanner
 
 public static partial class MatchingExtensions
 {
-  public static void RunRegexMatches(this IRegexMatcher self, ScanContext context, string input, string location = "")
+  public static void RunRegexMatches(this IRegexMatcher self, ICollection<Observation> obs, string input, string location = "")
   {
     foreach (var item in self.RegexRules)
     {
       if (item.Evaluate(input))
-        context.Observations.Add(new(self.ScannerName, item.Severity, item.Summary, item.Description, location));
+        obs.Add(new(self.ScannerName, item.Severity, item.Summary, item.Description, location));
     }
   }
 }

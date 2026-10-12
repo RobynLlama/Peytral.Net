@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using ICSharpCode.Decompiler;
-using ICSharpCode.Decompiler.CSharp;
+using AssemblyInspect.Observations;
 
 namespace AssemblyInspect.Scanners;
 
@@ -18,9 +17,11 @@ public class SourceScanner : IRegexMatcher, IPlaintextMatcher
     PlainTextRules = plainRules;
   }
 
-  public void Scan(ScanContext context)
+  public IReadOnlyCollection<Observation> Scan(ScanContext context)
   {
-    this.RunRegexMatches(context, context.FullSourceBlob);
-    this.RunPlaintextMatching(context, context.FullSourceBlob);
+    List<Observation> obs = [];
+    this.RunRegexMatches(obs, context.FullSourceBlob);
+    this.RunPlaintextMatching(obs, context.FullSourceBlob);
+    return obs;
   }
 }

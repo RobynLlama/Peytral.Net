@@ -104,9 +104,10 @@ public class ResourceScanner : IAssemblyScanner
         )
     ];
 
-  public void Scan(ScanContext context)
+  public IReadOnlyCollection<Observation> Scan(ScanContext context)
   {
     Resource[] resources = [.. context.Assembly.Modules.SelectMany(x => x.Resources)];
+    List<Observation> obs = [];
 
     foreach (var item in resources)
     {
@@ -122,7 +123,7 @@ public class ResourceScanner : IAssemblyScanner
               if (entry.Key?.ToString() is { } name)
               {
                 reader.GetResourceData(name, out var type, out var data);
-                context.Observations.Add(CheckItem(name, data));
+                obs.Add(CheckItem(name, data));
               }
             }
           }
@@ -130,20 +131,22 @@ public class ResourceScanner : IAssemblyScanner
 
         //standard embedded resource
         case EmbeddedResource emb:
-          context.Observations.Add(CheckItem(emb.Name, emb.GetResourceData()));
+          obs.Add(CheckItem(emb.Name, emb.GetResourceData()));
           break;
 
         //link
         case LinkedResource link:
-          context.Observations.Add(new ResourceObservation(ScannerName, SeverityLevel.Message, item.Name, "Linked File", link.File, []));
+          obs.Add(new ResourceObservation(ScannerName, SeverityLevel.Message, item.Name, "Linked File", link.File, []));
           break;
 
         //satellite assembly link
         case AssemblyLinkedResource asm:
-          context.Observations.Add(new ResourceObservation(ScannerName, SeverityLevel.Message, item.Name, "Assembly Link", asm.Assembly.FullName, []));
+          obs.Add(new ResourceObservation(ScannerName, SeverityLevel.Message, item.Name, "Assembly Link", asm.Assembly.FullName, []));
           break;
       }
     }
+
+    return obs;
   }
 
   public ResourceObservation CheckItem(string name, byte[] data)

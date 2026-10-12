@@ -1,7 +1,10 @@
+using System.Collections.Generic;
+using AssemblyInspect.Observations;
+
 namespace AssemblyInspect.Scanners;
 
 public interface IAssemblyScanner
 {
   public string ScannerName { get; }
-  public void Scan(ScanContext context);
+  public IReadOnlyCollection<Observation> Scan(ScanContext context);
 }

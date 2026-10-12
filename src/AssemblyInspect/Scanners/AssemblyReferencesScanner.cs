@@ -12,7 +12,7 @@ public class AssemblyReferencesScanner : IRegexMatcher, IPlaintextMatcher
   public IEnumerable<RegexRule> RegexRules { get; set; } = [];
   public IEnumerable<PlainTextRule> PlainTextRules { get; set; } = [];
 
-  public void Scan(ScanContext context)
+  public IReadOnlyCollection<Observation> Scan(ScanContext context)
   {
     //turns out every member ref is also recorded in a
     //typedef so this is safe and faster
@@ -24,10 +24,14 @@ public class AssemblyReferencesScanner : IRegexMatcher, IPlaintextMatcher
       .Distinct(StringComparer.OrdinalIgnoreCase)
       .ToHashSet();
 
+    List<Observation> obs = [];
+
     foreach (var item in data)
     {
-      this.RunRegexMatches(context, item);
-      this.RunPlaintextMatching(context, item);
+      this.RunRegexMatches(obs, item);
+      this.RunPlaintextMatching(obs, item);
     }
+
+    return obs;
   }
 }

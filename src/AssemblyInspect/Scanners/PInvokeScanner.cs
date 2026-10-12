@@ -14,7 +14,7 @@ public class PInvokeScanner : IRegexMatcher, IPlaintextMatcher
   public IEnumerable<RegexRule> RegexRules { get; set; } = [];
   public IEnumerable<PlainTextRule> PlainTextRules { get; set; } = [];
 
-  public void Scan(ScanContext context)
+  public IReadOnlyCollection<Observation> Scan(ScanContext context)
   {
     bool genericWarning = false;
     var data = context.Assembly.Modules
@@ -22,18 +22,22 @@ public class PInvokeScanner : IRegexMatcher, IPlaintextMatcher
       .SelectMany(type => type.GetMethods())
       .Where(method => (method.Attributes & MethodAttributes.PInvokeImpl) != 0);
 
+    List<Observation> obs = [];
+
     foreach (var item in data)
     {
       if (!genericWarning)
       {
         genericWarning = true;
-        context.Observations.Add(new(ScannerName, SeverityLevel.Warning, "Module loads native libraries", "The given module loads native libraries. There are some legitimate reasons for this but any native library use should be scrutinized.", "Assembly Metadata"));
+        obs.Add(new(ScannerName, SeverityLevel.Warning, "Module loads native libraries", "The given module loads native libraries. There are some legitimate reasons for this but any native library use should be scrutinized.", "Assembly Metadata"));
       }
 
       string key = $"{item.PInvokeInfo.Module.Name}::{item.PInvokeInfo.EntryPoint}";
 
-      this.RunRegexMatches(context, key);
-      this.RunPlaintextMatching(context, key);
+      this.RunRegexMatches(obs, key);
+      this.RunPlaintextMatching(obs, key);
     }
+
+    return obs;
   }
 }

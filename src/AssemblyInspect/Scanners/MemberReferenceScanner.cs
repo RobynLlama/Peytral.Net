@@ -13,16 +13,20 @@ public class MemberReferenceScanner : IRegexMatcher, IPlaintextMatcher
   public IEnumerable<RegexRule> RegexRules { get; set; } = [];
   public IEnumerable<PlainTextRule> PlainTextRules { get; set; } = [];
 
-  public void Scan(ScanContext context)
+  public IReadOnlyCollection<Observation> Scan(ScanContext context)
   {
     var data = context.Assembly.Modules
       .SelectMany(module => module.GetMemberReferences());
 
+    List<Observation> obs = [];
+
     foreach (var item in data)
     {
       var name = item.ShortSignature();
-      this.RunRegexMatches(context, name);
-      this.RunPlaintextMatching(context, name);
+      this.RunRegexMatches(obs, name);
+      this.RunPlaintextMatching(obs, name);
     }
+
+    return obs;
   }
 }
