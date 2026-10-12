@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://da0yt3ttuljon" path="res://Scripts/Tabs/ScanResults/ScanResultsTab.tscn" id="8_s7fxr"]
 [ext_resource type="PackedScene" uid="uid://gsyf4s8pr4dd" path="res://Scripts/Tabs/ResourceView/ResourceViewTab.tscn" id="9_cw5qt"]
 [ext_resource type="PackedScene" uid="uid://bu5ioy27taofa" path="res://Scripts/Tabs/SourceView/SourceViewTab.tscn" id="10_ygs31"]
+[ext_resource type="Texture2D" uid="uid://dsyfarv0l5vvr" path="res://LevelIcons/Message.png" id="11_ggub0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03owx"]
 bg_color = Color(0.23921569, 0.21568628, 0.27450982, 1)
@@ -19,7 +20,10 @@ font_size = 32
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
-[node name="Main" type="PanelContainer" unique_id=774995434 node_paths=PackedStringArray("Selector")]
+[sub_resource type="LabelSettings" id="LabelSettings_pw20b"]
+font_size = 48
+
+[node name="Main" type="PanelContainer" unique_id=774995434 node_paths=PackedStringArray("Selector", "WorkingPanel")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -28,6 +32,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_03owx")
 script = ExtResource("1_5dj6k")
 Selector = NodePath("FileDialog")
+WorkingPanel = NodePath("WorkingPanel")
 
 [node name="Layout" type="VBoxContainer" parent="." unique_id=556872354]
 custom_minimum_size = Vector2(32, 32)
@@ -120,6 +125,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Resource View" parent="Layout/MainSpace/AssemblyDisplay" unique_id=1939364646 instance=ExtResource("9_cw5qt")]
+visible = false
 layout_mode = 2
 
 [node name="Source View" parent="Layout/MainSpace/AssemblyDisplay" unique_id=1483884746 instance=ExtResource("10_ygs31")]
@@ -142,6 +148,32 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 10
 text = "Ready"
+vertical_alignment = 1
+
+[node name="WorkingPanel" type="PanelContainer" parent="." unique_id=1237040074]
+visible = false
+layout_mode = 2
+
+[node name="Layout" type="CenterContainer" parent="WorkingPanel" unique_id=1445322630]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WorkingPanel/Layout" unique_id=510226861]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WorkingPanel/Layout/VBoxContainer" unique_id=1531533498]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="WorkingPanel/Layout/VBoxContainer/HBoxContainer" unique_id=1943081706]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("11_ggub0")
+expand_mode = 1
+
+[node name="WorkingLabel" type="Label" parent="WorkingPanel/Layout/VBoxContainer/HBoxContainer" unique_id=1903743881]
+layout_mode = 2
+text = "Working! Please Wait"
+label_settings = SubResource("LabelSettings_pw20b")
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="FileDialog" type="FileDialog" parent="." unique_id=1874533269]
