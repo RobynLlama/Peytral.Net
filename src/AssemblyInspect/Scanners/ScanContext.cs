@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using AssemblyInspect.Observations;
 using AssemblyInspect.VirtualTree;
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.CSharp;
@@ -9,11 +7,10 @@ using Mono.Cecil;
 
 namespace AssemblyInspect.Scanners;
 
-public class ScanContext(AssemblyDefinition assembly, string location, IEnumerable<Observation> observations)
+public class ScanContext(string location)
 {
-  public readonly AssemblyDefinition Assembly = assembly;
+  public readonly AssemblyDefinition Assembly = AssemblyDefinition.ReadAssembly(location);
   public readonly FileInfo Info = new(location);
-  public readonly IEnumerable<Observation> Observations = observations;
 
   private string? _fullSrcBlob;
   public string FullSourceBlob
