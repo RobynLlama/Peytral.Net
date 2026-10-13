@@ -13,8 +13,11 @@ if (args.Length == 0)
 string assemblyPathRaw = args[0];
 string assemblyPath = Path.Combine(Environment.CurrentDirectory, assemblyPathRaw);
 
-AssemblyInspector inspector = new(assemblyPath, [
-  /*new SourceScanner()
+var ctx = new ScanContext(assemblyPath);
+var opt = new ScanOptions();
+
+IAssemblyScanner[] scanners = [
+  new SourceScanner()
   {
     RegexRules = [
       new(@"using.*;", "Example Regex Rule", "Using statement detected", AssemblyInspect.Observations.SeverityLevel.Message)
@@ -22,7 +25,7 @@ AssemblyInspector inspector = new(assemblyPath, [
     PlainTextRules = [
       new(@"System.", "Example Plaintext Rule", "System.* detected", AssemblyInspect.Observations.SeverityLevel.Message)
     ],
-  },*/
+  },
   new MemberReferenceScanner()
   {
     PlainTextRules = DemoLists.MemberRefPlainTextRules,
@@ -36,11 +39,11 @@ AssemblyInspector inspector = new(assemblyPath, [
     PlainTextRules = DemoLists.AssemblyReferencePlainTextRules,
   },
   new ResourceScanner(),
-]);
+];
 
-var ctx = await inspector.ScanAssemblyAsync();
+var results = await AssemblyInspector.ScanAssemblyAsync(ctx, scanners, opt);
 
-foreach (var item in ctx.Observations)
+foreach (var item in results.Observations)
   Console.WriteLine(item);
 
 Console.WriteLine("\nProject files: ");
