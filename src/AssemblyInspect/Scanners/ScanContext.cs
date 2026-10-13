@@ -7,64 +7,51 @@ using Mono.Cecil;
 
 namespace AssemblyInspect.Scanners;
 
-public class ScanContext(string location)
+public class ScanContext
 {
-  public readonly AssemblyDefinition Assembly = AssemblyDefinition.ReadAssembly(location);
-  public readonly FileInfo Info = new(location);
+  public readonly AssemblyDefinition Assembly;
+  public readonly FileInfo Info;
 
-  private string? _fullSrcBlob;
-  public string FullSourceBlob
+  private readonly Lazy<string> _fullSrcBlob;
+  private readonly Lazy<VTree> _virtualProject;
+  private readonly Lazy<DocumentLineMap> _lineMap;
+  public string FullSourceBlob => _fullSrcBlob.Value;
+  public VTree VirtualProject => _virtualProject.Value;
+  public DocumentLineMap DocumentMap => _lineMap.Value;
+
+  public ScanContext(string location)
   {
-    get
-    {
-      if (_fullSrcBlob is not null)
-        return _fullSrcBlob;
+    Assembly = AssemblyDefinition.ReadAssembly(location);
+    Info = new(location);
+    _fullSrcBlob = new(DecompileFullProject);
+    _virtualProject = new(DecompileProjectTree);
+    _lineMap = new(ConstructLineMap);
+  }
 
-      var settings = new DecompilerSettings(LanguageVersion.Latest)
+  private string DecompileFullProject()
+  {
+    var decompiler = new CSharpDecompiler(Info.FullName,
+      new DecompilerSettings(LanguageVersion.Latest)
       {
         ThrowOnAssemblyResolveErrors = false,
         ShowXmlDocumentation = true
-      };
+      });
 
-      var decompiler = new CSharpDecompiler(Info.FullName, settings);
-      string blob = string.Empty;
-
-      try
-      {
-        blob = decompiler.DecompileWholeModuleAsString();
-      }
-      catch (Exception)
-      {
-        //do something about it?
-      }
-      return _fullSrcBlob = blob;
-    }
-  }
-
-  private VTree? _virtualProject;
-
-  public VTree VirtualProject
-  {
-    get
+    try
     {
-      if (_virtualProject is not null)
-        return _virtualProject;
-
-      var decompiler = TreeProjectWriter.CreateFromPath(Info.FullName);
-      return _virtualProject = decompiler.DecompileProject();
+      return decompiler.DecompileWholeModuleAsString();
     }
-  }
-
-  private DocumentLineMap? _lineMap;
-
-  public DocumentLineMap DocumentMap
-  {
-    get
+    catch (Exception ex)
     {
-      if (_lineMap is not null)
-        return _lineMap;
-
-      return _lineMap = new(FullSourceBlob);
+      return $"""
+      /*
+      Decompilation failed:
+      {ex.Message}
+      */
+      """;
     }
   }
+
+  private VTree DecompileProjectTree() => TreeProjectWriter.CreateFromPath(Info.FullName).DecompileProject();
+  private DocumentLineMap ConstructLineMap() => new(FullSourceBlob);
 }
