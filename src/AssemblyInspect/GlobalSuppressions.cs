@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "Readability", Scope = "member", Target = "~M:AssemblyInspect.AssemblyInspector.ScanAssemblyAsync(System.Threading.CancellationToken)~System.Threading.Tasks.Task{AssemblyInspect.Scanners.ScanContext}")]
+[assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "Readability", Scope = "member", Target = "~M:AssemblyInspect.AssemblyInspector.ScanAssemblyAsync(AssemblyInspect.Scanners.ScanContext,System.Collections.Generic.IEnumerable{AssemblyInspect.Scanners.IAssemblyScanner},AssemblyInspect.ScanOptions,System.Threading.CancellationToken)~System.Threading.Tasks.Task{AssemblyInspect.Scanners.ScanResult}")]

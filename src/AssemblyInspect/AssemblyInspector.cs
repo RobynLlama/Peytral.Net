@@ -4,32 +4,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using AssemblyInspect.Observations;
 using AssemblyInspect.Scanners;
-using Mono.Cecil;
 
 namespace AssemblyInspect;
 
-public class AssemblyInspector
+public static class AssemblyInspector
 {
-  protected string _assemblyPath;
-  public AssemblyDefinition AssemblyDef { get; }
-  public List<IAssemblyScanner> Scanners = [];
-
-  public AssemblyInspector(string path, IEnumerable<IAssemblyScanner>? scanners = null)
+  public static async Task<ScanResult> ScanAssemblyAsync(ScanContext ctx, IEnumerable<IAssemblyScanner> scanners, ScanOptions opt, CancellationToken cancellationToken = default)
   {
-    if (scanners is not null)
-      Scanners = [.. scanners];
-
-    _assemblyPath = path;
-    AssemblyDef = AssemblyDefinition.ReadAssembly(_assemblyPath);
-  }
-
-  public async Task<ScanContext> ScanAssemblyAsync(CancellationToken cancellationToken = default)
-  {
-    List<Observation> obs = [];
-    ScanContext ctx = new(AssemblyDef, _assemblyPath, obs);
-
     //Create tasks
-    Task<IReadOnlyCollection<Observation>>[] tasks = Scanners
+    Task<IReadOnlyCollection<Observation>>[] tasks = scanners
       .Select(scanner => Task.Run(() =>
         {
           cancellationToken.ThrowIfCancellationRequested();
@@ -39,23 +22,21 @@ public class AssemblyInspector
         }, cancellationToken)).ToArray();
     //Ignore the range selector hint above for readability
 
-    //Wait
-    IReadOnlyCollection<Observation>[] batchResults = await Task.WhenAll(tasks);
+    //results
+    IReadOnlyList<Observation> observations = [.. (await Task.WhenAll(tasks)).SelectMany(obs => obs)];
 
-    foreach (var group in batchResults)
-      obs.AddRange(group);
+    ScanResult results = new(ctx, observations, opt);
 
-    return ctx;
+    return results;
   }
 
-  public ScanContext ScanAssembly()
+  public static ScanResult ScanAssembly(ScanContext ctx, IEnumerable<IAssemblyScanner> scanners, ScanOptions opt)
   {
     List<Observation> obs = [];
-    ScanContext ctx = new(AssemblyDef, _assemblyPath, obs);
 
-    foreach (var scanner in Scanners)
+    foreach (var scanner in scanners)
       obs.AddRange(scanner.Scan(ctx));
 
-    return ctx;
+    return new(ctx, obs, opt);
   }
 }
