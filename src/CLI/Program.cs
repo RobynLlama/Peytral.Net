@@ -43,6 +43,12 @@ IAssemblyScanner[] scanners = [
 
 var results = await AssemblyInspector.ScanAssemblyAsync(ctx, scanners, opt);
 
+Console.WriteLine($"""
+Scanned {results.Context.Assembly.Name.Name} # {ctx.AssemblyHash}
+  Found {results.Observations.Count} observations
+
+""");
+
 foreach (var item in results.Observations)
   Console.WriteLine(item);
 
