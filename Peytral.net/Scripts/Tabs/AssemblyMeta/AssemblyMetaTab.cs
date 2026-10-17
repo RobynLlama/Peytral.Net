@@ -22,8 +22,11 @@ public partial class AssemblyMetaTab : MarginContainer
     MetaLabel.Text = PlaceholderText;
   }
 
-  private void ScannedDocument(ScanContext context)
+  private void ScannedDocument(ScanResult result)
   {
+    //lazy update
+    var context = result.Context;
+
     var culture = string.IsNullOrEmpty(context.Assembly.Name.Culture)
       ? "Neutral"
       : context.Assembly.Name.Culture;

@@ -19,9 +19,9 @@ public partial class ResourceViewTab : MarginContainer
     ResetTab();
   }
 
-  private void NewScan(ScanContext context)
+  private void NewScan(ScanResult result)
   {
-    var items = context.Observations.OfType<ResourceObservation>();
+    var items = result.Observations.OfType<ResourceObservation>();
     ResourcesLabel.Text = $"Total Resources: {items.Count()}";
 
     foreach (var item in items)

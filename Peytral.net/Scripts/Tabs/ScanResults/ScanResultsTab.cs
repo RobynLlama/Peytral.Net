@@ -13,9 +13,9 @@ public partial class ScanResultsTab : MarginContainer
     DocumentManager.OnDocumentScanned += ScannedDocument;
   }
 
-  private void ScannedDocument(ScanContext context)
+  private void ScannedDocument(ScanResult results)
   {
-    foreach (var item in context.Observations)
+    foreach (var item in results.Observations)
       ObsContainer.DisplayObservation(item);
   }
 

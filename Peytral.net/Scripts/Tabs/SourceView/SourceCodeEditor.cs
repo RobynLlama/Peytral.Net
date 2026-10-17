@@ -123,11 +123,13 @@ public partial class SourceCodeEditor : CodeEdit
     }
   }
 
-  private void DocumentScanned(ScanContext context)
+  private void DocumentScanned(ScanResult results)
   {
     //known issue: this doesn't handle multiple issues on a single line at all
-    Text = context.FullSourceBlob;
-    LastInHighlights = [.. context.Observations.OfType<ObservationWithLineInfo>()];
+    Text = results.Context.FullSourceBlob;
+
+    LastInHighlights = [.. results.Observations
+      .OfType<ObservationWithLineInfo>()];
 
     foreach (var item in LastInHighlights)
     {
