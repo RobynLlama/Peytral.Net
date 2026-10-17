@@ -15,65 +15,71 @@ public partial class DocumentManager : Node
   public ScannerData[] Scanners;
 
   public static DocumentManager Instance { get; private set; }
-  private static AssemblyInspector OpenDocument;
-  private static ScanContext LastScanResult;
-  public static event Action<AssemblyInspector> OnDocumentLoaded;
-  public static event Action<ScanContext> OnDocumentScanned;
+  private static ScanResult LastScanResult;
+  private static readonly ScanOptions Options = new()
+  {
+    CacheDirectory = Path.Combine(OS.GetUserDataDir(), "assembly-cache")
+  };
+  public static event Action<ScanResult> OnDocumentScanned;
   public static event Action OnDocumentClosed;
-  public static event Action<DirectoryInfo, ScanContext> OnDocumentSaved;
+  public static event Action<DirectoryInfo, ScanResult> OnDocumentSaved;
 
   public override void _Ready()
   {
     Instance = this;
+    GD.Print($"Cache Dir: {Options.CacheDirectory}");
   }
 
   public static async Task OpenNewDocument(string path)
   {
 
     CloseDocument();
-
-    try
-    {
-      OpenDocument = new(path);
-    }
-    catch (Exception)
-    {
-      //todo scream here
-      return;
-    }
-
-    OnDocumentLoaded?.Invoke(OpenDocument);
     ScanContext ctx;
 
+    //This will be needed later after I add proper validation
+    //to context constructors
     try
     {
-      OpenDocument.Scanners = [.. Instance.Scanners.Select(x => x.BuildScanner())];
-      ctx = await OpenDocument.ScanAssemblyAsync();
-      OnDocumentScanned?.Invoke(ctx);
-      LastScanResult = ctx;
+      ctx = new(path);
     }
-    catch (Exception)
+    catch (Exception ex)
     {
-      //todo scream here
+      //Todo: user-facing error handling
+      GD.PrintErr(ex);
       return;
     }
+
+    try
+    {
+      //Get scanners
+      var scanners = Instance.Scanners
+        .Select(x => x.BuildScanner());
+
+      //Todo: allow cancellation here
+      //Todo: maybe a scan options resource?
+      LastScanResult = await AssemblyInspector.ScanAssemblyAsync(ctx, scanners, Options);
+    }
+    catch (Exception ex)
+    {
+      //Todo: user-facing error handling
+      GD.PrintErr(ex);
+      return;
+    }
+
+    OnDocumentScanned?.Invoke(LastScanResult);
   }
 
   public static void CloseDocument()
   {
-    if (OpenDocument is null)
+    if (LastScanResult is null)
       return;
 
-    OpenDocument = null;
     LastScanResult = null;
     OnDocumentClosed?.Invoke();
   }
 
   public static void SaveDocument(DirectoryInfo location)
   {
-    if (OpenDocument is null)
-      return;
-
     if (LastScanResult is null)
       return;
 
