@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://ewjq1stpqp5"]
+
+[ext_resource type="Script" uid="uid://bxja07od8ymgh" path="res://Scripts/Main/ScanEditorSection.cs" id="1_xpt2h"]
+
+[node name="ScanEditor" type="VBoxContainer" unique_id=270031207 node_paths=PackedStringArray("BtnSwitch")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xpt2h")
+BtnSwitch = NodePath("EditorQuickbarPanel/QuickbarLayout/BtnSwitch")
+metadata/_custom_type_script = "uid://bxja07od8ymgh"
+
+[node name="EditorQuickbarPanel" type="MarginContainer" parent="." unique_id=1333291247]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 8
+
+[node name="QuickbarLayout" type="HBoxContainer" parent="EditorQuickbarPanel" unique_id=1804883865]
+layout_mode = 2
+
+[node name="BtnSwitch" type="Button" parent="EditorQuickbarPanel/QuickbarLayout" unique_id=1908449138]
+custom_minimum_size = Vector2(128, 48)
+layout_mode = 2
+text = "← Inspector"
+expand_icon = true
+
+[node name="TopSep2" type="HSeparator" parent="." unique_id=1906395964]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1683281402]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MainSpace" type="HBoxContainer" parent="PanelContainer" unique_id=2099893191]
+layout_mode = 2
+size_flags_vertical = 3
