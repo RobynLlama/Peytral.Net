@@ -1,16 +1,10 @@
 [gd_scene format=3 uid="uid://dh3142w6jm11o"]
 
-[ext_resource type="Script" uid="uid://dldo3mpee32qx" path="res://Scripts/Main/Main.cs" id="1_5dj6k"]
+[ext_resource type="Script" uid="uid://d08043cuvbblf" path="res://Scripts/Main/Main.cs" id="1_jeqyd"]
 [ext_resource type="Texture2D" uid="uid://dj7xsk33q74ua" path="res://icon.png" id="2_t0ywk"]
-[ext_resource type="Script" uid="uid://d017xxjrscj36" path="res://Scripts/Main/QuickbarPanel.cs" id="3_i4n7x"]
-[ext_resource type="Texture2D" uid="uid://c1uqq425a2se7" path="res://Quickbar/New.png" id="4_5ddhp"]
-[ext_resource type="Texture2D" uid="uid://livm6aligcix" path="res://Quickbar/Save.png" id="5_fe4io"]
-[ext_resource type="Texture2D" uid="uid://1qnnuq2yx43i" path="res://Quickbar/Close.png" id="6_flh1d"]
-[ext_resource type="PackedScene" uid="uid://in37prkorqly" path="res://Scripts/Tabs/AssemblyMeta/AssemblyMetaTab.tscn" id="7_wi1qe"]
-[ext_resource type="PackedScene" uid="uid://da0yt3ttuljon" path="res://Scripts/Tabs/ScanResults/ScanResultsTab.tscn" id="8_s7fxr"]
-[ext_resource type="PackedScene" uid="uid://gsyf4s8pr4dd" path="res://Scripts/Tabs/ResourceView/ResourceViewTab.tscn" id="9_cw5qt"]
-[ext_resource type="PackedScene" uid="uid://bu5ioy27taofa" path="res://Scripts/Tabs/SourceView/SourceViewTab.tscn" id="10_ygs31"]
-[ext_resource type="Texture2D" uid="uid://dsyfarv0l5vvr" path="res://LevelIcons/Message.png" id="11_ggub0"]
+[ext_resource type="PackedScene" uid="uid://bkf18ioqm76qa" path="res://Scripts/Main/InspectorSection.tscn" id="3_jeqyd"]
+[ext_resource type="PackedScene" uid="uid://crk7u18wcc2nx" path="res://Scripts/Main/WorkingPanel.tscn" id="4_jeqyd"]
+[ext_resource type="PackedScene" uid="uid://ewjq1stpqp5" path="res://Scripts/Main/ScanEditorSection.tscn" id="4_k58v0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03owx"]
 bg_color = Color(0.23921569, 0.21568628, 0.27450982, 1)
@@ -20,35 +14,31 @@ font_size = 32
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_pw20b"]
-font_size = 48
-
-[node name="Main" type="PanelContainer" unique_id=774995434 node_paths=PackedStringArray("Selector", "WorkingPanel")]
+[node name="Main" type="PanelContainer" unique_id=774995434 node_paths=PackedStringArray("Inspector", "ScanEditor")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_03owx")
-script = ExtResource("1_5dj6k")
-Selector = NodePath("FileDialog")
-WorkingPanel = NodePath("WorkingPanel")
+script = ExtResource("1_jeqyd")
+Inspector = NodePath("OuterLayout/InspectorSection")
+ScanEditor = NodePath("OuterLayout/ScanEditor")
 
-[node name="Layout" type="VBoxContainer" parent="." unique_id=556872354]
-custom_minimum_size = Vector2(32, 32)
+[node name="OuterLayout" type="VBoxContainer" parent="." unique_id=1777848635]
 layout_mode = 2
 
-[node name="TitleBox" type="MarginContainer" parent="Layout" unique_id=681835809]
+[node name="TitleBox" type="MarginContainer" parent="OuterLayout" unique_id=681835809]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Layout/TitleBox" unique_id=368564319]
+[node name="HBoxContainer" type="HBoxContainer" parent="OuterLayout/TitleBox" unique_id=368564319]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="Layout/TitleBox/HBoxContainer" unique_id=1919655464]
+[node name="TitleLabel" type="Label" parent="OuterLayout/TitleBox/HBoxContainer" unique_id=1919655464]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Peytral.Net Assembly Inspector"
@@ -56,135 +46,41 @@ label_settings = SubResource("LabelSettings_glv2v")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CenteredIcon" type="CenterContainer" parent="Layout/TitleBox/HBoxContainer" unique_id=2007371026]
+[node name="CenteredIcon" type="CenterContainer" parent="OuterLayout/TitleBox/HBoxContainer" unique_id=2007371026]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 
-[node name="IconTexture" type="TextureRect" parent="Layout/TitleBox/HBoxContainer/CenteredIcon" unique_id=651549162]
+[node name="IconTexture" type="TextureRect" parent="OuterLayout/TitleBox/HBoxContainer/CenteredIcon" unique_id=651549162]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("2_t0ywk")
 expand_mode = 1
 
-[node name="TopSep" type="HSeparator" parent="Layout" unique_id=1008174510]
+[node name="TopSep" type="HSeparator" parent="OuterLayout" unique_id=1008174510]
 layout_mode = 2
 
-[node name="QuickbarPanel" type="MarginContainer" parent="Layout" unique_id=165251123 node_paths=PackedStringArray("BtnNew", "BtnSave", "BtnClose", "OpenFileSelector")]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 8
-script = ExtResource("3_i4n7x")
-BtnNew = NodePath("QuickbarLayout/BtnNew")
-BtnSave = NodePath("QuickbarLayout/BtnSave")
-BtnClose = NodePath("QuickbarLayout/BtnClose")
-OpenFileSelector = NodePath("../../FileDialog")
-
-[node name="QuickbarLayout" type="HBoxContainer" parent="Layout/QuickbarPanel" unique_id=881613037]
+[node name="InspectorSection" parent="OuterLayout" unique_id=944980250 instance=ExtResource("3_jeqyd")]
 layout_mode = 2
 
-[node name="BtnNew" type="Button" parent="Layout/QuickbarPanel/QuickbarLayout" unique_id=109242442]
-custom_minimum_size = Vector2(96, 48)
-layout_mode = 2
-text = "Open"
-icon = ExtResource("4_5ddhp")
-expand_icon = true
-
-[node name="BtnSave" type="Button" parent="Layout/QuickbarPanel/QuickbarLayout" unique_id=58204791]
-custom_minimum_size = Vector2(96, 48)
-layout_mode = 2
-text = "Save"
-icon = ExtResource("5_fe4io")
-expand_icon = true
-
-[node name="BtnClose" type="Button" parent="Layout/QuickbarPanel/QuickbarLayout" unique_id=1957160517]
-custom_minimum_size = Vector2(96, 48)
-layout_mode = 2
-text = "Close
-"
-icon = ExtResource("6_flh1d")
-expand_icon = true
-
-[node name="TopSep2" type="HSeparator" parent="Layout" unique_id=1785035904]
-layout_mode = 2
-
-[node name="MainSpace" type="HBoxContainer" parent="Layout" unique_id=1357746282]
+[node name="ScanEditor" parent="OuterLayout" unique_id=3973680 instance=ExtResource("4_k58v0")]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="AssemblyDisplay" type="TabContainer" parent="Layout/MainSpace" unique_id=194780704]
-layout_mode = 2
-size_flags_horizontal = 3
-current_tab = 0
-
-[node name="Assembly Meta" parent="Layout/MainSpace/AssemblyDisplay" unique_id=1159870531 instance=ExtResource("7_wi1qe")]
-layout_mode = 2
-
-[node name="Scan Results" parent="Layout/MainSpace/AssemblyDisplay" unique_id=335934787 instance=ExtResource("8_s7fxr")]
-layout_mode = 2
-
-[node name="Resource View" parent="Layout/MainSpace/AssemblyDisplay" unique_id=1939364646 instance=ExtResource("9_cw5qt")]
-visible = false
-layout_mode = 2
-
-[node name="Source View" parent="Layout/MainSpace/AssemblyDisplay" unique_id=1483884746 instance=ExtResource("10_ygs31")]
-layout_mode = 2
-
-[node name="BotSep" type="HSeparator" parent="Layout" unique_id=1146123679]
-visible = false
-layout_mode = 2
-
-[node name="StatusContainer" type="MarginContainer" parent="Layout" unique_id=882682368]
+[node name="StatusContainer" type="MarginContainer" parent="OuterLayout" unique_id=1023926981]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="StatusBar" type="HBoxContainer" parent="Layout/StatusContainer" unique_id=1311092164]
+[node name="StatusBar" type="HBoxContainer" parent="OuterLayout/StatusContainer" unique_id=1712261627]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 
-[node name="StatusLabel" type="Label" parent="Layout/StatusContainer/StatusBar" unique_id=1804152717]
+[node name="StatusLabel" type="Label" parent="OuterLayout/StatusContainer/StatusBar" unique_id=2056432710]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 10
 text = "Ready"
 vertical_alignment = 1
 
-[node name="WorkingPanel" type="PanelContainer" parent="." unique_id=1237040074]
-visible = false
+[node name="WorkingPanel" parent="." unique_id=1360715364 instance=ExtResource("4_jeqyd")]
 layout_mode = 2
-
-[node name="Layout" type="CenterContainer" parent="WorkingPanel" unique_id=1445322630]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="WorkingPanel/Layout" unique_id=510226861]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="WorkingPanel/Layout/VBoxContainer" unique_id=1531533498]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="WorkingPanel/Layout/VBoxContainer/HBoxContainer" unique_id=1943081706]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-texture = ExtResource("11_ggub0")
-expand_mode = 1
-
-[node name="WorkingLabel" type="Label" parent="WorkingPanel/Layout/VBoxContainer/HBoxContainer" unique_id=1903743881]
-layout_mode = 2
-text = "Working! Please Wait"
-label_settings = SubResource("LabelSettings_pw20b")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="FileDialog" type="FileDialog" parent="." unique_id=1874533269]
-oversampling_override = 1.0
-mode = 2
-title = "Open a File"
-initial_position = 2
-size = Vector2i(1200, 720)
-dialog_hide_on_ok = true
-file_mode = 0
-display_mode = 1
-access = 2
-filters = PackedStringArray("*.dll", "*.exe")
-use_native_dialog = true

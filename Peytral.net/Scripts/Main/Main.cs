@@ -1,25 +1,27 @@
+using System;
 using Godot;
-using Peytral;
 
 public partial class Main : PanelContainer
 {
   [Export]
-  public FileDialog Selector;
-
+  public InspectorSection Inspector;
   [Export]
-  public Control WorkingPanel;
-
-  // Called when the node enters the scene tree for the first time.
+  public ScanEditorSection ScanEditor;
   public override void _Ready()
   {
-    Selector.FileSelected += FileSelected;
+    Inspector.BtnSwitch.Pressed += SwitchToEditor;
+    ScanEditor.BtnSwitch.Pressed += SwitchToInspector;
   }
 
-  private async void FileSelected(string path)
+  private void SwitchToInspector()
   {
-    WorkingPanel.Visible = true;
-    await DocumentManager.OpenNewDocument(path);
-    WorkingPanel.Visible = false;
+    ScanEditor.Visible = false;
+    Inspector.Visible = true;
   }
 
+  private void SwitchToEditor()
+  {
+    ScanEditor.Visible = true;
+    Inspector.Visible = false;
+  }
 }
