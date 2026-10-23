@@ -20,8 +20,13 @@ public class SourceScanner : IRegexMatcher, IPlaintextMatcher
   public IReadOnlyCollection<Observation> Scan(ScanContext context)
   {
     List<Observation> obs = [];
-    this.RunRegexMatches(obs, context.FullSourceBlob);
-    this.RunPlaintextMatching(obs, context.FullSourceBlob);
+
+    foreach (var item in context.VirtualProject)
+    {
+      this.RunRegexMatches(obs, item.Value, item.Key);
+      this.RunPlaintextMatching(obs, item.Value, item.Key);
+    }
+
     return obs;
   }
 }
