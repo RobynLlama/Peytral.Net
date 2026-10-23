@@ -1,4 +1,5 @@
 using System.IO;
+using System.Text;
 
 namespace AssemblyInspect.VirtualTree;
 
@@ -17,7 +18,11 @@ public class TreeMemoryStream(string path, VTree tree) : MemoryStream
 
   public override void Close()
   {
-    Tree[Path] = ToArray();
+    if (TryGetBuffer(out var buffer))
+      Tree[Path] = Encoding.UTF8.GetString(buffer);
+    else
+      Tree[Path] = string.Empty;
+
     base.Close();
   }
 }

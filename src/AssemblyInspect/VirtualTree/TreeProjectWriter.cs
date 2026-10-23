@@ -66,10 +66,6 @@ public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSet
     return;
   }
 
-  protected override IEnumerable<ProjectItemInfo> WriteResourceToFile(string fileName, string resourceName, Stream entryStream)
-  {
-    //The original does this and I dunno what it does to not return the manifest so I copied it
-    //Other than this, skip resources and let them be handled by querying Module.Resources elsewhere
-    return [new ProjectItemInfo("EmbeddedResource", fileName).With("LogicalName", resourceName)];
-  }
+  protected override IEnumerable<ProjectItemInfo> WriteResourceFilesInProject(MetadataFile module)
+   => [];
 }

@@ -4,7 +4,7 @@ using System.IO;
 
 namespace AssemblyInspect.VirtualTree;
 
-public class VTree : ConcurrentDictionary<string, byte[]>, IEnumerable<KeyValuePair<string, byte[]>>
+public class VTree : ConcurrentDictionary<string, string>, IEnumerable<KeyValuePair<string, string>>
 {
   public StreamWriter GetWriterByPath(string path) =>
     new(new TreeMemoryStream(path, this));
