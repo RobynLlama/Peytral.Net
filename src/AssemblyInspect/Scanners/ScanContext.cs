@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
 using AssemblyInspect.VirtualTree;
@@ -35,6 +36,18 @@ public class ScanContext
 
   private string DecompileFullProject()
   {
+    if (AssemblyInspector.CacheEnabled)
+    {
+      //check if the item is in the cache here
+      FileInfo info = new(Path.Combine(AssemblyInspector.CacheDirectory, $"{AssemblyHash}.blob.gz"));
+      if (info.Exists)
+      {
+        GZipStream gZip = new(info.OpenRead(), CompressionMode.Decompress);
+        using StreamReader reader = new(gZip);
+        return reader.ReadToEnd();
+      }
+    }
+
     var decompiler = new CSharpDecompiler(Info.FullName,
       new DecompilerSettings(LanguageVersion.Latest)
       {
@@ -42,22 +55,58 @@ public class ScanContext
         ShowXmlDocumentation = true
       });
 
+    string data;
+
     try
     {
-      return decompiler.DecompileWholeModuleAsString();
+      data = decompiler.DecompileWholeModuleAsString();
     }
     catch (Exception ex)
     {
-      return $"""
+      data = $"""
       /*
       Decompilation failed:
       {ex.Message}
       */
       """;
     }
+
+    if (AssemblyInspector.CacheEnabled)
+    {
+      //cache the data
+      StreamWriter blob = new(Path.Combine(AssemblyInspector.CacheDirectory, $"{AssemblyHash}.blob.gz"));
+      using GZipStream gZip = new(blob.BaseStream, CompressionLevel.Optimal);
+      gZip.Write(Encoding.UTF8.GetBytes(data));
+    }
+
+    return data;
   }
 
-  private VTree DecompileProjectTree() => TreeProjectWriter.CreateFromPath(Info.FullName).DecompileProject();
+  private VTree DecompileProjectTree()
+  {
+
+    if (AssemblyInspector.CacheEnabled)
+    {
+      FileInfo info = new(Path.Combine(AssemblyInspector.CacheDirectory, $"{AssemblyHash}.tree.gz"));
+      if (info.Exists)
+      {
+        using GZipStream gZip = new(info.OpenRead(), CompressionMode.Decompress);
+        if (VTree.TryDeserialize(gZip, out var data))
+          return data;
+      }
+    }
+
+    var tree = TreeProjectWriter.CreateFromPath(Info.FullName).DecompileProject();
+
+    if (AssemblyInspector.CacheEnabled)
+    {
+      StreamWriter treeFile = new(Path.Combine(AssemblyInspector.CacheDirectory, $"{AssemblyHash}.tree.gz"));
+      using GZipStream gZip = new(treeFile.BaseStream, CompressionLevel.Optimal);
+      tree.Serialize(gZip);
+    }
+
+    return tree;
+  }
   private DocumentLineMap ConstructLineMap() => new(FullSourceBlob);
   private string HashAssembly()
   {
