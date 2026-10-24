@@ -14,7 +14,10 @@ string assemblyPathRaw = args[0];
 string assemblyPath = Path.Combine(Environment.CurrentDirectory, assemblyPathRaw);
 
 var ctx = new ScanContext(assemblyPath);
-var opt = new ScanOptions();
+var cacheDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Peytral.CLI", ".cache");
+
+Console.WriteLine($"Cache directory: {cacheDir}");
+AssemblyInspector.SetCacheOptions(true, cacheDir);
 
 IAssemblyScanner[] scanners = [
   new SourceScanner()
@@ -41,7 +44,7 @@ IAssemblyScanner[] scanners = [
   new ResourceScanner(),
 ];
 
-var results = await AssemblyInspector.ScanAssemblyAsync(ctx, scanners, opt);
+var results = await AssemblyInspector.ScanAssemblyAsync(ctx, scanners);
 
 Console.WriteLine($"""
 Scanned {results.Context.Assembly.Name.Name} # {ctx.AssemblyHash}
