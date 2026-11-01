@@ -16,10 +16,7 @@ public partial class DocumentManager : Node
 
   public static DocumentManager Instance { get; private set; }
   private static ScanResult LastScanResult;
-  private static readonly ScanOptions Options = new()
-  {
-    CacheDirectory = Path.Combine(OS.GetUserDataDir(), "assembly-cache")
-  };
+  private static readonly string CacheDirectory = Path.Combine(OS.GetUserDataDir(), "assembly-cache");
   public static event Action<ScanResult> OnDocumentScanned;
   public static event Action OnDocumentClosed;
   public static event Action<DirectoryInfo, ScanResult> OnDocumentSaved;
@@ -27,7 +24,8 @@ public partial class DocumentManager : Node
   public override void _Ready()
   {
     Instance = this;
-    GD.Print($"Cache Dir: {Options.CacheDirectory}");
+    GD.Print($"Cache Dir: {CacheDirectory}");
+    AssemblyInspector.SetCacheOptions(true, CacheDirectory);
   }
 
   public static async Task OpenNewDocument(string path)
@@ -56,8 +54,7 @@ public partial class DocumentManager : Node
         .Select(x => x.BuildScanner());
 
       //Todo: allow cancellation here
-      //Todo: maybe a scan options resource?
-      LastScanResult = await AssemblyInspector.ScanAssemblyAsync(ctx, scanners, Options);
+      LastScanResult = await AssemblyInspector.ScanAssemblyAsync(ctx, scanners);
     }
     catch (Exception ex)
     {
