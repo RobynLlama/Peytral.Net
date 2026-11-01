@@ -57,4 +57,4 @@ foreach (var item in results.Observations)
 
 Console.WriteLine("\nProject files: ");
 foreach (var (name, data) in ctx.VirtualProject)
-  Console.WriteLine($"  {name.TrimStart("vRoot/")}, size: {data.Length}");
+  Console.WriteLine($"  {name}, size: {data.Length}");
