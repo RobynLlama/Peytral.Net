@@ -12,7 +12,7 @@ namespace AssemblyInspect.VirtualTree;
 public class TreeMemoryStream(string path, VTree tree) : MemoryStream
 {
 
-  private readonly string Path = path;
+  private readonly string Path = path.TrimStart('/');
   private readonly VTree Tree = tree;
 
 

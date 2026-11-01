@@ -43,7 +43,6 @@ public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSet
 
   /// <summary>
   /// Hands off the stored target to the decompiler
-  /// at the default root "vRoot"
   /// </summary>
   /// <returns>The VTree representing the project in memory</returns>
   /// <remarks>Does not check if the VTree is clean before decompilation.
@@ -52,7 +51,7 @@ public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSet
   /// their decompiler</remarks>
   public VTree DecompileProject()
   {
-    DecompileProject(Target, "vRoot");
+    DecompileProject(Target, "/");
     return FileTree;
   }
 
