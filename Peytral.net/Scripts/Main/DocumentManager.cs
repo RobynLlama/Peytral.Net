@@ -15,7 +15,7 @@ public partial class DocumentManager : Node
   public ScannerData[] Scanners;
 
   public static DocumentManager Instance { get; private set; }
-  private static ScanResult LastScanResult;
+  public static ScanResult LastScanResult { get; private set; }
   private static readonly string CacheDirectory = Path.Combine(OS.GetUserDataDir(), "assembly-cache");
   public static event Action<ScanResult> OnDocumentScanned;
   public static event Action OnDocumentClosed;
