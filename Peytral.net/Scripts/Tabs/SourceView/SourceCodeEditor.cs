@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using System.Linq;
 using AssemblyInspect.Observations;
 using AssemblyInspect.Scanners;
@@ -123,39 +125,31 @@ public partial class SourceCodeEditor : CodeEdit
     }
   }
 
+  public void ChangeToDocument(string documentPath)
+  {
+    var result = DocumentManager.LastScanResult;
+    if (result is null)
+      return;
+
+    if (!result.Context.VirtualProject.TryGetValue(documentPath, out var data))
+      return;
+
+    Text = data;
+    //Todo: highlighting here
+  }
+
   private void DocumentScanned(ScanResult results)
   {
-    //known issue: this doesn't handle multiple issues on a single line at all
-    Text = results.Context.FullSourceBlob;
-
-    LastInHighlights = [.. results.Observations
-      .OfType<ObservationWithLineInfo>()];
-
-    foreach (var item in LastInHighlights)
+    foreach (var item in results.Context.VirtualProject)
     {
-
-      Texture2D gutterTex;
-      Color bColor;
-
-      switch (item.Severity)
+      if (Path.GetExtension(item.Key).Equals(".csproj", StringComparison.OrdinalIgnoreCase))
       {
-        case SeverityLevel.Critical:
-        case SeverityLevel.Alert:
-          gutterTex = AlertTex;
-          bColor = AlertColor;
-          break;
-        case SeverityLevel.Warning:
-          gutterTex = WarnTex;
-          bColor = WarnColor;
-          break;
-        default:
-          gutterTex = MessageTex;
-          bColor = MessageColor;
-          break;
+        ChangeToDocument(item.Key);
+        GD.Print($"Changing to {item.Key}");
+        return;
       }
-
-      SetLineBackgroundColor(item.LineNumber, bColor);
-      SetLineGutterIcon(item.LineNumber, GutterID, gutterTex);
     }
+
+    GD.Print("Found no csproj");
   }
 }

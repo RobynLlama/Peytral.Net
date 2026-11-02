@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using Peytral;
 
@@ -5,9 +6,21 @@ public partial class SourceViewTab : MarginContainer
 {
   [Export]
   public SourceCodeEditor SourceEditor;
+  [Export]
+  public VBoxContainer TreePanel;
+  [Export]
+  public Button HideButton;
+
   public override void _Ready()
   {
     DocumentManager.OnDocumentClosed += ResetTab;
+    HideButton.Pressed += ToggleDocumentTree;
+  }
+
+  private void ToggleDocumentTree()
+  {
+    TreePanel.Visible = !TreePanel.Visible;
+    HideButton.Text = TreePanel.Visible ? "←" : "→";
   }
 
   private void ResetTab()
