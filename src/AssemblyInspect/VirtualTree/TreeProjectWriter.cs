@@ -36,6 +36,7 @@ public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSet
     var settings = new DecompilerSettings(ICSharpCode.Decompiler.CSharp.LanguageVersion.Latest)
     {
       ThrowOnAssemblyResolveErrors = false,
+      UseNestedDirectoriesForNamespaces = true,
     };
 
     return new(resolver, settings, peFile);
