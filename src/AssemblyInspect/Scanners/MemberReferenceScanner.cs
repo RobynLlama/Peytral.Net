@@ -2,20 +2,19 @@ using System.Collections.Generic;
 using System.Linq;
 using AssemblyInspect.Extensions;
 using AssemblyInspect.Observations;
-using AssemblyInspect.Scanners.Interfaces;
 using AssemblyInspect.Scanners.Models;
 using AssemblyInspect.Scanners.Rules;
 
 namespace AssemblyInspect.Scanners;
 
-public class MemberReferenceScanner : IRegexMatcher, IPlaintextMatcher
+public class MemberReferenceScanner : SimpleScannerBase
 {
 
-  public string ScannerName => "Member Reference Scanner";
+  public override string ScannerName => "Member Reference Scanner";
   public IEnumerable<RegexRule> RegexRules { get; set; } = [];
   public IEnumerable<PlainTextRule> PlainTextRules { get; set; } = [];
 
-  public IReadOnlyCollection<Observation> Scan(ScanContext context)
+  public override IReadOnlyCollection<Observation> Scan(ScanContext context)
   {
     var data = context.Assembly.Modules
       .SelectMany(module => module.GetMemberReferences());
@@ -25,8 +24,8 @@ public class MemberReferenceScanner : IRegexMatcher, IPlaintextMatcher
     foreach (var item in data)
     {
       var name = item.ShortSignature();
-      this.RunRegexMatches(obs, name);
-      this.RunPlaintextMatching(obs, name);
+      RunPlainTextMatches(obs, PlainTextRules, name, "Member References");
+      RunRegexMatches(obs, RegexRules, name, "Member References");
     }
 
     return obs;

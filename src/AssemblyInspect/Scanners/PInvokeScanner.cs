@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using AssemblyInspect.Observations;
-using AssemblyInspect.Scanners.Interfaces;
 using AssemblyInspect.Scanners.Models;
 using AssemblyInspect.Scanners.Rules;
 using Mono.Cecil;
@@ -9,14 +8,14 @@ using Mono.Cecil.Rocks;
 
 namespace AssemblyInspect.Scanners;
 
-public class PInvokeScanner : IRegexMatcher, IPlaintextMatcher
+public class PInvokeScanner : SimpleScannerBase
 {
 
-  public string ScannerName => "P/Invoke Scanner";
+  public override string ScannerName => "P/Invoke Scanner";
   public IEnumerable<RegexRule> RegexRules { get; set; } = [];
   public IEnumerable<PlainTextRule> PlainTextRules { get; set; } = [];
 
-  public IReadOnlyCollection<Observation> Scan(ScanContext context)
+  public override IReadOnlyCollection<Observation> Scan(ScanContext context)
   {
     bool genericWarning = false;
     var data = context.Assembly.Modules
@@ -36,8 +35,8 @@ public class PInvokeScanner : IRegexMatcher, IPlaintextMatcher
 
       string key = $"{item.PInvokeInfo.Module.Name}::{item.PInvokeInfo.EntryPoint}";
 
-      this.RunRegexMatches(obs, key);
-      this.RunPlaintextMatching(obs, key);
+      RunPlainTextMatches(obs, PlainTextRules, key, "P/Invoke References");
+      RunRegexMatches(obs, RegexRules, key, "P/Invoke References");
     }
 
     return obs;
