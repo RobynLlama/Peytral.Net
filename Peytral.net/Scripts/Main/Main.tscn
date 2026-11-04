@@ -10,7 +10,7 @@
 bg_color = Color(0.23921569, 0.21568628, 0.27450982, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_glv2v"]
-font_size = 32
+font_size = 18
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
@@ -28,34 +28,6 @@ ScanEditor = NodePath("OuterLayout/ScanEditor")
 [node name="OuterLayout" type="VBoxContainer" parent="." unique_id=1777848635]
 layout_mode = 2
 
-[node name="TitleBox" type="MarginContainer" parent="OuterLayout" unique_id=681835809]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-
-[node name="HBoxContainer" type="HBoxContainer" parent="OuterLayout/TitleBox" unique_id=368564319]
-custom_minimum_size = Vector2(0, 64)
-layout_mode = 2
-
-[node name="TitleLabel" type="Label" parent="OuterLayout/TitleBox/HBoxContainer" unique_id=1919655464]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Peytral.Net Assembly Inspector"
-label_settings = SubResource("LabelSettings_glv2v")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="CenteredIcon" type="CenterContainer" parent="OuterLayout/TitleBox/HBoxContainer" unique_id=2007371026]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-
-[node name="IconTexture" type="TextureRect" parent="OuterLayout/TitleBox/HBoxContainer/CenteredIcon" unique_id=651549162]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-texture = ExtResource("2_t0ywk")
-expand_mode = 1
-
 [node name="TopSep" type="HSeparator" parent="OuterLayout" unique_id=1008174510]
 layout_mode = 2
 
@@ -70,10 +42,31 @@ size_flags_vertical = 3
 [node name="StatusContainer" type="MarginContainer" parent="OuterLayout" unique_id=1023926981]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
 
 [node name="StatusBar" type="HBoxContainer" parent="OuterLayout/StatusContainer" unique_id=1712261627]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
+
+[node name="CenteredIcon" type="CenterContainer" parent="OuterLayout/StatusContainer/StatusBar" unique_id=2007371026]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="IconTexture" type="TextureRect" parent="OuterLayout/StatusContainer/StatusBar/CenteredIcon" unique_id=651549162]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("2_t0ywk")
+expand_mode = 1
+
+[node name="TitleLabel" type="Label" parent="OuterLayout/StatusContainer/StatusBar" unique_id=1919655464]
+layout_mode = 2
+text = "Peytral.Net Assembly Inspector"
+label_settings = SubResource("LabelSettings_glv2v")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="StatusLabel" type="Label" parent="OuterLayout/StatusContainer/StatusBar" unique_id=2056432710]
 visible = false
