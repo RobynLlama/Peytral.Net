@@ -35,7 +35,7 @@ public class SourceTreeScanner : IAssemblyScanner
           obs.Add(new SourceFileObservation(ScannerName, rule.Severity, rule.Summary, rule.Description, item.Key, map.GetLineIndex(match)));
 
       foreach (var rule in RegexRules)
-        foreach (var match in rule.CompiledRegex.EnumerateMatches(context.FullSourceBlob))
+        foreach (var match in rule.CompiledRegex.EnumerateMatches(item.Value))
           obs.Add(new SourceFileObservation(ScannerName, rule.Severity, rule.Summary, rule.Description, item.Key, map.GetLineIndex(match.Index)));
     }
 
