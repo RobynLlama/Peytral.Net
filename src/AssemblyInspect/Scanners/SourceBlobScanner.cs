@@ -6,15 +6,15 @@ using AssemblyInspect.Scanners.Rules;
 
 namespace AssemblyInspect.Scanners;
 
-public class SourceScanner : IRegexMatcher, IPlaintextMatcher
+public class SourceBlobScanner : IRegexMatcher, IPlaintextMatcher
 {
   public string ScannerName => "Assembly Sourcecode Scanner";
   public IEnumerable<RegexRule> RegexRules { get; set; } = [];
   public IEnumerable<PlainTextRule> PlainTextRules { get; set; } = [];
 
-  public SourceScanner() { }
+  public SourceBlobScanner() { }
 
-  public SourceScanner(IEnumerable<RegexRule> rules, IEnumerable<PlainTextRule> plainRules)
+  public SourceBlobScanner(IEnumerable<RegexRule> rules, IEnumerable<PlainTextRule> plainRules)
   {
     RegexRules = rules;
     PlainTextRules = plainRules;
