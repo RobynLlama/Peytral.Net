@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using AssemblyInspect.Observations;
 using AssemblyInspect.Scanners.Models;
 
-namespace AssemblyInspect.Scanners.Interfaces;
+namespace AssemblyInspect.Scanners;
 
 public interface IAssemblyScanner
 {
