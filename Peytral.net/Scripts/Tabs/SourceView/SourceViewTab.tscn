@@ -168,6 +168,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/icon_max_width = 16
 columns = 2
+column_titles_visible = true
 hide_root = true
 script = ExtResource("2_25ydg")
 FolderIcon = ExtResource("3_23qd4")

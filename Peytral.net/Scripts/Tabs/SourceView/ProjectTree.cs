@@ -24,6 +24,8 @@ public partial class ProjectTree : Tree
 
     SetColumnExpandRatio(0, 4);
     SetColumnExpandRatio(1, 1);
+    SetColumnTitle(0, "Name");
+    SetColumnTitle(1, "Size");
   }
 
   public void BuildFileTreeForProject(ScanResult result)
