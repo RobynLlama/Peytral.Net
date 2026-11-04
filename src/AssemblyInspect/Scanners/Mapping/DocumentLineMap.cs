@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AssemblyInspect;
+namespace AssemblyInspect.Scanners.Mapping;
 
 public class DocumentLineMap(string text)
 {

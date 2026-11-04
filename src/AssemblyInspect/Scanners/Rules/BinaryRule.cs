@@ -1,7 +1,7 @@
 using System;
 using AssemblyInspect.Observations;
 
-namespace AssemblyInspect.Scanners;
+namespace AssemblyInspect.Scanners.Rules;
 
 public class BinaryRule(byte[] pattern, string summary, string analysis, SeverityLevel severity)
 {

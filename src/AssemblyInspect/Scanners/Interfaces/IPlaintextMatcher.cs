@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using AssemblyInspect.Observations;
+using AssemblyInspect.Scanners.Rules;
 
-namespace AssemblyInspect.Scanners;
+namespace AssemblyInspect.Scanners.Interfaces;
 
 public interface IPlaintextMatcher : IAssemblyScanner
 {

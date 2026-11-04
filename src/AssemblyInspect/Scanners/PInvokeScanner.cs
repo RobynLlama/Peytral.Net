@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using AssemblyInspect.Observations;
+using AssemblyInspect.Scanners.Interfaces;
+using AssemblyInspect.Scanners.Models;
+using AssemblyInspect.Scanners.Rules;
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
 

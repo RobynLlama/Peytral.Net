@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AssemblyInspect.Observations;
+using AssemblyInspect.Scanners.Interfaces;
+using AssemblyInspect.Scanners.Models;
+using AssemblyInspect.Scanners.Rules;
 
 namespace AssemblyInspect.Scanners;
 

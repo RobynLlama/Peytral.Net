@@ -2,7 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 using AssemblyInspect.Observations;
 
-namespace AssemblyInspect.Scanners;
+namespace AssemblyInspect.Scanners.Rules;
 
 public class RegexRule(string pattern, string summary, string description, SeverityLevel severity)
 {

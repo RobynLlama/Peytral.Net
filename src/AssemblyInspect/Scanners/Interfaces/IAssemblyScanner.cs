@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using AssemblyInspect.Observations;
+using AssemblyInspect.Scanners.Models;
 
-namespace AssemblyInspect.Scanners;
+namespace AssemblyInspect.Scanners.Interfaces;
 
 public interface IAssemblyScanner
 {
