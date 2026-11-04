@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Resources;
 using AssemblyInspect.Observations;
-using AssemblyInspect.Scanners.Interfaces;
 using AssemblyInspect.Scanners.Models;
 using AssemblyInspect.Scanners.Rules;
 using Mono.Cecil;
