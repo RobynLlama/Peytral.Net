@@ -1,5 +1,5 @@
 using AssemblyInspect.Observations;
-using AssemblyInspect.Scanners;
+using AssemblyInspect.Scanners.Rules;
 using Godot;
 
 [GlobalClass]

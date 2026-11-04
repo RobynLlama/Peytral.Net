@@ -1,5 +1,6 @@
 using System.Linq;
 using AssemblyInspect.Scanners;
+using AssemblyInspect.Scanners.Rules;
 using Godot;
 
 [GlobalClass]
