@@ -25,6 +25,7 @@ public class ScanContext
   public VTree VirtualProject => _virtualProject.Value;
   public DocumentLineMap FullSourceLineMap => _lineMap.Value;
   public string AssemblyHash => _assemblyHash.Value;
+  public FullProjectLineMap ProjectLineMap => _projectLineMap.Value;
 
   public ScanContext(string location)
   {
