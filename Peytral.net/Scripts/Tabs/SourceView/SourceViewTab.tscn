@@ -6,11 +6,11 @@
 [ext_resource type="Script" uid="uid://cfb3twgtioyv6" path="res://Scripts/Tabs/SourceView/SourceViewTab.cs" id="2_rkn3k"]
 [ext_resource type="Texture2D" uid="uid://cummaeuunq6r8" path="res://Scripts/Tabs/SourceView/Folder.png" id="3_23qd4"]
 [ext_resource type="Texture2D" uid="uid://bnltb53m5oe1w" path="res://LevelIcons/Alert.png" id="3_bkqho"]
-[ext_resource type="Texture2D" uid="uid://c1uqq425a2se7" path="res://Quickbar/New.png" id="4_ae6kc"]
+[ext_resource type="Texture2D" uid="uid://c1uqq425a2se7" path="res://Scripts/Tabs/SourceView/File.png" id="4_ae6kc"]
 [ext_resource type="Texture2D" uid="uid://duxm44sbgjwu1" path="res://LevelIcons/Warning.png" id="4_oobav"]
 [ext_resource type="Texture2D" uid="uid://dsyfarv0l5vvr" path="res://LevelIcons/Message.png" id="5_s0v4l"]
 [ext_resource type="Script" uid="uid://cc78k78tfdah8" path="res://Scripts/Tabs/SourceView/ExamineViews.cs" id="6_ynbbn"]
-[ext_resource type="PackedScene" uid="uid://b87vckx4a4yud" path="res://Scripts/Main/ObservationPrefab.tscn" id="7_c84si"]
+[ext_resource type="PackedScene" uid="uid://b87vckx4a4yud" path="res://Scripts/Tabs/ScanResults/ObservationPrefab.tscn" id="7_c84si"]
 [ext_resource type="Script" uid="uid://mhewxl5u1e07" path="res://Scripts/Tabs/SourceView/CodeSearchBar.cs" id="8_rgm7k"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5vvyt"]
