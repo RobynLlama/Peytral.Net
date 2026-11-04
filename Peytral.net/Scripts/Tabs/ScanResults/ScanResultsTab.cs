@@ -1,4 +1,4 @@
-using AssemblyInspect.Scanners;
+using AssemblyInspect.Scanners.Models;
 using Godot;
 using Peytral;
 

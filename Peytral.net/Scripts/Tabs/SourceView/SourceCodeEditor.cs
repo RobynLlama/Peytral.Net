@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using AssemblyInspect.Observations;
-using AssemblyInspect.Scanners;
+using AssemblyInspect.Scanners.Models;
 using Godot;
 using Peytral;
 
@@ -29,7 +29,7 @@ public partial class SourceCodeEditor : CodeEdit
   public Color MessageColor;
 
   public int GutterID { get; private set; }
-  private ObservationWithLineInfo[] LastInHighlights = [];
+  private SourceFileObservation[] LastInHighlights = [];
 
   public static SourceCodeEditor Instance;
 
@@ -135,6 +135,7 @@ public partial class SourceCodeEditor : CodeEdit
       return;
 
     Text = data;
+
     //Todo: highlighting here
   }
 

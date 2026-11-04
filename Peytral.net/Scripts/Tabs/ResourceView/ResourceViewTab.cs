@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using AssemblyInspect.Observations;
-using AssemblyInspect.Scanners;
+using AssemblyInspect.Scanners.Models;
 using Godot;
 using Peytral;
 
