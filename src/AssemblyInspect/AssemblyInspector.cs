@@ -5,7 +5,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AssemblyInspect.Observations;
-using AssemblyInspect.Scanners;
+using AssemblyInspect.Scanners.Interfaces;
+using AssemblyInspect.Scanners.Models;
 
 namespace AssemblyInspect;
 
