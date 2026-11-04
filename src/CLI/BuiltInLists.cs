@@ -1,5 +1,6 @@
 using AssemblyInspect.Observations;
 using AssemblyInspect.Scanners;
+using AssemblyInspect.Scanners.Rules;
 
 public static class DemoLists
 {

@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using AssemblyInspect;
 using AssemblyInspect.Scanners;
+using AssemblyInspect.Scanners.Interfaces;
+using AssemblyInspect.Scanners.Models;
 
 if (args.Length == 0)
 {
@@ -20,7 +22,7 @@ Console.WriteLine($"Cache directory: {cacheDir}");
 AssemblyInspector.SetCacheOptions(true, cacheDir);
 
 IAssemblyScanner[] scanners = [
-  new SourceScanner()
+  new SourceBlobScanner()
   {
     RegexRules = [
       new(@"using.*;", "Example Regex Rule", "Using statement detected", AssemblyInspect.Observations.SeverityLevel.Message)
