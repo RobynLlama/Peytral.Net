@@ -4,11 +4,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Folder Name="/Peytral.net/">
-    <Project Path="Peytral.net/Peytral.Net.csproj">
-      <BuildType Project="Debug" />
-    </Project>
-  </Folder>
   <Folder Name="/src/">
     <Project Path="src/AssemblyInspect/AssemblyInspect.csproj" />
     <Project Path="src/ObfuscatedLoadDemo/ObfuscatedLoadDemo.csproj" />
