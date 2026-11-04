@@ -7,4 +7,4 @@ public record SourceFileObservation(
   string Description,
   string FilePath,
   int LineNumber
-) : Observation(ScannerName, Severity, Summary, Description, $"{FilePath} L{LineNumber}");
+) : Observation(ScannerName, Severity, Summary, Description, $"{FilePath} L{LineNumber + 1}");
