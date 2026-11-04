@@ -29,6 +29,6 @@ public partial class ResourceViewPrefab : PanelContainer
     CurrentResource = resource;
     LblName.Text = $"Name: {resource.ResourceName}";
     LblSize.Text = $"Size: {resource.ResourceData.Length:N0} bytes";
-    LblAnalysis.Text = $"Analysis: [{resource.Severity}] {resource.Analysis}";
+    LblAnalysis.Text = $"Analysis: [{resource.Severity}] {resource.Description}";
   }
 }
