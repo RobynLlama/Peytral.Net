@@ -48,5 +48,3 @@ public class SourceBlobScanner : IRegexMatcher, IPlaintextMatcher
     return obs;
   }
 }
-
-public record ObservationWithLineInfo(string ScannerName, SeverityLevel Severity, string Summary, string Description, string Location, int LineNumber) : Observation(ScannerName, Severity, Summary, Description, Location) { }
