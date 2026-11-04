@@ -1,11 +1,17 @@
 [gd_scene format=3 uid="uid://da0yt3ttuljon"]
 
 [ext_resource type="Script" uid="uid://b4yjre132nlnf" path="res://Scripts/Tabs/ScanResults/ScanResultsTab.cs" id="1_rssam"]
-[ext_resource type="PackedScene" uid="uid://b87vckx4a4yud" path="res://Scripts/Main/ObservationPrefab.tscn" id="2_weaon"]
+[ext_resource type="PackedScene" uid="uid://b87vckx4a4yud" path="res://Scripts/Tabs/ScanResults/ObservationPrefab.tscn" id="2_weaon"]
 [ext_resource type="Script" uid="uid://cve6ceo1guin6" path="res://Scripts/Tabs/ScanResults/ObservationList.cs" id="3_q0jd0"]
 
 [node name="Scan Results" type="MarginContainer" unique_id=335934787 node_paths=PackedStringArray("ObsContainer")]
-visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
