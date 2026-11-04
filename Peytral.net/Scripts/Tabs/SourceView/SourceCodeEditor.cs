@@ -36,6 +36,7 @@ public partial class SourceCodeEditor : CodeEdit
   public override void _Ready()
   {
     DocumentManager.OnDocumentScanned += DocumentScanned;
+    DocumentManager.OnDocumentClosed += Clear;
     SetSearchFlags((uint)SearchFlags.WholeWords);
     SearchBar.TextChanged += OnSearchTextChanged;
     SearchBar.TextSubmitted += FindNextString;
@@ -52,6 +53,24 @@ public partial class SourceCodeEditor : CodeEdit
     GutterClicked += GutterHandler;
 
     Instance = this;
+  }
+
+  public new void Clear()
+  {
+    base.Clear();
+
+    //View lines, icons and text
+    SetLineBackgroundColor(0, new(0, 0, 0, 0));
+    SetLineGutterIcon(0, GutterID, null);
+
+    //search
+    SetSearchText(string.Empty);
+    SetSearchFlags(0u);
+    SearchBar.Text = string.Empty;
+    SearchBar.Visible = false;
+
+    //Finally set the text back to placeholder text for highlighting
+    Text = PlaceholderText;
   }
 
   private void GutterHandler(long line, long gutter)
@@ -128,6 +147,7 @@ public partial class SourceCodeEditor : CodeEdit
   public void ChangeToDocument(string documentPath)
   {
     var result = DocumentManager.LastScanResult;
+    Clear();
     if (result is null)
       return;
 
@@ -136,7 +156,33 @@ public partial class SourceCodeEditor : CodeEdit
 
     Text = data;
 
-    //Todo: highlighting here
+    //find all source file items relevant to the current file
+    SourceFileObservation[] test = [.. result.Observations.OfType<SourceFileObservation>()];
+    LastInHighlights = [.. result.Observations.OfType<SourceFileObservation>().Where(x => x.FilePath.Equals(documentPath))];
+    GD.Print($"Highlights selected: {LastInHighlights.Length} / {test.Length}");
+
+    foreach (var item in LastInHighlights)
+    {
+      GD.Print($"Item Location: {item.Location}");
+      var line = item.LineNumber;
+
+      switch (item.Severity)
+      {
+        case SeverityLevel.Alert:
+        case SeverityLevel.Critical:
+          SetLineGutterIcon(line, GutterID, AlertTex);
+          SetLineBackgroundColor(line, AlertColor);
+          break;
+        case SeverityLevel.Warning:
+          SetLineGutterIcon(line, GutterID, WarnTex);
+          SetLineBackgroundColor(line, WarnColor);
+          break;
+        default:
+          SetLineGutterIcon(line, GutterID, MessageTex);
+          SetLineBackgroundColor(line, MessageColor);
+          break;
+      }
+    }
   }
 
   private void DocumentScanned(ScanResult results)
