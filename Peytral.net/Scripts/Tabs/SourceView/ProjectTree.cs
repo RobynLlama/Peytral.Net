@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using AssemblyInspect.Scanners.Models;
 using Godot;
@@ -14,7 +16,15 @@ public partial class ProjectTree : Tree
   [Export]
   public SourceCodeEditor Editor;
 
-  public const string NO_EDIT = "NO_EDIT";
+  public const string FOLD_ACTION = "FOLDER_ACTION";
+  public const string NO_EDIT = "NO_EDITOR_ACTION";
+
+  private readonly static HashSet<string> WhiteListExt = new(StringComparer.OrdinalIgnoreCase)
+  {
+    ".cs",
+    ".csproj",
+    ".txt"
+  };
 
   public override void _Ready()
   {
@@ -65,7 +75,7 @@ public partial class ProjectTree : Tree
           dirItem.SetText(0, folderName);
           dirItem.SetIcon(0, FolderIcon);
           //this is magic to stop this item from opening in the editor
-          dirItem.SetMetadata(0, NO_EDIT);
+          dirItem.SetMetadata(0, FOLD_ACTION);
           //fold it by default
           dirItem.Collapsed = true;
 
@@ -85,24 +95,36 @@ public partial class ProjectTree : Tree
       fileItem.SetTextAlignment(1, HorizontalAlignment.Right);
 
       //Files that can be opened store their path in the meta
-      fileItem.SetMetadata(0, fullPath);
+      if (WhiteListExt.Contains(Path.GetExtension(fullPath)))
+        fileItem.SetMetadata(0, fullPath);
+      else
+        //Only .cs files are whitelisted for the editor right now
+        //This is to handle embedded resources that may show up here
+        fileItem.SetMetadata(0, NO_EDIT);
     }
   }
 
   private void SelectedItem()
   {
     var selected = GetSelected();
-    var path = selected.GetMetadata(0);
-    GD.Print($"Selected: {path}");
 
     //I bet AsString() and ToString() call the same method tbh
     //but its good to be in the habit for when I expand this later
-    if (path.AsString().Equals(NO_EDIT))
+    var path = selected.GetMetadata(0).AsString();
+    GD.Print($"Selected: {path}");
+
+    if (path.Equals(FOLD_ACTION))
     {
-      GD.Print("Not opening NO_EDIT item");
+      GD.Print("Performing FOLD_ACTION on item");
+      selected.Collapsed = !selected.Collapsed;
+      return;
+    }
+    else if (path.Equals(NO_EDIT))
+    {
+      GD.Print("Skipping NO_EDIT item");
       return;
     }
 
-    Editor.ChangeToDocument(path.AsString());
+    Editor.ChangeToDocument(path);
   }
 }
