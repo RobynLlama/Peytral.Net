@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://dh3142w6jm11o"]
+
+[ext_resource type="Script" uid="uid://d08043cuvbblf" path="res://AppUI/MainUI.cs" id="1_jeqyd"]
+[ext_resource type="Texture2D" uid="uid://dj7xsk33q74ua" path="res://icon.png" id="2_t0ywk"]
+[ext_resource type="PackedScene" uid="uid://bkf18ioqm76qa" path="res://AppUI/Sections/Inspector/InspectorSection.tscn" id="3_jeqyd"]
+[ext_resource type="PackedScene" uid="uid://crk7u18wcc2nx" path="res://AppUI/WorkingPanel.tscn" id="4_jeqyd"]
+[ext_resource type="PackedScene" uid="uid://ewjq1stpqp5" path="res://AppUI/Sections/ScanEditor/ScanEditorSection.tscn" id="4_k58v0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03owx"]
+bg_color = Color(0.23921569, 0.21568628, 0.27450982, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_glv2v"]
+font_size = 18
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Main" type="PanelContainer" unique_id=774995434 node_paths=PackedStringArray("Inspector", "ScanEditor")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_03owx")
+script = ExtResource("1_jeqyd")
+Inspector = NodePath("OuterLayout/InspectorSection")
+ScanEditor = NodePath("OuterLayout/ScanEditor")
+
+[node name="OuterLayout" type="VBoxContainer" parent="." unique_id=1777848635]
+layout_mode = 2
+
+[node name="TopSep" type="HSeparator" parent="OuterLayout" unique_id=1008174510]
+layout_mode = 2
+
+[node name="InspectorSection" parent="OuterLayout" unique_id=944980250 instance=ExtResource("3_jeqyd")]
+layout_mode = 2
+
+[node name="ScanEditor" parent="OuterLayout" unique_id=3973680 instance=ExtResource("4_k58v0")]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatusContainer" type="MarginContainer" parent="OuterLayout" unique_id=1023926981]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="StatusBar" type="HBoxContainer" parent="OuterLayout/StatusContainer" unique_id=1712261627]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="CenteredIcon" type="CenterContainer" parent="OuterLayout/StatusContainer/StatusBar" unique_id=2007371026]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="IconTexture" type="TextureRect" parent="OuterLayout/StatusContainer/StatusBar/CenteredIcon" unique_id=651549162]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("2_t0ywk")
+expand_mode = 1
+
+[node name="TitleLabel" type="Label" parent="OuterLayout/StatusContainer/StatusBar" unique_id=1919655464]
+layout_mode = 2
+text = "Peytral.Net Assembly Inspector"
+label_settings = SubResource("LabelSettings_glv2v")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="OuterLayout/StatusContainer/StatusBar" unique_id=2056432710]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Ready"
+vertical_alignment = 1
+
+[node name="WorkingPanel" parent="." unique_id=1360715364 instance=ExtResource("4_jeqyd")]
+layout_mode = 2

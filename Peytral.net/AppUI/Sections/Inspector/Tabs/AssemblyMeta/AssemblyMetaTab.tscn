@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://in37prkorqly"]
+
+[ext_resource type="Script" uid="uid://4sxxsnx728nw" path="res://AppUI/Sections/Inspector/Tabs/AssemblyMeta/AssemblyMetaTab.cs" id="1_cy53t"]
+
+[node name="Assembly Meta" type="MarginContainer" unique_id=1159870531 node_paths=PackedStringArray("MetaLabel")]
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("1_cy53t")
+MetaLabel = NodePath("Layout/LabelAssemblyMeta")
+PlaceholderText = "No Assembly Loaded, use the Open button to load an assembly"
+metadata/_tab_index = 0
+
+[node name="Layout" type="VBoxContainer" parent="." unique_id=1622577543]
+layout_mode = 2
+
+[node name="LabelAssemblyMeta" type="Label" parent="Layout" unique_id=1600466153]
+layout_mode = 2
+size_flags_vertical = 3

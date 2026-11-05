@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://b87vckx4a4yud"]
+
+[ext_resource type="StyleBox" uid="uid://c8qixthpw72kn" path="res://Resources/PrefabPanelBox.tres" id="1_05nq0"]
+[ext_resource type="Texture2D" uid="uid://bnltb53m5oe1w" path="res://Textures/Alert.png" id="1_knfhc"]
+[ext_resource type="Script" uid="uid://bbj28dr3it5l8" path="res://AppUI/Sections/Inspector/Tabs/ScanResults/ObservationPrefab.cs" id="1_mjor6"]
+[ext_resource type="Texture2D" uid="uid://duxm44sbgjwu1" path="res://Textures/Warning.png" id="2_mjor6"]
+[ext_resource type="Texture2D" uid="uid://dsyfarv0l5vvr" path="res://Textures/Message.png" id="3_34tl6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_t7uk0"]
+font_size = 22
+
+[sub_resource type="LabelSettings" id="LabelSettings_1nbly"]
+font_size = 18
+
+[node name="ObservationPrefab" type="PanelContainer" unique_id=1428790476 node_paths=PackedStringArray("SummaryLabel", "ContentLabel", "LocationLabel", "AlertIcon", "WarnIcon", "MsgIcon")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_styles/panel = ExtResource("1_05nq0")
+script = ExtResource("1_mjor6")
+SummaryLabel = NodePath("HBoxContainer/MarginContainer/VBoxContainer/Summary")
+ContentLabel = NodePath("HBoxContainer/MarginContainer/VBoxContainer/Content")
+LocationLabel = NodePath("HBoxContainer/MarginContainer/VBoxContainer/Location")
+AlertIcon = NodePath("HBoxContainer/IconHolder/AlertIcon")
+WarnIcon = NodePath("HBoxContainer/IconHolder/WarnIcon")
+MsgIcon = NodePath("HBoxContainer/IconHolder/MessageIcon")
+metadata/_custom_type_script = "uid://bbj28dr3it5l8"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1118858544]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="IconHolder" type="CenterContainer" parent="HBoxContainer" unique_id=836008401]
+layout_mode = 2
+
+[node name="AlertIcon" type="TextureRect" parent="HBoxContainer/IconHolder" unique_id=734737495]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("1_knfhc")
+expand_mode = 1
+
+[node name="WarnIcon" type="TextureRect" parent="HBoxContainer/IconHolder" unique_id=1512612744]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("2_mjor6")
+expand_mode = 1
+
+[node name="MessageIcon" type="TextureRect" parent="HBoxContainer/IconHolder" unique_id=168531711]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("3_34tl6")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer" unique_id=2023043759]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MarginContainer" unique_id=2041292998]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Summary" type="Label" parent="HBoxContainer/MarginContainer/VBoxContainer" unique_id=1583590312]
+layout_mode = 2
+text = "Summary"
+label_settings = SubResource("LabelSettings_t7uk0")
+
+[node name="Content" type="Label" parent="HBoxContainer/MarginContainer/VBoxContainer" unique_id=849977906]
+custom_minimum_size = Vector2(240, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "asdf
+asdf
+asdf
+asdf
+asdf
+asdf"
+label_settings = SubResource("LabelSettings_1nbly")
+autowrap_mode = 3
+
+[node name="Location" type="Label" parent="HBoxContainer/MarginContainer/VBoxContainer" unique_id=891876619]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Location"

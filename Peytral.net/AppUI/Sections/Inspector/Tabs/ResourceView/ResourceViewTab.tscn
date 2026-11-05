@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://gsyf4s8pr4dd"]
+
+[ext_resource type="Script" uid="uid://c353ggng73bh7" path="res://AppUI/Sections/Inspector/Tabs/ResourceView/ResourceViewTab.cs" id="1_yhbbn"]
+[ext_resource type="PackedScene" uid="uid://bbpfrweboh2rr" path="res://AppUI/Sections/Inspector/Tabs/ResourceView/ResourceViewPrefab.tscn" id="2_jggjo"]
+[ext_resource type="Script" uid="uid://cd2fpxad0x3e6" path="res://AppUI/Sections/Inspector/Tabs/ResourceView/ResourceListBox.cs" id="3_a25lw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yw06a"]
+bg_color = Color(0.6, 0.6, 0.6, 0.09411765)
+border_width_top = 8
+border_color = Color(0.5019608, 0.5019608, 0.5019608, 0.5019608)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_a25lw"]
+font_size = 22
+
+[node name="Resource View" type="MarginContainer" unique_id=1939364646 node_paths=PackedStringArray("ResourcesLabel", "ResourceList")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("1_yhbbn")
+ResourcesLabel = NodePath("Layout/Header/PanelSep/Toptions/CountLabel")
+ResourceList = NodePath("Layout/ResourceScrollBox/ResourceListBox")
+metadata/_tab_index = 2
+
+[node name="Layout" type="VBoxContainer" parent="." unique_id=2123384490]
+layout_mode = 2
+
+[node name="Header" type="VBoxContainer" parent="Layout" unique_id=1112721381]
+layout_mode = 2
+
+[node name="PanelSep" type="PanelContainer" parent="Layout/Header" unique_id=777991921]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yw06a")
+
+[node name="Toptions" type="VBoxContainer" parent="Layout/Header/PanelSep" unique_id=1545254594]
+layout_mode = 2
+
+[node name="HeaderLabel" type="Label" parent="Layout/Header/PanelSep/Toptions" unique_id=505704308]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Assembly Resources"
+label_settings = SubResource("LabelSettings_a25lw")
+horizontal_alignment = 1
+
+[node name="CountLabel" type="Label" parent="Layout/Header/PanelSep/Toptions" unique_id=924424377]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="SaveAllButton" type="CheckButton" parent="Layout/Header/PanelSep/Toptions" unique_id=1305471678]
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Save All Resources with Results"
+
+[node name="ResourceScrollBox" type="ScrollContainer" parent="Layout" unique_id=852003002]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ResourceListBox" type="VBoxContainer" parent="Layout/ResourceScrollBox" unique_id=1148735733 node_paths=PackedStringArray("ResourceFileSelector")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("3_a25lw")
+ResourcePrefab = ExtResource("2_jggjo")
+ResourceFileSelector = NodePath("../../../FileDialog")
+metadata/_custom_type_script = "uid://cd2fpxad0x3e6"
+
+[node name="PanelSep" type="PanelContainer" parent="Layout" unique_id=2070082331]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yw06a")
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=1582315101]
+oversampling_override = 1.0
+mode = 2
+initial_position = 2
+size = Vector2i(1200, 720)
+dialog_hide_on_ok = true
+display_mode = 1
+access = 2
+use_native_dialog = true

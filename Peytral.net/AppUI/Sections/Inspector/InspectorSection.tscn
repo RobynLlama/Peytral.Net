@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://bkf18ioqm76qa"]
+
+[ext_resource type="Script" uid="uid://dy2nsqbpo6e8u" path="res://AppUI/Sections/Inspector/InspectorSection.cs" id="1_ekgsh"]
+[ext_resource type="Texture2D" uid="uid://c7wg003864ud" path="res://Textures/NewScan.png" id="2_ekgsh"]
+[ext_resource type="Texture2D" uid="uid://1qnnuq2yx43i" path="res://Textures/Close.png" id="3_gdpf7"]
+[ext_resource type="Texture2D" uid="uid://ds7c0on63p52a" path="res://Textures/SaveReport.png" id="3_x41n8"]
+[ext_resource type="PackedScene" uid="uid://in37prkorqly" path="res://AppUI/Sections/Inspector/Tabs/AssemblyMeta/AssemblyMetaTab.tscn" id="4_x41n8"]
+[ext_resource type="PackedScene" uid="uid://da0yt3ttuljon" path="res://AppUI/Sections/Inspector/Tabs/ScanResults/ScanResultsTab.tscn" id="5_js41s"]
+[ext_resource type="PackedScene" uid="uid://gsyf4s8pr4dd" path="res://AppUI/Sections/Inspector/Tabs/ResourceView/ResourceViewTab.tscn" id="6_g76l4"]
+[ext_resource type="PackedScene" uid="uid://bu5ioy27taofa" path="res://AppUI/Sections/Inspector/Tabs/SourceView/SourceViewTab.tscn" id="7_12ou4"]
+
+[node name="InspectorSection" type="VBoxContainer" unique_id=1511083990 node_paths=PackedStringArray("BtnNew", "BtnSave", "BtnClose", "BtnSwitch", "OpenFileSelector")]
+custom_minimum_size = Vector2(32, 32)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("1_ekgsh")
+BtnNew = NodePath("QuickbarPanel/QuickbarLayout/BtnNew")
+BtnSave = NodePath("QuickbarPanel/QuickbarLayout/BtnSave")
+BtnClose = NodePath("QuickbarPanel/QuickbarLayout/BtnClose")
+BtnSwitch = NodePath("QuickbarPanel/QuickbarLayout/RightButtons/BtnSwitch")
+OpenFileSelector = NodePath("FileDialog")
+metadata/_custom_type_script = "uid://dy2nsqbpo6e8u"
+
+[node name="QuickbarPanel" type="MarginContainer" parent="." unique_id=230247213]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 8
+
+[node name="QuickbarLayout" type="HBoxContainer" parent="QuickbarPanel" unique_id=85684644]
+layout_mode = 2
+
+[node name="BtnNew" type="Button" parent="QuickbarPanel/QuickbarLayout" unique_id=46630727]
+custom_minimum_size = Vector2(96, 48)
+layout_mode = 2
+text = "Scan"
+icon = ExtResource("2_ekgsh")
+expand_icon = true
+
+[node name="BtnSave" type="Button" parent="QuickbarPanel/QuickbarLayout" unique_id=1324140408]
+custom_minimum_size = Vector2(104, 48)
+layout_mode = 2
+text = "Export"
+icon = ExtResource("3_x41n8")
+expand_icon = true
+
+[node name="BtnClose" type="Button" parent="QuickbarPanel/QuickbarLayout" unique_id=2015235953]
+custom_minimum_size = Vector2(96, 48)
+layout_mode = 2
+text = "Close
+"
+icon = ExtResource("3_gdpf7")
+expand_icon = true
+
+[node name="RightButtons" type="VBoxContainer" parent="QuickbarPanel/QuickbarLayout" unique_id=1843335219]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="BtnSwitch" type="Button" parent="QuickbarPanel/QuickbarLayout/RightButtons" unique_id=319709568]
+custom_minimum_size = Vector2(128, 48)
+layout_mode = 2
+text = "Scan Editor →"
+expand_icon = true
+
+[node name="TopSep2" type="HSeparator" parent="." unique_id=1552169401]
+layout_mode = 2
+
+[node name="MainSpace" type="HBoxContainer" parent="." unique_id=451723846]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AssemblyDisplay" type="TabContainer" parent="MainSpace" unique_id=31059238]
+layout_mode = 2
+size_flags_horizontal = 3
+current_tab = 0
+
+[node name="Assembly Meta" parent="MainSpace/AssemblyDisplay" unique_id=1159870531 instance=ExtResource("4_x41n8")]
+layout_mode = 2
+
+[node name="Scan Results" parent="MainSpace/AssemblyDisplay" unique_id=335934787 instance=ExtResource("5_js41s")]
+visible = false
+layout_mode = 2
+
+[node name="Resource View" parent="MainSpace/AssemblyDisplay" unique_id=1939364646 instance=ExtResource("6_g76l4")]
+visible = false
+layout_mode = 2
+
+[node name="Source View" parent="MainSpace/AssemblyDisplay" unique_id=1483884746 instance=ExtResource("7_12ou4")]
+visible = false
+layout_mode = 2
+
+[node name="BotSep" type="HSeparator" parent="." unique_id=1119811043]
+visible = false
+layout_mode = 2
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=1794270645]
+oversampling_override = 1.0
+mode = 2
+title = "Open a File"
+initial_position = 2
+size = Vector2i(1200, 720)
+dialog_hide_on_ok = true
+file_mode = 0
+display_mode = 1
+access = 2
+filters = PackedStringArray("*.dll", "*.exe")
+use_native_dialog = true
