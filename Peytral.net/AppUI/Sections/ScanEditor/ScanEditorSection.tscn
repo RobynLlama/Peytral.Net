@@ -1,15 +1,34 @@
 [gd_scene format=3 uid="uid://ewjq1stpqp5"]
 
 [ext_resource type="Script" uid="uid://bxja07od8ymgh" path="res://AppUI/Sections/ScanEditor/ScanEditorSection.cs" id="1_xpt2h"]
+[ext_resource type="Script" uid="uid://cx6gtuot61vtu" path="res://AppUI/Sections/ScanEditor/ScannerElementList.cs" id="2_wh3nj"]
+[ext_resource type="PackedScene" uid="uid://bkewrytjb3lvt" path="res://AppUI/Sections/ScanEditor/ScanElementPrefab.tscn" id="3_doxfh"]
 
-[node name="ScanEditor" type="VBoxContainer" unique_id=270031207 node_paths=PackedStringArray("BtnSwitch")]
+[sub_resource type="LabelSettings" id="LabelSettings_5cs5r"]
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_wh3nj"]
+font_size = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5cs5r"]
+bg_color = Color(0, 0, 0, 0.1254902)
+border_width_top = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 0.5019608)
+
+[node name="ScanEditor" type="VBoxContainer" unique_id=270031207 node_paths=PackedStringArray("ElementList", "BtnSwitch", "BtnNewPlain", "BtnNewRegex", "BtnSave", "BtnClear")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xpt2h")
+ElementList = NodePath("PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/ScrollContainer/Panel/ScannerElementList")
 BtnSwitch = NodePath("EditorQuickbarPanel/QuickbarLayout/BtnSwitch")
+BtnNewPlain = NodePath("PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/Controls/BtnAddPlain")
+BtnNewRegex = NodePath("PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/Controls/BtnAddRegex")
+BtnSave = NodePath("PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/Controls/BtnSave")
+BtnClear = NodePath("PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/Controls/BtnClear")
 metadata/_custom_type_script = "uid://bxja07od8ymgh"
 
 [node name="EditorQuickbarPanel" type="MarginContainer" parent="." unique_id=1333291247]
@@ -38,3 +57,126 @@ size_flags_vertical = 3
 [node name="MainSpace" type="HBoxContainer" parent="PanelContainer" unique_id=2099893191]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="ScannerMargins" type="MarginContainer" parent="PanelContainer/MainSpace" unique_id=1870632412]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="ScannerWorkspace" type="VBoxContainer" parent="PanelContainer/MainSpace/ScannerMargins" unique_id=2016920302]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace" unique_id=1429545241]
+layout_mode = 2
+text = "Scanner Editor"
+label_settings = SubResource("LabelSettings_5cs5r")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace" unique_id=50431566]
+layout_mode = 2
+
+[node name="NameContainer" type="HBoxContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace" unique_id=6632327]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/NameContainer" unique_id=657985821]
+layout_mode = 2
+text = "Scanner Name:"
+
+[node name="NameInput" type="LineEdit" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/NameContainer" unique_id=880966488]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "This will be shown in the scanner list, be descriptive!"
+context_menu_enabled = false
+emoji_menu_enabled = false
+clear_button_enabled = true
+
+[node name="TypeContainer" type="HBoxContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace" unique_id=82781148]
+layout_mode = 2
+
+[node name="TypeLabel" type="Label" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/TypeContainer" unique_id=398882983]
+layout_mode = 2
+text = "Scanner Type:  "
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/TypeContainer" unique_id=2115081692]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="LblElements" type="Label" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace" unique_id=798244391]
+layout_mode = 2
+text = "Scanner Items"
+label_settings = SubResource("LabelSettings_wh3nj")
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace" unique_id=1306797538]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel" type="PanelContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/ScrollContainer" unique_id=1240245943]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_5cs5r")
+
+[node name="ScannerElementList" type="VBoxContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/ScrollContainer/Panel" unique_id=1930381211]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_wh3nj")
+ElementPrefab = ExtResource("3_doxfh")
+metadata/_custom_type_script = "uid://cx6gtuot61vtu"
+
+[node name="Controls" type="HBoxContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace" unique_id=1897043961]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="BtnAddPlain" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/Controls" unique_id=2012704414]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "Add PlainText Rule"
+
+[node name="BtnAddRegex" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/Controls" unique_id=1524741781]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "Add Regex Rule"
+
+[node name="BtnSave" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/Controls" unique_id=1199977438]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "Save Scanner"
+
+[node name="BtnClear" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/Controls" unique_id=1205608614]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "Clear Scanner"
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/MainSpace" unique_id=1315354170]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ScanMargins" type="MarginContainer" parent="PanelContainer/MainSpace" unique_id=1363198216]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="ScanWorkspace" type="VBoxContainer" parent="PanelContainer/MainSpace/ScanMargins" unique_id=1082270757]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="PanelContainer/MainSpace/ScanMargins/ScanWorkspace" unique_id=1006366196]
+layout_mode = 2
+text = "Scan Setup"
+label_settings = SubResource("LabelSettings_5cs5r")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MainSpace/ScanMargins/ScanWorkspace" unique_id=1394534365]
+layout_mode = 2

@@ -5,9 +5,25 @@ using Godot;
 public partial class ScanEditorSection : VBoxContainer
 {
   [Export]
+  public ScannerElementList ElementList;
+  [Export]
+  public OptionButton ScannerTypeDropdown;
+  [Export, ExportGroup("Buttons")]
   public Button BtnSwitch;
+  [Export]
+  public Button BtnNewPlain;
+  [Export]
+  public Button BtnNewRegex;
+  [Export]
+  public Button BtnSave;
+  [Export]
+  public Button BtnClear;
+
 
   public override void _Ready()
   {
+    BtnNewPlain.Pressed += () => ElementList.AddNewElement(false);
+    BtnNewRegex.Pressed += () => ElementList.AddNewElement(true);
+    BtnClear.Pressed += ElementList.Clear;
   }
 }

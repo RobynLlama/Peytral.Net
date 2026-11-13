@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bkewrytjb3lvt"]
+
+[ext_resource type="Script" uid="uid://lcf1w41w0c4q" path="res://AppUI/Sections/ScanEditor/ScanElementPrefab.cs" id="1_oshog"]
+
+[node name="ScanElementPrefab" type="VBoxContainer" unique_id=1150820370 node_paths=PackedStringArray("LblTitle", "BtnDelete")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_oshog")
+LblTitle = NodePath("LblType")
+BtnDelete = NodePath("BtnDelete")
+metadata/_custom_type_script = "uid://lcf1w41w0c4q"
+
+[node name="LblType" type="Label" parent="." unique_id=1448920780]
+layout_mode = 2
+text = "Scan Element Prefab"
+horizontal_alignment = 1
+
+[node name="BtnDelete" type="Button" parent="." unique_id=317444510]
+layout_mode = 2
+text = "Delete"
