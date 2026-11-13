@@ -18,10 +18,11 @@ public partial class ResourceListBox : VBoxContainer
   public override void _Ready()
   {
     ResourceFileSelector.FileSelected += FileSelected;
-    Pool = new(InitialPoolSize, CreatePoolItem)
+    Pool = new(CreatePoolItem)
     {
       OnEnterPool = OnEnterPool,
     };
+    Pool.SetMinCapacity(InitialPoolSize);
   }
 
   private void FileSelected(string path) =>

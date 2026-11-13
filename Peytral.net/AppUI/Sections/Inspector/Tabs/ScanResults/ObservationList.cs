@@ -13,10 +13,11 @@ public partial class ObservationList : VBoxContainer
 
   public override void _Ready()
   {
-    Pool = new(InitialPoolSize, CreatePoolItem)
+    Pool = new(CreatePoolItem)
     {
       OnEnterPool = OnEnterPool,
     };
+    Pool.SetMinCapacity(InitialPoolSize);
   }
 
   private ObservationPrefab CreatePoolItem()

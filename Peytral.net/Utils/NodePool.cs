@@ -2,27 +2,28 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-public class NodePool<T> where T : Node
+public class NodePool<T>(Func<T> constructor) where T : Node
 {
-  public int InitialPoolSize { get; protected set; }
   public Action<T> OnEnterPool = null;
   public Action<T> OnLeavePool = null;
-  protected Func<T> Constructor;
+  protected Func<T> Constructor = constructor;
   protected HashSet<T> ActivePoolItems = [];
   protected Stack<T> Pool = [];
 
-  public NodePool(int size, Func<T> constructor)
-  {
-    Constructor = constructor;
-    InitialPoolSize = size;
-    InitializePool();
-  }
-
   public IEnumerable<T> GetActiveItems => [.. ActivePoolItems];
 
-  protected void InitializePool()
+  /// <summary>
+  /// Ensures the pool has at least X number of items
+  /// available for checkout.
+  /// </summary>
+  public void SetMinCapacity(int size)
   {
-    for (int i = 0; i < InitialPoolSize; i++)
+    var add = size - Pool.Count;
+
+    if (add < 1)
+      return;
+
+    for (int i = 0; i < add; i++)
     {
       var item = Constructor();
       Pool.Push(item);
