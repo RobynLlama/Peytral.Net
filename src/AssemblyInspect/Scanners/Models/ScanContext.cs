@@ -48,6 +48,13 @@ public class ScanContext
     _assemblyHash = new(HashAssembly);
     _projectLineMap = new(LazyLoadProjectMap);
   }
+
+  public ScanContext(Stream assemblyStream, string fullName = "Memory Stream")
+  {
+    Assembly = AssemblyDefinition.ReadAssembly(assemblyStream);
+    Length = assemblyStream.Length - assemblyStream.Position;
+    AssemblyModule = new PEFile(fullName, assemblyStream);
+    FullName = fullName;
     _fullSrcBlob = new(DecompileFullProject);
     _virtualProject = new(DecompileProjectTree);
     _lineMap = new(ConstructLineMap);
