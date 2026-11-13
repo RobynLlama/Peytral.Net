@@ -50,9 +50,9 @@ public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSet
   /// It is possible to decompile multiple projects into one VTree.
   /// The user is responsible for handling the state of 
   /// their decompiler</remarks>
-  public VTree DecompileProject()
+  public VTree DecompileProject(string rootName = "/")
   {
-    DecompileProject(Target, "/");
+    DecompileProject(Target, rootName);
     return FileTree;
   }
 
