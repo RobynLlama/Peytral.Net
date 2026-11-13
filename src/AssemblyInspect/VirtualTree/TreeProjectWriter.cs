@@ -42,6 +42,25 @@ public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSet
     return new(resolver, settings, peFile);
   }
 
+
+  public static TreeProjectWriter CreateFromStream(Stream assemblyData)
+  {
+    var resolver = new UniversalAssemblyResolver(
+      string.Empty,
+      throwOnError: false,
+      targetFramework: null
+    );
+
+    var peFile = new PEFile("Streamed Assembly", assemblyData);
+    var settings = new DecompilerSettings(ICSharpCode.Decompiler.CSharp.LanguageVersion.Latest)
+    {
+      ThrowOnAssemblyResolveErrors = false,
+      UseNestedDirectoriesForNamespaces = true,
+    };
+
+    return new(resolver, settings, peFile);
+  }
+
   /// <summary>
   /// Hands off the stored target to the decompiler
   /// </summary>
