@@ -7,6 +7,7 @@ using AssemblyInspect.Scanners.Mapping;
 using AssemblyInspect.VirtualTree;
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.CSharp;
+using ICSharpCode.Decompiler.Metadata;
 using Mono.Cecil;
 
 namespace AssemblyInspect.Scanners.Models;
@@ -14,7 +15,10 @@ namespace AssemblyInspect.Scanners.Models;
 public class ScanContext
 {
   public readonly AssemblyDefinition Assembly;
-  public readonly FileInfo Info;
+  protected readonly PEFile AssemblyModule;
+
+  public readonly string FullName;
+  public readonly long Length;
 
   private readonly Lazy<string> _fullSrcBlob;
   private readonly Lazy<VTree> _virtualProject;
@@ -29,8 +33,21 @@ public class ScanContext
 
   public ScanContext(string location)
   {
+    var info = new FileInfo(location);
+
+    if (!info.Exists)
+      throw new FileNotFoundException($"Unable to read {location}");
+
     Assembly = AssemblyDefinition.ReadAssembly(location);
-    Info = new(location);
+    FullName = location;
+    AssemblyModule = new PEFile(FullName, info.OpenRead());
+    Length = info.Length;
+    _fullSrcBlob = new(DecompileFullProject);
+    _virtualProject = new(DecompileProjectTree);
+    _lineMap = new(ConstructLineMap);
+    _assemblyHash = new(HashAssembly);
+    _projectLineMap = new(LazyLoadProjectMap);
+  }
     _fullSrcBlob = new(DecompileFullProject);
     _virtualProject = new(DecompileProjectTree);
     _lineMap = new(ConstructLineMap);
@@ -52,7 +69,9 @@ public class ScanContext
       }
     }
 
-    var decompiler = new CSharpDecompiler(Info.FullName,
+    var decompiler = new CSharpDecompiler(
+      AssemblyModule,
+      new UniversalAssemblyResolver(string.Empty, false, null),
       new DecompilerSettings(LanguageVersion.Latest)
       {
         ThrowOnAssemblyResolveErrors = false,
@@ -100,7 +119,7 @@ public class ScanContext
       }
     }
 
-    var tree = TreeProjectWriter.CreateFromPath(Info.FullName).DecompileProject();
+    var tree = TreeProjectWriter.CreateFromModule(AssemblyModule).DecompileProject();
 
     if (AssemblyInspector.CacheEnabled)
     {
@@ -115,7 +134,7 @@ public class ScanContext
   private FullProjectLineMap LazyLoadProjectMap() => new(VirtualProject);
   private string HashAssembly()
   {
-    string initial = $"{Assembly.FullName}|{Assembly.MainModule.Mvid}|{Info.Length}";
+    string initial = $"{Assembly.FullName}|{Assembly.MainModule.Mvid}|{Length}";
     return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(initial)))[..24];
   }
 }
