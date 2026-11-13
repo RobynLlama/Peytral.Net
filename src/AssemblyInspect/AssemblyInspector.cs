@@ -65,6 +65,19 @@ public static class AssemblyInspector
     return results;
   }
 
+  public static async Task<IEnumerable<ScanResult>> ScanAssembliesAsync(IEnumerable<ScanContext> contexts, IEnumerable<IAssemblyScanner> scanners)
+  {
+    List<Task<ScanResult>> scans = [];
+    foreach (var item in contexts)
+      scans.Add(ScanAssemblyAsync(item, scanners));
+
+    await Task.WhenAll(scans);
+    return scans.Select(x => x.GetAwaiter().GetResult());
+  }
+
+  public static async Task<IEnumerable<ScanResult>> ScanAssembliesAsync(IEnumerable<IAssemblyScanner> scanners, params ScanContext[] contexts) =>
+    await ScanAssembliesAsync(contexts, scanners);
+
   public static ScanResult ScanAssembly(ScanContext ctx, IEnumerable<IAssemblyScanner> scanners)
   {
     List<Observation> obs = [];
