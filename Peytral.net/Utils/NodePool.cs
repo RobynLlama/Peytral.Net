@@ -18,6 +18,8 @@ public class NodePool<T> where T : Node
     InitializePool();
   }
 
+  public IEnumerable<T> GetActiveItems => [.. ActivePoolItems];
+
   protected void InitializePool()
   {
     for (int i = 0; i < InitialPoolSize; i++)
