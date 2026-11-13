@@ -44,6 +44,23 @@ public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSet
     return new(resolver, settings, peFile);
   }
 
+  public static TreeProjectWriter CreateFromModule(PEFile module)
+  {
+
+    var resolver = new UniversalAssemblyResolver(
+      string.Empty,
+      throwOnError: false,
+      targetFramework: null
+    );
+
+    var settings = new DecompilerSettings(ICSharpCode.Decompiler.CSharp.LanguageVersion.Latest)
+    {
+      ThrowOnAssemblyResolveErrors = false,
+      UseNestedDirectoriesForNamespaces = true,
+    };
+
+    return new(resolver, settings, module);
+  }
 
   public static TreeProjectWriter CreateFromStream(Stream assemblyData)
   {
