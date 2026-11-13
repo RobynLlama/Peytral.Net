@@ -13,9 +13,11 @@ namespace AssemblyInspect.VirtualTree;
 /// <remarks>Does not support resource handling, use the AssemblyDefinition to read those if you want them</remarks>
 public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSettings settings, PEFile file) : WholeProjectDecompiler(settings, assemblyResolver, null, null, null)
 {
-
-  //gotta do it as concurrent cuz there's some parallelism in the decomp, I think?
-  public readonly VTree FileTree = [];
+  /// <summary>
+  /// Generally this property should not be modified; for advanced
+  /// use only.
+  /// </summary>
+  public VTree FileTree = [];
   public readonly PEFile Target = file;
 
   /// <summary>
