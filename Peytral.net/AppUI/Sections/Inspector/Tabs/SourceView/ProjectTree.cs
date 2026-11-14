@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,7 +30,7 @@ public partial class ProjectTree : Tree
   public override void _Ready()
   {
     ItemActivated += SelectedItem;
-    DocumentManager.OnDocumentScanned += BuildFileTreeForProject;
+    DocumentManager.OnScanCompleted += BuildFileTreeForProject;
     DocumentManager.OnDocumentClosed += Clear;
 
     SetColumnExpandRatio(0, 4);
@@ -38,7 +39,7 @@ public partial class ProjectTree : Tree
     SetColumnTitle(1, "Size");
   }
 
-  public void BuildFileTreeForProject(ScanResult result)
+  public void BuildFileTreeForProject(IEnumerable<ScanResult> results)
   {
     //There has to be a way to make this better but this is
     //the best I've got right now
@@ -47,7 +48,11 @@ public partial class ProjectTree : Tree
 
     //cache paths to directories
     Dictionary<string, TreeItem> cache = [];
-    var depthFirstVTree = result.Context.VirtualProject.OrderBy(x => x.Key, new DepthFirstComparer());
+
+    //Select all items and order by depth
+    var depthFirstVTree = results
+      .SelectMany(x => x.Context.VirtualProject)
+      .OrderBy(x => x.Key, new DepthFirstComparer());
 
     foreach (var item in depthFirstVTree)
     {

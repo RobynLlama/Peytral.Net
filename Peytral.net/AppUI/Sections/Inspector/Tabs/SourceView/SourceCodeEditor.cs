@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AssemblyInspect.Observations;
@@ -29,13 +30,13 @@ public partial class SourceCodeEditor : CodeEdit
   public Color MessageColor;
 
   public int GutterID { get; private set; }
-  private SourceFileObservation[] LastInHighlights = [];
+  private IEnumerable<SourceFileObservation> LastInHighlights = [];
 
   public static SourceCodeEditor Instance;
 
   public override void _Ready()
   {
-    DocumentManager.OnDocumentScanned += DocumentScanned;
+    DocumentManager.OnScanCompleted += DocumentScanned;
     DocumentManager.OnDocumentClosed += Clear;
     SetSearchFlags((uint)SearchFlags.WholeWords);
     SearchBar.TextChanged += OnSearchTextChanged;
@@ -146,20 +147,25 @@ public partial class SourceCodeEditor : CodeEdit
 
   public void ChangeToDocument(string documentPath)
   {
-    var result = DocumentManager.LastScanResult;
+    var results = DocumentManager.LastScanResults;
     Clear();
-    if (result is null)
+
+    if (results is null)
       return;
 
-    if (!result.Context.VirtualProject.TryGetValue(documentPath, out var data))
+    KeyValuePair<string, string> sentinel = new("INVALID", string.Empty);
+    var document = results.SelectMany(x => x.Context.VirtualProject)
+      .FirstOrDefault(x => x.Key.Equals(documentPath, StringComparison.OrdinalIgnoreCase), sentinel);
+
+    if (string.IsNullOrEmpty(document.Value))
       return;
 
-    Text = data;
+    Text = document.Value;
 
     //find all source file items relevant to the current file
-    SourceFileObservation[] test = [.. result.Observations.OfType<SourceFileObservation>()];
-    LastInHighlights = [.. result.Observations.OfType<SourceFileObservation>().Where(x => x.FilePath.Equals(documentPath))];
-    GD.Print($"Highlights selected: {LastInHighlights.Length} / {test.Length}");
+    LastInHighlights = results.SelectMany(x => x.Observations)
+      .OfType<SourceFileObservation>()
+      .Where(x => x.FilePath.Equals(documentPath, StringComparison.OrdinalIgnoreCase));
 
     foreach (var item in LastInHighlights)
     {
@@ -185,18 +191,14 @@ public partial class SourceCodeEditor : CodeEdit
     }
   }
 
-  private void DocumentScanned(ScanResult results)
+  private void DocumentScanned(IEnumerable<ScanResult> results)
   {
-    foreach (var item in results.Context.VirtualProject)
-    {
-      if (Path.GetExtension(item.Key).Equals(".csproj", StringComparison.OrdinalIgnoreCase))
-      {
-        ChangeToDocument(item.Key);
-        GD.Print($"Changing to {item.Key}");
-        return;
-      }
-    }
+    var file = results.SelectMany(x => x.Context.VirtualProject.Keys)
+      .FirstOrDefault(x => x.Equals(".csproj", StringComparison.OrdinalIgnoreCase));
 
-    GD.Print("Found no csproj");
+    if (string.IsNullOrEmpty(file))
+      return;
+
+    ChangeToDocument(file);
   }
 }

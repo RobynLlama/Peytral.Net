@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using AssemblyInspect.Observations;
 using AssemblyInspect.Scanners.Models;
@@ -15,13 +16,14 @@ public partial class ResourceViewTab : MarginContainer
   public override void _Ready()
   {
     DocumentManager.OnDocumentClosed += ResetTab;
-    DocumentManager.OnDocumentScanned += NewScan;
+    DocumentManager.OnScanCompleted += NewScan;
     ResetTab();
   }
 
-  private void NewScan(ScanResult result)
+  private void NewScan(IEnumerable<ScanResult> results)
   {
-    var items = result.Observations.OfType<ResourceObservation>();
+
+    var items = results.SelectMany(x => x.Observations.OfType<ResourceObservation>());
     ResourcesLabel.Text = $"Total Resources: {items.Count()}";
 
     foreach (var item in items)

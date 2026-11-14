@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,11 +16,11 @@ public partial class DocumentManager : Node
   public ScannerData[] Scanners;
 
   public static DocumentManager Instance { get; private set; }
-  public static ScanResult LastScanResult { get; private set; }
+  public static IEnumerable<ScanResult> LastScanResults { get; private set; }
   private static readonly string CacheDirectory = Path.Combine(OS.GetUserDataDir(), "assembly-cache");
-  public static event Action<ScanResult> OnDocumentScanned;
+  public static event Action<IEnumerable<ScanResult>> OnScanCompleted;
   public static event Action OnDocumentClosed;
-  public static event Action<DirectoryInfo, ScanResult> OnDocumentSaved;
+  public static event Action<DirectoryInfo, IEnumerable<ScanResult>> OnDocumentSaved;
 
   public override void _Ready()
   {
@@ -28,7 +29,7 @@ public partial class DocumentManager : Node
     AssemblyInspector.SetCacheOptions(true, CacheDirectory);
   }
 
-  public static async Task OpenNewDocument(string path)
+  public static async Task ScanSingleFile(string path)
   {
 
     CloseDocument();
@@ -54,7 +55,7 @@ public partial class DocumentManager : Node
         .Select(x => x.BuildScanner());
 
       //Todo: allow cancellation here
-      LastScanResult = await AssemblyInspector.ScanAssemblyAsync(ctx, scanners);
+      LastScanResults = [await AssemblyInspector.ScanAssemblyAsync(ctx, scanners)];
     }
     catch (Exception ex)
     {
@@ -63,23 +64,23 @@ public partial class DocumentManager : Node
       return;
     }
 
-    OnDocumentScanned?.Invoke(LastScanResult);
+    OnScanCompleted?.Invoke(LastScanResults);
   }
 
   public static void CloseDocument()
   {
-    if (LastScanResult is null)
+    if (LastScanResults is null)
       return;
 
-    LastScanResult = null;
+    LastScanResults = null;
     OnDocumentClosed?.Invoke();
   }
 
   public static void SaveDocument(DirectoryInfo location)
   {
-    if (LastScanResult is null)
+    if (LastScanResults is null)
       return;
 
-    OnDocumentSaved?.Invoke(location, LastScanResult);
+    OnDocumentSaved?.Invoke(location, LastScanResults);
   }
 }

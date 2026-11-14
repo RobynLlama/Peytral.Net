@@ -30,6 +30,6 @@ public partial class InspectorSection : VBoxContainer
   private async void AssemblySelected(string path)
   {
     using var busy = WorkingPanel.Instance.GetBusyLock();
-    await DocumentManager.OpenNewDocument(path);
+    await DocumentManager.ScanSingleFile(path);
   }
 }

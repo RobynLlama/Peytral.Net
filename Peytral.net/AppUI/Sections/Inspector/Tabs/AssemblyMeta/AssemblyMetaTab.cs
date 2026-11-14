@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using AssemblyInspect.Scanners.Models;
 using Godot;
 using Peytral;
@@ -12,7 +14,7 @@ public partial class AssemblyMetaTab : MarginContainer
   public string PlaceholderText;
   public override void _Ready()
   {
-    DocumentManager.OnDocumentScanned += ScannedDocument;
+    DocumentManager.OnScanCompleted += ScannedDocument;
     DocumentManager.OnDocumentClosed += ResetTab;
     ResetTab();
   }
@@ -22,35 +24,42 @@ public partial class AssemblyMetaTab : MarginContainer
     MetaLabel.Text = PlaceholderText;
   }
 
-  private void ScannedDocument(ScanResult result)
+  private void ScannedDocument(IEnumerable<ScanResult> results)
   {
-    //lazy update
-    var context = result.Context;
+    StringBuilder sb = new("Scanned Assemblies:\n\n");
+    foreach (var result in results)
+    {
+      //lazy update
+      var context = result.Context;
 
-    var culture = string.IsNullOrEmpty(context.Assembly.Name.Culture)
-      ? "Neutral"
-      : context.Assembly.Name.Culture;
+      var culture = string.IsNullOrEmpty(context.Assembly.Name.Culture)
+        ? "Neutral"
+        : context.Assembly.Name.Culture;
 
-    //I have no idea what else to put in here, it just feels so empty, lul
-    var types = context.Assembly.Modules.SelectMany(x => x.GetTypes());
-    var typeCount = types.Count();
-    var interfaceCount = types.Count(x => x.IsInterface);
-    var abstractCount = types.Count(x => x.IsAbstract);
-    var classCount = types.Count(x => x.IsClass);
+      //I have no idea what else to put in here, it just feels so empty, lul
+      var types = context.Assembly.Modules.SelectMany(x => x.GetTypes());
+      var typeCount = types.Count();
+      var interfaceCount = types.Count(x => x.IsInterface);
+      var abstractCount = types.Count(x => x.IsAbstract);
+      var classCount = types.Count(x => x.IsClass);
 
-    MetaLabel.Text = $"""
-    Name: {context.Assembly.Name.Name}
-    Version: {context.Assembly.MainModule.RuntimeVersion}
-    Culture: {culture}
+      sb.Append($"""
+        Name: {context.Assembly.Name.Name}
+        Version: {context.Assembly.MainModule.RuntimeVersion}
+        Culture: {culture}
 
-    Location: {context.FullName}
-    Size: {context.Length}
+        Location: {context.FullName}
+        Size: {context.Length}
 
-    Type Overview:
-      Types: {typeCount}
-      Classes: {classCount}
-      Interfaces: {interfaceCount}
-      Abstract Classes: {abstractCount}
-    """;
+        Type Overview:
+          Types: {typeCount}
+          Classes: {classCount}
+          Interfaces: {interfaceCount}
+          Abstract Classes: {abstractCount}
+
+        """);
+    }
+
+    MetaLabel.Text = sb.ToString();
   }
 }
