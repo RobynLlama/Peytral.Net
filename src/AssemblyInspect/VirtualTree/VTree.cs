@@ -17,9 +17,15 @@ public class VTree(string keyPrefix) : ConcurrentDictionary<string, string>
     BinaryWriter writer = new(stream);
     //write item count
     writer.Write(Keys.Count);
+    var usedKey = KeyPrefix != "/";
+
     foreach ((string key, string item) in this)
     {
-      writer.Write(new string(key.TrimStart(KeyPrefix)));
+      if (usedKey)
+        writer.Write(key[(KeyPrefix.Length + 1)..]);
+      else
+        writer.Write(key);
+
       writer.Write(item);
     }
   }
@@ -32,9 +38,15 @@ public class VTree(string keyPrefix) : ConcurrentDictionary<string, string>
     try
     {
       var items = reader.ReadInt32();
+      var usedKey = keyPrefix != "/";
       for (int i = 0; i < items; i++)
       {
-        var key = Path.Combine(keyPrefix, reader.ReadString());
+        string key;
+        if (usedKey)
+          key = Path.Combine(keyPrefix, reader.ReadString());
+        else
+          key = reader.ReadString();
+
         var value = reader.ReadString();
         result[key] = value;
       }
