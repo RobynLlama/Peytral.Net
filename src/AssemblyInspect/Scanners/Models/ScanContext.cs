@@ -52,10 +52,14 @@ public partial class ScanContext
 
   public ScanContext(Stream assemblyStream, string fullName = "Memory Stream", ScanConfiguration? config = null)
   {
+    var pos = assemblyStream.Position;
     Assembly = AssemblyDefinition.ReadAssembly(assemblyStream);
+    //reset position to where it was before we read it
+    assemblyStream.Position = pos;
     Config = config ?? new();
     Length = assemblyStream.Length - assemblyStream.Position;
-    AssemblyModule = new PEFile(fullName, assemblyStream);
+    AssemblyModule = new PEFile(fullName, assemblyStream,
+      streamOptions: System.Reflection.PortableExecutable.PEStreamOptions.PrefetchEntireImage);
     FullName = fullName;
     _fullSrcBlob = new(DecompileFullProject);
     _virtualProject = new(DecompileProjectTree);
