@@ -90,6 +90,9 @@ public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSet
   /// their decompiler</remarks>
   public VTree DecompileProject(string rootName = "/")
   {
+    //There is a known issue where using any rootName override
+    //will make the cache unhappy, fix will be to make the root
+    //override ephemeral within the cache, WIP
     DecompileProject(Target, rootName);
     return FileTree;
   }
