@@ -43,8 +43,8 @@ public partial class AssemblyMetaTab : MarginContainer
     Version: {context.Assembly.MainModule.RuntimeVersion}
     Culture: {culture}
 
-    Location: {context.Info.FullName}
-    Size: {context.Info.Length}
+    Location: {context.FullName}
+    Size: {context.Length}
 
     Type Overview:
       Types: {typeCount}
