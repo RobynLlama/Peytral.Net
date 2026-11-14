@@ -11,13 +11,9 @@ namespace AssemblyInspect.VirtualTree;
 /// into a VTree in memory rather than on the disk.
 /// </summary>
 /// <remarks>Does not support resource handling, use the AssemblyDefinition to read those if you want them</remarks>
-public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSettings settings, PEFile file) : WholeProjectDecompiler(settings, assemblyResolver, null, null, null)
+public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSettings settings, PEFile file, string keyPrefix) : WholeProjectDecompiler(settings, assemblyResolver, null, null, null)
 {
-  /// <summary>
-  /// Generally this property should not be modified; for advanced
-  /// use only.
-  /// </summary>
-  public VTree FileTree = [];
+  public readonly VTree FileTree = new(keyPrefix);
   public readonly PEFile Target = file;
 
   /// <summary>
@@ -26,7 +22,7 @@ public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSet
   /// <param name="assemblyPath">Path to the assembly to decompile</param>
   /// <remarks>This is preferred over the constructor for ease</remarks>
   /// <returns>An instance of TreeProjectWriter</returns>
-  public static TreeProjectWriter CreateFromPath(string assemblyPath)
+  public static TreeProjectWriter CreateFromPath(string assemblyPath, string keyPrefix)
   {
     var resolver = new UniversalAssemblyResolver(
       assemblyPath,
@@ -41,10 +37,10 @@ public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSet
       UseNestedDirectoriesForNamespaces = true,
     };
 
-    return new(resolver, settings, peFile);
+    return new(resolver, settings, peFile, keyPrefix);
   }
 
-  public static TreeProjectWriter CreateFromModule(PEFile module)
+  public static TreeProjectWriter CreateFromModule(PEFile module, string keyPrefix)
   {
 
     var resolver = new UniversalAssemblyResolver(
@@ -59,10 +55,10 @@ public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSet
       UseNestedDirectoriesForNamespaces = true,
     };
 
-    return new(resolver, settings, module);
+    return new(resolver, settings, module, keyPrefix);
   }
 
-  public static TreeProjectWriter CreateFromStream(Stream assemblyData)
+  public static TreeProjectWriter CreateFromStream(Stream assemblyData, string keyPrefix)
   {
     var resolver = new UniversalAssemblyResolver(
       string.Empty,
@@ -77,7 +73,7 @@ public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSet
       UseNestedDirectoriesForNamespaces = true,
     };
 
-    return new(resolver, settings, peFile);
+    return new(resolver, settings, peFile, keyPrefix);
   }
 
   /// <summary>
@@ -88,12 +84,12 @@ public class TreeProjectWriter(IAssemblyResolver assemblyResolver, DecompilerSet
   /// It is possible to decompile multiple projects into one VTree.
   /// The user is responsible for handling the state of 
   /// their decompiler</remarks>
-  public VTree DecompileProject(string rootName = "/")
+  public VTree DecompileProject()
   {
     //There is a known issue where using any rootName override
     //will make the cache unhappy, fix will be to make the root
     //override ephemeral within the cache, WIP
-    DecompileProject(Target, rootName);
+    DecompileProject(Target, FileTree.KeyPrefix);
     return FileTree;
   }
 

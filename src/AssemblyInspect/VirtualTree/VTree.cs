@@ -5,8 +5,10 @@ using System.IO;
 
 namespace AssemblyInspect.VirtualTree;
 
-public class VTree : ConcurrentDictionary<string, string>
+public class VTree(string keyPrefix) : ConcurrentDictionary<string, string>
 {
+
+  public readonly string KeyPrefix = keyPrefix;
   public StreamWriter GetWriterByPath(string path) =>
     new(new TreeMemoryStream(path, this));
 
@@ -17,22 +19,22 @@ public class VTree : ConcurrentDictionary<string, string>
     writer.Write(Keys.Count);
     foreach ((string key, string item) in this)
     {
-      writer.Write(key);
+      writer.Write(new string(key.TrimStart(KeyPrefix)));
       writer.Write(item);
     }
   }
 
-  public static bool TryDeserialize(Stream stream, [NotNullWhen(true)] out VTree? result)
+  public static bool TryDeserialize(string keyPrefix, Stream stream, [NotNullWhen(true)] out VTree? result)
   {
     BinaryReader reader = new(stream);
-    result = new();
+    result = new(keyPrefix);
     //read item count
     try
     {
       var items = reader.ReadInt32();
       for (int i = 0; i < items; i++)
       {
-        var key = reader.ReadString();
+        var key = Path.Combine(keyPrefix, reader.ReadString());
         var value = reader.ReadString();
         result[key] = value;
       }

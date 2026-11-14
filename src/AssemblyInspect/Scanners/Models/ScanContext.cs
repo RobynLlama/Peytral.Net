@@ -127,12 +127,12 @@ public partial class ScanContext
       if (info.Exists)
       {
         using GZipStream gZip = new(info.OpenRead(), CompressionMode.Decompress);
-        if (VTree.TryDeserialize(gZip, out var data))
+        if (VTree.TryDeserialize(Config.VTreeRootOverride, gZip, out var data))
           return data;
       }
     }
 
-    var tree = TreeProjectWriter.CreateFromModule(AssemblyModule).DecompileProject(Config.VTreeRootOverride);
+    var tree = TreeProjectWriter.CreateFromModule(AssemblyModule, Config.VTreeRootOverride).DecompileProject();
 
     if (AssemblyInspector.CacheEnabled)
     {
