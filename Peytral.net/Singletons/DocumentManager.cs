@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using AssemblyInspect;
@@ -64,6 +65,62 @@ public partial class DocumentManager : Node
       return;
     }
 
+    OnScanCompleted?.Invoke(LastScanResults);
+  }
+
+  public static async Task ScanZipArchive(string zipPath)
+  {
+    FileInfo info = new(zipPath);
+
+    if (!info.Exists)
+    {
+      GD.PrintErr($"Zip archive does not exist at path: {zipPath}");
+      return;
+    }
+
+    try
+    {
+      var archiveStream = info.OpenRead();
+      using var archive = new ZipArchive(archiveStream);
+      List<ScanContext> contexts = [];
+      int prefixCount = 0;
+
+      foreach (var item in archive.Entries)
+      {
+        if (Path.GetExtension(item.Name).Contains(".dll", StringComparison.OrdinalIgnoreCase))
+        {
+          prefixCount++;
+          using var itemStream = item.Open();
+          var deflated = new MemoryStream();
+          itemStream.CopyTo(deflated);
+          GD.Print($"Extracting and scanning {item.FullName}, {deflated.Length}");
+          deflated.Position = 0;
+
+          contexts.Add(new(deflated, item.FullName, new($"{Path.GetFileNameWithoutExtension(item.Name)}~{prefixCount}")));
+        }
+      }
+
+      var scanners = Instance.Scanners
+        .Select(x => x.BuildScanner());
+
+      LastScanResults = await AssemblyInspector.ScanAssembliesAsync(contexts, scanners);
+    }
+    catch (Exception ex)
+    {
+      //todo: care more about this
+      GD.PrintErr(ex);
+      return;
+    }
+
+    OnScanCompleted?.Invoke(LastScanResults);
+  }
+
+  public static async Task ScanMany(IEnumerable<ScanContext> contexts)
+  {
+    var scanners = Instance.Scanners
+        .Select(x => x.BuildScanner());
+
+    LastScanResults = await AssemblyInspector.ScanAssembliesAsync(contexts, scanners);
     OnScanCompleted?.Invoke(LastScanResults);
   }
 
