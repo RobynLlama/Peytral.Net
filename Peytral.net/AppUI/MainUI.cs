@@ -1,5 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using AssemblyInspect.Scanners.Models;
 using Godot;
+using Peytral;
 
 public partial class MainUI : PanelContainer
 {
@@ -11,6 +15,44 @@ public partial class MainUI : PanelContainer
   {
     Inspector.BtnSwitch.Pressed += SwitchToEditor;
     ScanEditor.BtnSwitch.Pressed += SwitchToInspector;
+    GetWindow().FilesDropped += HandleFileDrop;
+  }
+
+  private async void HandleFileDrop(string[] files)
+  {
+
+    using var busy = WorkingPanel.Instance.GetBusyLock();
+
+    if (files.Length == 1)
+    {
+      var file = files[0];
+      var ext = Path.GetExtension(file).ToLowerInvariant();
+      switch (ext)
+      {
+        case ".dll":
+          await DocumentManager.ScanSingleFile(file);
+          break;
+        case ".zip":
+          await DocumentManager.ScanZipArchive(file);
+          break;
+        default:
+          GD.PushWarning($"Unable to service file: {file}");
+          break;
+      }
+    }
+    else
+    {
+      //validate files
+      List<ScanContext> ctxs = [];
+      int prefixes = 0;
+      foreach (var file in files)
+        if (Path.GetExtension(file).Equals(".dll", StringComparison.OrdinalIgnoreCase))
+          ctxs.Add(new(file, new($"{Path.GetFileNameWithoutExtension(file)}~{++prefixes}")));
+        else
+          GD.PushWarning($"Ignoring non-assembly file {file}");
+
+      await DocumentManager.ScanMany(ctxs);
+    }
   }
 
   private void SwitchToInspector()
