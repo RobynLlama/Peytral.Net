@@ -31,7 +31,7 @@ public partial class ScanContext
   public string AssemblyHash => _assemblyHash.Value;
   public FullProjectLineMap ProjectLineMap => _projectLineMap.Value;
 
-  public ScanContext(string location)
+  public ScanContext(string location, ScanConfiguration? config = null)
   {
     var info = new FileInfo(location);
 
@@ -39,6 +39,7 @@ public partial class ScanContext
       throw new FileNotFoundException($"Unable to read {location}");
 
     Assembly = AssemblyDefinition.ReadAssembly(location);
+    Config = config ?? new();
     FullName = location;
     AssemblyModule = new PEFile(FullName, info.OpenRead());
     Length = info.Length;
@@ -49,9 +50,10 @@ public partial class ScanContext
     _projectLineMap = new(LazyLoadProjectMap);
   }
 
-  public ScanContext(Stream assemblyStream, string fullName = "Memory Stream")
+  public ScanContext(Stream assemblyStream, string fullName = "Memory Stream", ScanConfiguration? config = null)
   {
     Assembly = AssemblyDefinition.ReadAssembly(assemblyStream);
+    Config = config ?? new();
     Length = assemblyStream.Length - assemblyStream.Position;
     AssemblyModule = new PEFile(fullName, assemblyStream);
     FullName = fullName;
@@ -126,7 +128,7 @@ public partial class ScanContext
       }
     }
 
-    var tree = TreeProjectWriter.CreateFromModule(AssemblyModule).DecompileProject();
+    var tree = TreeProjectWriter.CreateFromModule(AssemblyModule).DecompileProject(Config.VTreeRootOverride);
 
     if (AssemblyInspector.CacheEnabled)
     {
