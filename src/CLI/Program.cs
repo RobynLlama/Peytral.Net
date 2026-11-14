@@ -15,7 +15,7 @@ string assemblyPathRaw = args[0];
 string assemblyPath = Path.Combine(Environment.CurrentDirectory, assemblyPathRaw);
 
 var ctx = new ScanContext(assemblyPath);
-var cacheDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Peytral.CLI", ".cache");
+var cacheDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Peytral.CLI", "cache");
 
 Console.WriteLine($"Cache directory: {cacheDir}");
 AssemblyInspector.SetCacheOptions(true, cacheDir);
