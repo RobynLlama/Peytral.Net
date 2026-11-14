@@ -12,7 +12,7 @@ using Mono.Cecil;
 
 namespace AssemblyInspect.Scanners.Models;
 
-public class ScanContext
+public partial class ScanContext
 {
   public readonly AssemblyDefinition Assembly;
   protected readonly PEFile AssemblyModule;
