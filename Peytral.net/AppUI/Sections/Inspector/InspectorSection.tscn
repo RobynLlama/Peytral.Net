@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://gsyf4s8pr4dd" path="res://AppUI/Sections/Inspector/Tabs/ResourceView/ResourceViewTab.tscn" id="6_g76l4"]
 [ext_resource type="PackedScene" uid="uid://bu5ioy27taofa" path="res://AppUI/Sections/Inspector/Tabs/SourceView/SourceViewTab.tscn" id="7_12ou4"]
 
-[node name="InspectorSection" type="VBoxContainer" unique_id=1511083990 node_paths=PackedStringArray("BtnNew", "BtnSave", "BtnClose", "BtnSwitch", "OpenFileSelector")]
+[node name="InspectorSection" type="VBoxContainer" unique_id=1511083990 node_paths=PackedStringArray("BtnNew", "BtnSave", "BtnClose", "BtnSwitch", "OpenFileSelector", "SaveReportSelector")]
 custom_minimum_size = Vector2(32, 32)
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,7 +22,8 @@ BtnNew = NodePath("QuickbarPanel/QuickbarLayout/BtnNew")
 BtnSave = NodePath("QuickbarPanel/QuickbarLayout/BtnSave")
 BtnClose = NodePath("QuickbarPanel/QuickbarLayout/BtnClose")
 BtnSwitch = NodePath("QuickbarPanel/QuickbarLayout/RightButtons/BtnSwitch")
-OpenFileSelector = NodePath("FileDialog")
+OpenFileSelector = NodePath("OpenFileDialog")
+SaveReportSelector = NodePath("SaveProjectDialog")
 metadata/_custom_type_script = "uid://dy2nsqbpo6e8u"
 
 [node name="QuickbarPanel" type="MarginContainer" parent="." unique_id=230247213]
@@ -98,7 +99,7 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="FileDialog" type="FileDialog" parent="." unique_id=1794270645]
+[node name="OpenFileDialog" type="FileDialog" parent="." unique_id=1794270645]
 oversampling_override = 1.0
 mode = 2
 title = "Open a File"
@@ -109,4 +110,16 @@ file_mode = 0
 display_mode = 1
 access = 2
 filters = PackedStringArray("*.dll", "*.exe")
+use_native_dialog = true
+
+[node name="SaveProjectDialog" type="FileDialog" parent="." unique_id=1339724328]
+oversampling_override = 1.0
+mode = 2
+title = "Save Report"
+initial_position = 2
+size = Vector2i(1200, 720)
+dialog_hide_on_ok = true
+display_mode = 1
+access = 2
+filters = PackedStringArray("*.zip")
 use_native_dialog = true
