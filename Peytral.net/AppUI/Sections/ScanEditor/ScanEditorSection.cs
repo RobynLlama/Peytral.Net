@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Godot;
 
 [GlobalClass]
@@ -8,6 +9,9 @@ public partial class ScanEditorSection : VBoxContainer
   public ScannerElementList ElementList;
   [Export]
   public OptionButton ScannerTypeDropdown;
+  [Export]
+  public FileDialog SaveDialog;
+
   [Export, ExportGroup("Buttons")]
   public Button BtnSwitch;
   [Export]
@@ -25,6 +29,13 @@ public partial class ScanEditorSection : VBoxContainer
     BtnNewPlain.Pressed += () => ElementList.AddNewElement(false);
     BtnNewRegex.Pressed += () => ElementList.AddNewElement(true);
     BtnClear.Pressed += ElementList.Clear;
+    BtnSave.Pressed += () => SaveDialog.PopupCentered();
+
+    var dataPath = new DirectoryInfo(Path.Combine(OS.GetUserDataDir(), "scanners"));
+    dataPath.Create();
+
+    SaveDialog.CurrentPath = Path.Combine(dataPath.FullName, "scanner.tres");
+    SaveDialog.FileSelected += SaveScannerResource;
 
     var idx = 0;
     ScannerTypeDropdown.Clear();
@@ -35,14 +46,21 @@ public partial class ScanEditorSection : VBoxContainer
       ScannerTypeDropdown.SetItemMetadata(idx, item.Key);
       idx++;
     }
-
-    ScannerTypeDropdown.ItemSelected += ScannerTypeSelected;
   }
 
-  private void ScannerTypeSelected(long index)
+  private void SaveScannerResource(string path)
   {
-    var key = ScannerTypeDropdown.GetItemMetadata((int)index);
-    ScannerManager.TryCreateScanner(key.AsString(), out var scanner);
-    GD.Print($"Selected: {key} : {scanner.GetType().Name}");
+    GD.Print($"Save resource here: {path}");
+
+    if (!ScannerManager.TryCreateScanner(ScannerTypeDropdown.GetItemMetadata(ScannerTypeDropdown.Selected).AsString(), out var scanner))
+    {
+      GD.PrintErr("Invalid scanner ID");
+      return;
+    }
+
+    scanner.RegexRules = [.. ElementList.GetRegexRules()];
+    scanner.PlainTextRules = [.. ElementList.GetPlainTextRules()];
+
+    ResourceSaver.Save(scanner, path);
   }
 }
