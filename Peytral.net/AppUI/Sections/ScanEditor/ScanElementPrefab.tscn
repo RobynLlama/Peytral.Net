@@ -2,23 +2,96 @@
 
 [ext_resource type="Script" uid="uid://lcf1w41w0c4q" path="res://AppUI/Sections/ScanEditor/ScanElementPrefab.cs" id="1_oshog"]
 
-[node name="ScanElementPrefab" type="VBoxContainer" unique_id=1150820370 node_paths=PackedStringArray("LblTitle", "BtnDelete")]
+[node name="ScanElementPrefab" type="MarginContainer" unique_id=1997172379 node_paths=PackedStringArray("LblTitle", "BtnDelete", "SummaryInput", "PatternInput", "MessageInput", "SeverityInput")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 script = ExtResource("1_oshog")
-LblTitle = NodePath("LblType")
-BtnDelete = NodePath("BtnDelete")
+LblTitle = NodePath("VBoxContainer/LblType")
+BtnDelete = NodePath("VBoxContainer/BtnDelete")
+SummaryInput = NodePath("VBoxContainer/Summary/LineEditSummary")
+PatternInput = NodePath("VBoxContainer/Pattern/LineEditPattern")
+MessageInput = NodePath("VBoxContainer/LogMessage/LineEditLog")
+SeverityInput = NodePath("VBoxContainer/LogMessage/SeveritySelector")
 metadata/_custom_type_script = "uid://lcf1w41w0c4q"
 
-[node name="LblType" type="Label" parent="." unique_id=1448920780]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2032229346]
+layout_mode = 2
+
+[node name="LblType" type="Label" parent="VBoxContainer" unique_id=1448920780]
 layout_mode = 2
 text = "Scan Element Prefab"
 horizontal_alignment = 1
 
-[node name="BtnDelete" type="Button" parent="." unique_id=317444510]
+[node name="Summary" type="HBoxContainer" parent="VBoxContainer" unique_id=689071392]
+layout_mode = 2
+
+[node name="LblSummary" type="Label" parent="VBoxContainer/Summary" unique_id=878415837]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+text = "Summary: "
+
+[node name="LineEditSummary" type="LineEdit" parent="VBoxContainer/Summary" unique_id=1189435381]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Short summary that shows up in the title of the Observation (120 Chars max)"
+max_length = 120
+emoji_menu_enabled = false
+clear_button_enabled = true
+
+[node name="Pattern" type="HBoxContainer" parent="VBoxContainer" unique_id=1450822769]
+layout_mode = 2
+
+[node name="LblPattern" type="Label" parent="VBoxContainer/Pattern" unique_id=1899858572]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+text = "Pattern: "
+
+[node name="LineEditPattern" type="LineEdit" parent="VBoxContainer/Pattern" unique_id=1403408910]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Regex / Plaintext pattern to match"
+emoji_menu_enabled = false
+clear_button_enabled = true
+
+[node name="LogMessage" type="HBoxContainer" parent="VBoxContainer" unique_id=1548724137]
+layout_mode = 2
+
+[node name="LblLog" type="Label" parent="VBoxContainer/LogMessage" unique_id=1396208848]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+text = "Log Msg:"
+
+[node name="LineEditLog" type="LineEdit" parent="VBoxContainer/LogMessage" unique_id=716456783]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "A larger description of the detection featured in the body of the Observation"
+emoji_menu_enabled = false
+clear_button_enabled = true
+
+[node name="SeveritySelector" type="OptionButton" parent="VBoxContainer/LogMessage" unique_id=522321071]
+layout_mode = 2
+selected = 0
+item_count = 4
+popup/item_0/text = "Message"
+popup/item_0/id = 0
+popup/item_1/text = "Warning"
+popup/item_1/id = 1
+popup/item_2/text = "Alert"
+popup/item_2/id = 2
+popup/item_3/text = "Critical"
+popup/item_3/id = 3
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=858659216]
+layout_mode = 2
+
+[node name="BtnDelete" type="Button" parent="VBoxContainer" unique_id=317444510]
 layout_mode = 2
 text = "Delete"
