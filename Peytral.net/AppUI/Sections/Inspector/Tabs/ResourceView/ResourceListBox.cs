@@ -13,15 +13,12 @@ public partial class ResourceListBox : VBoxContainer
   public FileDialog ResourceFileSelector;
 
   private ResourceObservation CurrentResource;
-  private NodePool<ResourceViewPrefab> Pool;
+  private ItemPool<ResourceViewPrefab> Pool;
 
   public override void _Ready()
   {
     ResourceFileSelector.FileSelected += FileSelected;
-    Pool = new(CreatePoolItem)
-    {
-      OnEnterPool = OnEnterPool,
-    };
+    Pool = new(CreatePoolItem);
     Pool.SetMinCapacity(InitialPoolSize);
   }
 
@@ -44,11 +41,6 @@ public partial class ResourceListBox : VBoxContainer
     AddChild(child);
 
     return child;
-  }
-
-  private static void OnEnterPool(ResourceViewPrefab item)
-  {
-    item.Visible = false;
   }
 
   public void DisplayObservation(ResourceObservation obs)

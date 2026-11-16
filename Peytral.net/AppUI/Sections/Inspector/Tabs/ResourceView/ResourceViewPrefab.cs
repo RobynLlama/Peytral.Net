@@ -3,7 +3,7 @@ using AssemblyInspect.Observations;
 using Godot;
 
 [GlobalClass]
-public partial class ResourceViewPrefab : PanelContainer
+public partial class ResourceViewPrefab : PanelContainer, IPoolItem
 {
 
   [Export]
@@ -31,4 +31,11 @@ public partial class ResourceViewPrefab : PanelContainer
     LblSize.Text = $"Size: {resource.ResourceData.Length:N0} bytes";
     LblAnalysis.Text = $"Analysis: [{resource.Severity}] {resource.Description}";
   }
+
+  public void EnterPool()
+  {
+    Visible = false;
+  }
+
+  public void ExitPool() { }
 }

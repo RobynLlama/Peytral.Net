@@ -1,11 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Godot;
-
-public class NodePool<T>(Func<T> constructor) where T : Node
+public class ItemPool<T>(Func<T> constructor) where T : IPoolItem
 {
-  public Action<T> OnEnterPool = null;
-  public Action<T> OnLeavePool = null;
   protected Func<T> Constructor = constructor;
   protected HashSet<T> ActivePoolItems = [];
   protected Stack<T> Pool = [];
@@ -32,23 +28,21 @@ public class NodePool<T>(Func<T> constructor) where T : Node
 
   public T Checkout()
   {
+    T item;
     if (Pool.TryPop(out var result))
-    {
-      ActivePoolItems.Add(result);
-      OnLeavePool?.Invoke(result);
-      return result;
-    }
+      item = result;
+    else
+      item = Constructor();
 
-    var item = Constructor();
     ActivePoolItems.Add(item);
-    OnLeavePool?.Invoke(item);
+    item.ExitPool();
     return item;
   }
 
   public void ReturnToPool(T item)
   {
     ActivePoolItems.Remove(item);
-    OnEnterPool?.Invoke(item);
+    item.EnterPool();
     Pool.Push(item);
   }
 

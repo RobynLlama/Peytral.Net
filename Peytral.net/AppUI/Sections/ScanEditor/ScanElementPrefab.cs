@@ -2,7 +2,7 @@ using System;
 using Godot;
 
 [GlobalClass]
-public partial class ScanElementPrefab : VBoxContainer
+public partial class ScanElementPrefab : VBoxContainer, IPoolItem
 {
   public bool IsRegex = false;
 
@@ -26,8 +26,10 @@ public partial class ScanElementPrefab : VBoxContainer
     LblTitle.Text = IsRegex ? "Regex Element" : "PlainText Element";
   }
 
-  public void SentToPool()
+  public void EnterPool()
   {
     Visible = false;
   }
+
+  public void ExitPool() { }
 }

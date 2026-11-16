@@ -9,14 +9,11 @@ public partial class ObservationList : VBoxContainer
   [Export]
   public int InitialPoolSize = 50;
 
-  private NodePool<ObservationPrefab> Pool;
+  private ItemPool<ObservationPrefab> Pool;
 
   public override void _Ready()
   {
-    Pool = new(CreatePoolItem)
-    {
-      OnEnterPool = OnEnterPool,
-    };
+    Pool = new(CreatePoolItem);
     Pool.SetMinCapacity(InitialPoolSize);
   }
 
@@ -26,11 +23,6 @@ public partial class ObservationList : VBoxContainer
     child.Visible = false;
     AddChild(child);
     return child;
-  }
-
-  private static void OnEnterPool(ObservationPrefab item)
-  {
-    item.Visible = false;
   }
 
   public void DisplayObservation(Observation obs)

@@ -2,7 +2,7 @@ using AssemblyInspect.Observations;
 using Godot;
 
 [GlobalClass]
-public partial class ObservationPrefab : PanelContainer
+public partial class ObservationPrefab : PanelContainer, IPoolItem
 {
   [Export, ExportGroup("Text")]
   public Label SummaryLabel;
@@ -27,4 +27,9 @@ public partial class ObservationPrefab : PanelContainer
     WarnIcon.Visible = obs.Severity == SeverityLevel.Warning;
     MsgIcon.Visible = obs.Severity == SeverityLevel.Message;
   }
+
+  public void EnterPool() =>
+    Visible = false;
+
+  public void ExitPool() { }
 }

@@ -6,13 +6,10 @@ public partial class ScannerElementList : VBoxContainer
 {
   [Export]
   public PackedScene ElementPrefab;
-  private NodePool<ScanElementPrefab> PrefabPool;
+  private ItemPool<ScanElementPrefab> PrefabPool;
   public override void _Ready()
   {
-    PrefabPool = new(PoolConstructor)
-    {
-      OnEnterPool = EnterPool,
-    };
+    PrefabPool = new(PoolConstructor);
     PrefabPool.SetMinCapacity(20);
   }
 
@@ -25,8 +22,6 @@ public partial class ScannerElementList : VBoxContainer
   }
 
   public void Clear() => PrefabPool.ReturnAllToPool();
-
-  #region Pool Functions
   private ScanElementPrefab PoolConstructor()
   {
     var child = ElementPrefab.Instantiate<ScanElementPrefab>();
@@ -35,8 +30,4 @@ public partial class ScannerElementList : VBoxContainer
     AddChild(child);
     return child;
   }
-
-  private static void EnterPool(ScanElementPrefab item) =>
-    item.SentToPool();
-  #endregion
 }
