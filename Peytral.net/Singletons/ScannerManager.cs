@@ -2,9 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using AssemblyInspect.Scanners;
+using Godot;
 
 public static class ScannerManager
 {
+
+  public static IEnumerable<IAssemblyScanner> DefaultScanners { get; private set; } =
+    ResourceLoader.Load<ScannerPackage>(@"res://Resources/Scanners/DefaultScanners.tres").BuildScanners;
+
   private static ScannerData Build<T>() where T : ScannerData, new() =>
       new T();
 
