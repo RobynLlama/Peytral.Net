@@ -1,19 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 public static class ScannerManager
 {
+  private static ScannerData Build<T>() where T : ScannerData, new() =>
+      new T();
+
   private readonly static Dictionary<string, ScannerInfo> ScannerFactories = new()
   {
-    {"sourceTreeScanner", new("Source Tree Scanner", () => new SourceTreeScannerData())},
+    {"sourceTreeScanner", new("Source Tree Scanner", Build<SourceTreeScannerData>)},
+    {"memberRefScanner", new("Member Reference Scanner", Build<MemberReferenceScannerData>)}
   };
 
-  public static IEnumerator<(string ID, string FriendlyName)> EnumerateFactories()
-  {
-    foreach (var item in ScannerFactories)
-      yield return (item.Key, item.Value.FriendlyName);
-  }
+  public static IEnumerable<KeyValuePair<string, ScannerInfo>> EnumerateFactories() =>
+    ScannerFactories.AsEnumerable();
 
   public static void AddScanner(string ID, ScannerInfo info) =>
     ScannerFactories[ID] = info;
@@ -30,5 +32,4 @@ public static class ScannerManager
     return false;
   }
 }
-
 public record struct ScannerInfo(string FriendlyName, Func<ScannerData> Constructor);
