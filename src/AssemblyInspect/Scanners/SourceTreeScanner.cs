@@ -9,7 +9,7 @@ namespace AssemblyInspect.Scanners;
 
 public class SourceTreeScanner : IAssemblyScanner
 {
-  public string ScannerName => "Source Tree Scanner";
+  public string ScannerName { get; set; } = "Source Tree Scanner";
   public IEnumerable<RegexRule> RegexRules { get; set; } = [];
   public IEnumerable<PlainTextRule> PlainTextRules { get; set; } = [];
 

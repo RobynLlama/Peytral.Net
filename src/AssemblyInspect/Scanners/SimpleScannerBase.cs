@@ -13,7 +13,7 @@ namespace AssemblyInspect.Scanners;
 /// </summary>
 public abstract class SimpleScannerBase : IAssemblyScanner
 {
-  public abstract string ScannerName { get; }
+  public string ScannerName { get; set; } = "Name not set";
   public abstract IReadOnlyCollection<Observation> Scan(ScanContext context);
 
   protected void RunPlainTextMatches(ICollection<Observation> obs, IEnumerable<PlainTextRule> rules, string input, string Location)

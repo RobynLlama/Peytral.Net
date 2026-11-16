@@ -10,10 +10,13 @@ namespace AssemblyInspect.Scanners;
 
 public class PInvokeScanner : SimpleScannerBase
 {
-
-  public override string ScannerName => "P/Invoke Scanner";
   public IEnumerable<RegexRule> RegexRules { get; set; } = [];
   public IEnumerable<PlainTextRule> PlainTextRules { get; set; } = [];
+
+  public PInvokeScanner()
+  {
+    ScannerName = "P/Invoke Scanner";
+  }
 
   public override IReadOnlyCollection<Observation> Scan(ScanContext context)
   {

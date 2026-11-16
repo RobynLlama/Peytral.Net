@@ -13,7 +13,8 @@ namespace AssemblyInspect.Scanners;
 
 public class ResourceScanner : IAssemblyScanner
 {
-  public string ScannerName => "Resource Scanner";
+
+  public string ScannerName { get; set; } = "Resource Scanner";
 
   public static IEnumerable<BinaryRule> Rules { get; } =
     [

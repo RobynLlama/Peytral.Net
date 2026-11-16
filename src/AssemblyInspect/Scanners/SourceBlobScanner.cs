@@ -12,7 +12,7 @@ public class SourceBlobScanner : IAssemblyScanner
   public IEnumerable<RegexRule> RegexRules { get; set; } = [];
   public IEnumerable<PlainTextRule> PlainTextRules { get; set; } = [];
 
-  public string ScannerName => "Source Blob Scanner";
+  public string ScannerName { get; set; } = "Source Blob Scanner";
 
   public IReadOnlyCollection<Observation> Scan(ScanContext context)
   {

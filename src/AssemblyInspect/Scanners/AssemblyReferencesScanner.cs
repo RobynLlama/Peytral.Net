@@ -9,10 +9,13 @@ namespace AssemblyInspect.Scanners;
 
 public class AssemblyReferencesScanner : SimpleScannerBase
 {
-
-  public override string ScannerName => "Assembly Reference Scanner";
   public IEnumerable<RegexRule> RegexRules { get; set; } = [];
   public IEnumerable<PlainTextRule> PlainTextRules { get; set; } = [];
+
+  public AssemblyReferencesScanner()
+  {
+    ScannerName = "Assembly Reference Scanner";
+  }
 
   public override IReadOnlyCollection<Observation> Scan(ScanContext context)
   {
