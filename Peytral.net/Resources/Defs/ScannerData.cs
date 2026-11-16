@@ -8,5 +8,7 @@ public abstract partial class ScannerData : Resource
   public RegexRuleResource[] RegexRules;
   [Export]
   public PlainTextRuleResource[] PlainTextRules;
+  [Export]
+  public string ScannerNameOverride;
   public abstract IAssemblyScanner BuildScanner();
 }
