@@ -11,6 +11,8 @@ public partial class ScanEditorSection : VBoxContainer
   public OptionButton ScannerTypeDropdown;
   [Export]
   public FileDialog SaveDialog;
+  [Export]
+  public LineEdit ScannerName;
 
   [Export, ExportGroup("Buttons")]
   public Button BtnSwitch;
@@ -58,6 +60,7 @@ public partial class ScanEditorSection : VBoxContainer
       return;
     }
 
+    scanner.ScannerNameOverride = ScannerName.Text;
     scanner.RegexRules = [.. ElementList.GetRegexRules()];
     scanner.PlainTextRules = [.. ElementList.GetPlainTextRules()];
 

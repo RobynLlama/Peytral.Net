@@ -16,7 +16,7 @@ border_width_top = 4
 border_width_bottom = 4
 border_color = Color(0, 0, 0, 0.5019608)
 
-[node name="ScanEditor" type="VBoxContainer" unique_id=270031207 node_paths=PackedStringArray("ElementList", "ScannerTypeDropdown", "SaveDialog", "BtnSwitch", "BtnNewPlain", "BtnNewRegex", "BtnSave", "BtnClear")]
+[node name="ScanEditor" type="VBoxContainer" unique_id=270031207 node_paths=PackedStringArray("ElementList", "ScannerTypeDropdown", "SaveDialog", "ScannerName", "BtnSwitch", "BtnNewPlain", "BtnNewRegex", "BtnSave", "BtnClear")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -26,6 +26,7 @@ script = ExtResource("1_xpt2h")
 ElementList = NodePath("PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/ScrollContainer/Panel/ScannerElementList")
 ScannerTypeDropdown = NodePath("PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/TypeContainer/OptionButton")
 SaveDialog = NodePath("SaveScannerBox")
+ScannerName = NodePath("PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/NameContainer/NameInput")
 BtnSwitch = NodePath("EditorQuickbarPanel/QuickbarLayout/BtnSwitch")
 BtnNewPlain = NodePath("PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/Controls/BtnAddPlain")
 BtnNewRegex = NodePath("PanelContainer/MainSpace/ScannerMargins/ScannerWorkspace/Controls/BtnAddRegex")
