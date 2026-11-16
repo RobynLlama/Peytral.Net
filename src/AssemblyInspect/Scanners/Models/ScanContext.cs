@@ -12,9 +12,10 @@ using Mono.Cecil;
 
 namespace AssemblyInspect.Scanners.Models;
 
-public partial class ScanContext
+public partial class ScanContext : IDisposable
 {
   public readonly AssemblyDefinition Assembly;
+  protected MemoryStream? BackingStream;
   protected readonly PEFile AssemblyModule;
 
   public readonly string FullName;
@@ -52,13 +53,15 @@ public partial class ScanContext
 
   public ScanContext(Stream assemblyStream, string fullName = "Memory Stream", ScanConfiguration? config = null)
   {
-    var pos = assemblyStream.Position;
-    Assembly = AssemblyDefinition.ReadAssembly(assemblyStream);
-    //reset position to where it was before we read it
-    assemblyStream.Position = pos;
-    Config = config ?? new();
     Length = assemblyStream.Length - assemblyStream.Position;
-    AssemblyModule = new PEFile(fullName, assemblyStream,
+    BackingStream = new SharedStream();
+    StreamReader reader = new(BackingStream);
+    assemblyStream.CopyTo(BackingStream);
+    BackingStream.Position = 0;
+    Assembly = AssemblyDefinition.ReadAssembly(BackingStream);
+    BackingStream.Position = 0;
+    Config = config ?? new();
+    AssemblyModule = new PEFile(fullName, BackingStream,
       streamOptions: System.Reflection.PortableExecutable.PEStreamOptions.PrefetchEntireImage);
     FullName = fullName;
     _fullSrcBlob = new(DecompileFullProject);
@@ -149,5 +152,10 @@ public partial class ScanContext
   {
     string initial = $"{Assembly.FullName}|{Assembly.MainModule.Mvid}|{Length}";
     return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(initial)))[..24];
+  }
+
+  public void Dispose()
+  {
+
   }
 }
