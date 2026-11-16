@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ScannerPackage" format=3 uid="uid://i2yor8j4atqw"]
+
+[ext_resource type="Resource" uid="uid://dukj3n14kj1k1" path="res://Resources/Scanners/SourceTreeScanner.tres" id="1_hkwo6"]
+[ext_resource type="Script" uid="uid://bhs6ucr68nuf6" path="res://Resources/Defs/ScannerPackage.cs" id="1_msqb3"]
+[ext_resource type="Resource" uid="uid://d75sdlefkk71" path="res://Resources/Scanners/MemberRefScanner.tres" id="2_2ogsg"]
+[ext_resource type="Resource" uid="uid://bfd2i5m0mc8cx" path="res://Resources/Scanners/PInvokeScanner.tres" id="3_u6krl"]
+[ext_resource type="Resource" uid="uid://dagma7vj65m32" path="res://Resources/Scanners/AssemblyRefScanner.tres" id="4_5d2uv"]
+[ext_resource type="Script" uid="uid://bim7jd8bvde2l" path="res://Resources/Defs/ResourceScannerData.cs" id="5_2ogsg"]
+
+[sub_resource type="Resource" id="Resource_u6krl"]
+script = ExtResource("5_2ogsg")
+RegexRules = Array[Object]([])
+PlainTextRules = Array[Object]([])
+ScannerNameOverride = "Default Resource Scanner"
+metadata/_custom_type_script = "uid://bim7jd8bvde2l"
+
+[resource]
+script = ExtResource("1_msqb3")
+Scanners = Array[Object]([ExtResource("1_hkwo6"), ExtResource("2_2ogsg"), ExtResource("3_u6krl"), ExtResource("4_5d2uv"), SubResource("Resource_u6krl")])
+metadata/_custom_type_script = "uid://bhs6ucr68nuf6"

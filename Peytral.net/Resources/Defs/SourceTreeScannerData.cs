@@ -10,6 +10,7 @@ public partial class SourceTreeScannerData : ScannerData
   {
     return new SourceTreeScanner()
     {
+      ScannerName = ScannerNameOverride,
       RegexRules = RegexRules.Select(x => (RegexRule)x),
       PlainTextRules = PlainTextRules.Select(x => (PlainTextRule)x),
     };

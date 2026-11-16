@@ -78,4 +78,5 @@ metadata/_custom_type_script = "uid://cbfuchmij41oy"
 script = ExtResource("1_w8ysd")
 RegexRules = Array[Object]([])
 PlainTextRules = Array[Object]([SubResource("Resource_7qk67"), SubResource("Resource_38pxu"), SubResource("Resource_ied5n"), SubResource("Resource_2fahn"), SubResource("Resource_7ktib"), SubResource("Resource_i237k"), SubResource("Resource_q453k"), SubResource("Resource_nqhhk"), SubResource("Resource_ctag3")])
+ScannerNameOverride = "Default P/Invoke Scanner"
 metadata/_custom_type_script = "uid://bqhylnras8u73"

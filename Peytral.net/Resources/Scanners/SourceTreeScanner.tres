@@ -22,4 +22,5 @@ metadata/_custom_type_script = "uid://cxxh0gdn5ox28"
 script = ExtResource("1_jiqnm")
 RegexRules = Array[Object]([SubResource("Resource_eym8a")])
 PlainTextRules = Array[Object]([SubResource("Resource_5pvhv")])
+ScannerNameOverride = "Default Source Tree Scanner"
 metadata/_custom_type_script = "uid://crfhpf25lvcbi"

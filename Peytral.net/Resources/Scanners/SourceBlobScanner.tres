@@ -22,4 +22,5 @@ metadata/_custom_type_script = "uid://cxxh0gdn5ox28"
 script = ExtResource("1_sruoe")
 RegexRules = Array[Object]([SubResource("Resource_x7x8x")])
 PlainTextRules = Array[Object]([SubResource("Resource_jjukk")])
+ScannerNameOverride = "Default Source Blob Scanner"
 metadata/_custom_type_script = "uid://dchyap5b1l4im"

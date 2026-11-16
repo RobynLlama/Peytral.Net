@@ -5,5 +5,5 @@ using Godot;
 public partial class ResourceScannerData : ScannerData
 {
   public override IAssemblyScanner BuildScanner() =>
-   new ResourceScanner();
+   new ResourceScanner() { ScannerName = ScannerNameOverride, };
 }

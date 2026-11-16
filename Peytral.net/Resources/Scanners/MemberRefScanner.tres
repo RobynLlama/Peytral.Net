@@ -166,4 +166,5 @@ metadata/_custom_type_script = "uid://cbfuchmij41oy"
 script = ExtResource("1_75r2m")
 RegexRules = Array[Object]([])
 PlainTextRules = Array[Object]([SubResource("Resource_52d1s"), SubResource("Resource_ahofr"), SubResource("Resource_xsor1"), SubResource("Resource_hyfn4"), SubResource("Resource_l4fyj"), SubResource("Resource_ow5bl"), SubResource("Resource_y1tmn"), SubResource("Resource_46ed2"), SubResource("Resource_hyiir"), SubResource("Resource_na2m7"), SubResource("Resource_k2e5d"), SubResource("Resource_lifk7"), SubResource("Resource_fbrfo"), SubResource("Resource_bh8mp"), SubResource("Resource_5hxbt"), SubResource("Resource_dq2q6"), SubResource("Resource_41q35"), SubResource("Resource_l5ndw"), SubResource("Resource_w2epw"), SubResource("Resource_m8q0f")])
+ScannerNameOverride = "Default Member References Scanner"
 metadata/_custom_type_script = "uid://1msm4cq4khq2"

@@ -10,6 +10,7 @@ public partial class SourceBlobScannerData : ScannerData
   {
     return new SourceBlobScanner()
     {
+      ScannerName = ScannerNameOverride,
       RegexRules = RegexRules.Select(x => (RegexRule)x),
       PlainTextRules = PlainTextRules.Select(x => (PlainTextRule)x),
     };

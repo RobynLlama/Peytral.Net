@@ -10,6 +10,7 @@ public partial class AssemblyReferenceScannerData : ScannerData
   {
     return new AssemblyReferencesScanner()
     {
+      ScannerName = ScannerNameOverride,
       RegexRules = RegexRules.Select(x => (RegexRule)x),
       PlainTextRules = PlainTextRules.Select(x => (PlainTextRule)x),
     };
