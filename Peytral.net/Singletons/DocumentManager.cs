@@ -8,24 +8,16 @@ using AssemblyInspect;
 using AssemblyInspect.Scanners.Models;
 using Godot;
 
-namespace Peytral;
-
-[GlobalClass]
-public partial class DocumentManager : Node
+public partial class DocumentManager
 {
-  [Export]
-  public ScannerData[] Scanners;
-
-  public static DocumentManager Instance { get; private set; }
   public static IEnumerable<ScanResult> LastScanResults { get; private set; }
   private static readonly string CacheDirectory = Path.Combine(OS.GetUserDataDir(), "assembly-cache");
   public static event Action<IEnumerable<ScanResult>> OnScanCompleted;
   public static event Action OnDocumentClosed;
   public static event Action<DirectoryInfo, IEnumerable<ScanResult>> OnDocumentSaved;
 
-  public override void _Ready()
+  static DocumentManager()
   {
-    Instance = this;
     GD.Print($"Cache Dir: {CacheDirectory}");
     AssemblyInspector.SetCacheOptions(true, CacheDirectory);
   }
@@ -51,12 +43,7 @@ public partial class DocumentManager : Node
 
     try
     {
-      //Get scanners
-      var scanners = Instance.Scanners
-        .Select(x => x.BuildScanner());
-
-      //Todo: allow cancellation here
-      LastScanResults = [await AssemblyInspector.ScanAssemblyAsync(ctx, scanners)];
+      LastScanResults = [await AssemblyInspector.ScanAssemblyAsync(ctx, ScannerManager.DefaultScanners)];
     }
     catch (Exception ex)
     {
@@ -99,11 +86,7 @@ public partial class DocumentManager : Node
           contexts.Add(new(deflated, item.FullName, new($"{Path.GetFileNameWithoutExtension(item.Name)}~{prefixCount}")));
         }
       }
-
-      var scanners = Instance.Scanners
-        .Select(x => x.BuildScanner());
-
-      LastScanResults = await AssemblyInspector.ScanAssembliesAsync(contexts, scanners);
+      LastScanResults = await AssemblyInspector.ScanAssembliesAsync(contexts, ScannerManager.DefaultScanners);
     }
     catch (Exception ex)
     {
@@ -117,10 +100,7 @@ public partial class DocumentManager : Node
 
   public static async Task ScanMany(IEnumerable<ScanContext> contexts)
   {
-    var scanners = Instance.Scanners
-        .Select(x => x.BuildScanner());
-
-    LastScanResults = await AssemblyInspector.ScanAssembliesAsync(contexts, scanners);
+    LastScanResults = await AssemblyInspector.ScanAssembliesAsync(contexts, ScannerManager.DefaultScanners);
     OnScanCompleted?.Invoke(LastScanResults);
   }
 

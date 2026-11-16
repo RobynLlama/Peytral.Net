@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using AssemblyInspect.Scanners.Models;
 using Godot;
-using Peytral;
 
 public partial class MainUI : PanelContainer
 {

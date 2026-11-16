@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AssemblyInspect.Scanners.Models;
 using Godot;
-using Peytral;
 
 [GlobalClass]
 public partial class ProjectTree : Tree

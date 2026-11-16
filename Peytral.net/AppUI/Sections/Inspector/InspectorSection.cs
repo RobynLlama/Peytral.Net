@@ -1,5 +1,4 @@
 using Godot;
-using Peytral;
 
 [GlobalClass]
 public partial class InspectorSection : VBoxContainer

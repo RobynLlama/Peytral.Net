@@ -4,7 +4,6 @@ using System.Linq;
 using AssemblyInspect.Observations;
 using AssemblyInspect.Scanners.Models;
 using Godot;
-using Peytral;
 
 public partial class ResourceViewTab : MarginContainer
 {

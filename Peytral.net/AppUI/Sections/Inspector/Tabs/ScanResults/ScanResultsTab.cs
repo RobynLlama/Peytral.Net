@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using AssemblyInspect.Scanners.Models;
 using Godot;
-using Peytral;
 
 public partial class ScanResultsTab : MarginContainer
 {

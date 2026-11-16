@@ -1,6 +1,4 @@
-using System;
 using Godot;
-using Peytral;
 
 public partial class SourceViewTab : MarginContainer
 {

@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using AssemblyInspect.Observations;
 using AssemblyInspect.Scanners.Models;
 using Godot;
-using Peytral;
 
 [GlobalClass]
 public partial class SourceCodeEditor : CodeEdit

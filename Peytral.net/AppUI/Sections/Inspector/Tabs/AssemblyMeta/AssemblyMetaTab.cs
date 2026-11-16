@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using AssemblyInspect.Scanners.Models;
 using Godot;
-using Peytral;
 
 public partial class AssemblyMetaTab : MarginContainer
 {
