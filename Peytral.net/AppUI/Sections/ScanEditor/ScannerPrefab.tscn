@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://ba3gnfu6t1v6h"]
+
+[ext_resource type="Script" uid="uid://c73em2pg7j3wf" path="res://AppUI/Sections/ScanEditor/ScannerPrefab.cs" id="1_wqutp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4kjak"]
+font_size = 24
+
+[node name="ScannerPrefab" type="MarginContainer" unique_id=118108002 node_paths=PackedStringArray("ScannerName", "BtnDelete")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+script = ExtResource("1_wqutp")
+ScannerName = NodePath("Layout/LblScannerName")
+BtnDelete = NodePath("Layout/BtnDelete")
+metadata/_custom_type_script = "uid://c73em2pg7j3wf"
+
+[node name="Layout" type="HBoxContainer" parent="." unique_id=1239644713]
+layout_mode = 2
+
+[node name="LblScannerName" type="Label" parent="Layout" unique_id=1046199664]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 6.0
+text = "Scanner Name"
+label_settings = SubResource("LabelSettings_4kjak")
+horizontal_alignment = 1
+
+[node name="BtnDelete" type="Button" parent="Layout" unique_id=707707714]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Remove"
