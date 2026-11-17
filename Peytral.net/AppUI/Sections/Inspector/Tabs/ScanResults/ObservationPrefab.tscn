@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b87vckx4a4yud"]
 
-[ext_resource type="StyleBox" uid="uid://c8qixthpw72kn" path="res://Resources/PrefabPanelBox.tres" id="1_05nq0"]
+[ext_resource type="StyleBox" uid="uid://c8qixthpw72kn" path="res://AppUI/Sections/Inspector/Tabs/PrefabPanelBox.tres" id="1_05nq0"]
 [ext_resource type="Texture2D" uid="uid://bnltb53m5oe1w" path="res://Textures/Alert.png" id="1_knfhc"]
 [ext_resource type="Script" uid="uid://bbj28dr3it5l8" path="res://AppUI/Sections/Inspector/Tabs/ScanResults/ObservationPrefab.cs" id="1_mjor6"]
 [ext_resource type="Texture2D" uid="uid://duxm44sbgjwu1" path="res://Textures/Warning.png" id="2_mjor6"]
