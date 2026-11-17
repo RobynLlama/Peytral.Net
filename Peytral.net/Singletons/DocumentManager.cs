@@ -57,6 +57,7 @@ public partial class DocumentManager
 
   public static async Task ScanZipArchive(string zipPath)
   {
+    CloseDocument();
     FileInfo info = new(zipPath);
 
     if (!info.Exists)
@@ -100,6 +101,7 @@ public partial class DocumentManager
 
   public static async Task ScanMany(IEnumerable<ScanContext> contexts)
   {
+    CloseDocument();
     LastScanResults = await AssemblyInspector.ScanAssembliesAsync(contexts, ScannerManager.DefaultScanners);
     OnScanCompleted?.Invoke(LastScanResults);
   }
