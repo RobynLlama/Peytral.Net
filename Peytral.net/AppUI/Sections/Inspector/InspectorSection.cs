@@ -14,11 +14,15 @@ public partial class InspectorSection : VBoxContainer
   [Export]
   public Button BtnClose;
   [Export]
+  public Button BtnConfig;
+  [Export]
   public Button BtnSwitch;
   [Export, ExportGroup("Other")]
   public FileDialog OpenFileSelector;
   [Export]
   public FileDialog SaveReportSelector;
+  [Export]
+  public ConfigWindow Config;
   public override void _Ready()
   {
     BtnNew.Pressed += OpenDialogue;
@@ -26,6 +30,7 @@ public partial class InspectorSection : VBoxContainer
     BtnClose.Pressed += DocumentManager.CloseDocument;
     OpenFileSelector.FileSelected += AssemblySelected;
     SaveReportSelector.FileSelected += SaveReport;
+    BtnConfig.Pressed += () => Config.PopupCentered();
   }
 
   private void OpenDialogue()

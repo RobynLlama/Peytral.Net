@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Threading.Tasks;
 using AssemblyInspect;
 using AssemblyInspect.Scanners.Models;
@@ -11,7 +10,7 @@ using Godot;
 public partial class DocumentManager
 {
   public static IEnumerable<ScanResult> LastScanResults { get; private set; }
-  private static readonly string CacheDirectory = Path.Combine(OS.GetUserDataDir(), "assembly-cache");
+  private static readonly string CacheDirectory = ConfigManager.CurrentConfig.CacheDirectory;
   public static event Action<IEnumerable<ScanResult>> OnScanCompleted;
   public static event Action OnDocumentClosed;
   public static event Action<DirectoryInfo, IEnumerable<ScanResult>> OnDocumentSaved;
@@ -19,7 +18,7 @@ public partial class DocumentManager
   static DocumentManager()
   {
     GD.Print($"Cache Dir: {CacheDirectory}");
-    AssemblyInspector.SetCacheOptions(true, CacheDirectory);
+    AssemblyInspector.SetCacheOptions(ConfigManager.CurrentConfig.CacheEnabled, CacheDirectory);
   }
 
   public static async Task ScanSingleFile(string path)

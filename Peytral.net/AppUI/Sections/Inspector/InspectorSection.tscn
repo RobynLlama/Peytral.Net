@@ -6,16 +6,18 @@
 [ext_resource type="Texture2D" uid="uid://ds7c0on63p52a" path="res://AppUI/Sections/Inspector/SaveReport.png" id="3_x41n8"]
 [ext_resource type="PackedScene" uid="uid://in37prkorqly" path="res://AppUI/Sections/Inspector/Tabs/AssemblyMeta/AssemblyMetaTab.tscn" id="4_x41n8"]
 [ext_resource type="PackedScene" uid="uid://da0yt3ttuljon" path="res://AppUI/Sections/Inspector/Tabs/ScanResults/ScanResultsTab.tscn" id="5_js41s"]
+[ext_resource type="Texture2D" uid="uid://cm3r72ip6au03" path="res://AppUI/Sections/Inspector/Settings.png" id="5_l388k"]
 [ext_resource type="PackedScene" uid="uid://gsyf4s8pr4dd" path="res://AppUI/Sections/Inspector/Tabs/ResourceView/ResourceViewTab.tscn" id="6_g76l4"]
 [ext_resource type="PackedScene" uid="uid://bu5ioy27taofa" path="res://AppUI/Sections/Inspector/Tabs/SourceView/SourceViewTab.tscn" id="7_12ou4"]
 [ext_resource type="Texture2D" uid="uid://dj7xsk33q74ua" path="res://icon.png" id="9_y56gs"]
+[ext_resource type="PackedScene" uid="uid://dlrm2oh06w2ov" path="res://AppUI/Sections/Inspector/ConfigWindow/ConfigWindow.tscn" id="11_0mamn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l388k"]
 font_size = 18
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
-[node name="InspectorSection" type="VBoxContainer" unique_id=1511083990 node_paths=PackedStringArray("BtnNew", "BtnSave", "BtnClose", "BtnSwitch", "OpenFileSelector", "SaveReportSelector")]
+[node name="InspectorSection" type="VBoxContainer" unique_id=1511083990 node_paths=PackedStringArray("BtnNew", "BtnSave", "BtnClose", "BtnConfig", "BtnSwitch", "OpenFileSelector", "SaveReportSelector", "Config")]
 custom_minimum_size = Vector2(32, 32)
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,9 +29,11 @@ script = ExtResource("1_ekgsh")
 BtnNew = NodePath("QuickbarPanel/QuickbarLayout/BtnNew")
 BtnSave = NodePath("QuickbarPanel/QuickbarLayout/BtnSave")
 BtnClose = NodePath("QuickbarPanel/QuickbarLayout/BtnClose")
+BtnConfig = NodePath("QuickbarPanel/QuickbarLayout/BtnSettings")
 BtnSwitch = NodePath("QuickbarPanel/QuickbarLayout/RightButtons/BtnSwitch")
 OpenFileSelector = NodePath("OpenFileDialog")
 SaveReportSelector = NodePath("SaveProjectDialog")
+Config = NodePath("ConfigWindow")
 metadata/_custom_type_script = "uid://dy2nsqbpo6e8u"
 
 [node name="QuickbarPanel" type="MarginContainer" parent="." unique_id=230247213]
@@ -62,6 +66,13 @@ layout_mode = 2
 text = "Close
 "
 icon = ExtResource("3_gdpf7")
+expand_icon = true
+
+[node name="BtnSettings" type="Button" parent="QuickbarPanel/QuickbarLayout" unique_id=1058224771]
+custom_minimum_size = Vector2(105, 48)
+layout_mode = 2
+text = "Config"
+icon = ExtResource("5_l388k")
 expand_icon = true
 
 [node name="RightButtons" type="VBoxContainer" parent="QuickbarPanel/QuickbarLayout" unique_id=1843335219]
@@ -165,3 +176,7 @@ display_mode = 1
 access = 2
 filters = PackedStringArray("*.zip")
 use_native_dialog = true
+
+[node name="ConfigWindow" parent="." unique_id=870933045 instance=ExtResource("11_0mamn")]
+visible = false
+force_native = true

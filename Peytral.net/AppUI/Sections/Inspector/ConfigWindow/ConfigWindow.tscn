@@ -1,0 +1,204 @@
+[gd_scene format=3 uid="uid://dlrm2oh06w2ov"]
+
+[ext_resource type="Script" uid="uid://cc82reedqabk6" path="res://AppUI/Sections/Inspector/ConfigWindow/ConfigWindow.cs" id="1_lf578"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7i35y"]
+font_size = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lf578"]
+bg_color = Color(0.6, 0.6, 0.6, 0.1254902)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.13319641, 0.13319641, 0.13319638, 1)
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="ConfigWindow" type="Window" unique_id=870933045 node_paths=PackedStringArray("CacheEnabled", "CacheLocation", "ClearCache", "DefaultScanners", "ResetScanners", "ExportObs", "ExportRes", "ExportSource", "ResetButton", "SaveButton")]
+oversampling_override = 1.0
+title = "Peytral - Config"
+position = Vector2i(0, 36)
+size = Vector2i(640, 490)
+script = ExtResource("1_lf578")
+CacheEnabled = NodePath("PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemEnableCache/ChkEnableCache")
+CacheLocation = NodePath("PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemCacheDir/EditCacheDir")
+ClearCache = NodePath("PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/BtnResetCache")
+DefaultScanners = NodePath("PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemScannerFile/EditScannerFile")
+ResetScanners = NodePath("PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/BtnResetScanner")
+ExportObs = NodePath("PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemExport1/BtnObs")
+ExportRes = NodePath("PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemExport2/BtnRes")
+ExportSource = NodePath("PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemExport3/BtnFiles")
+ResetButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BtnCancel")
+SaveButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BtnSave")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=830224022]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=799243946]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=2104126952]
+layout_mode = 2
+
+[node name="CfgHeader" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=689403938]
+layout_mode = 2
+text = "Peytral Config"
+label_settings = SubResource("LabelSettings_7i35y")
+
+[node name="InnerBorder" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1778390918]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_lf578")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder" unique_id=1664924749]
+layout_mode = 2
+
+[node name="InnerMargins" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer" unique_id=1421005578]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="InnerControls" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins" unique_id=933122583]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LblCacheSection" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls" unique_id=1256090441]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Caching"
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls" unique_id=928321616]
+layout_mode = 2
+
+[node name="ItemEnableCache" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls" unique_id=370540478]
+layout_mode = 2
+
+[node name="LblEnableCache" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemEnableCache" unique_id=260879304]
+layout_mode = 2
+text = "Enable Cache:"
+
+[node name="ChkEnableCache" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemEnableCache" unique_id=1490127757]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+button_pressed = true
+
+[node name="ItemCacheDir" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls" unique_id=2083462062]
+layout_mode = 2
+
+[node name="LblCacheDir" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemCacheDir" unique_id=1211744672]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Cache Directory:"
+
+[node name="EditCacheDir" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemCacheDir" unique_id=948703165]
+layout_mode = 2
+size_flags_horizontal = 3
+emoji_menu_enabled = false
+clear_button_enabled = true
+
+[node name="BtnResetCache" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls" unique_id=256085604]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Delete Assembly Cache"
+
+[node name="LblScannersSection" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls" unique_id=1546295877]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Scanners"
+
+[node name="HSeparator2" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls" unique_id=794188753]
+layout_mode = 2
+
+[node name="ItemScannerFile" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls" unique_id=735214571]
+layout_mode = 2
+
+[node name="LblScannerFile" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemScannerFile" unique_id=1139571529]
+layout_mode = 2
+text = "Default Scanner File:"
+
+[node name="EditScannerFile" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemScannerFile" unique_id=1222074528]
+layout_mode = 2
+size_flags_horizontal = 3
+emoji_menu_enabled = false
+clear_button_enabled = true
+
+[node name="BtnResetScanner" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls" unique_id=1200570455]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Reset Default Scanner"
+
+[node name="LblExportSection" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls" unique_id=1022621947]
+layout_mode = 2
+text = "Export"
+
+[node name="HSeparator3" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls" unique_id=1772821049]
+layout_mode = 2
+
+[node name="LblExports" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls" unique_id=549231204]
+layout_mode = 2
+text = "Project Export Categories"
+
+[node name="ItemExport1" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls" unique_id=336894771]
+layout_mode = 2
+
+[node name="BtnObs" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemExport1" unique_id=709858728]
+layout_mode = 2
+button_pressed = true
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemExport1" unique_id=2127279691]
+layout_mode = 2
+text = "Observations"
+
+[node name="ItemExport2" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls" unique_id=122111244]
+layout_mode = 2
+
+[node name="BtnRes" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemExport2" unique_id=1977439546]
+layout_mode = 2
+button_pressed = true
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemExport2" unique_id=73992358]
+layout_mode = 2
+text = "Resources"
+
+[node name="ItemExport3" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls" unique_id=2072533087]
+layout_mode = 2
+
+[node name="BtnFiles" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemExport3" unique_id=389748485]
+layout_mode = 2
+button_pressed = true
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemExport3" unique_id=698424853]
+layout_mode = 2
+text = "Project Source Files"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1414145764]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="BtnCancel" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1902218944]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Cancel"
+
+[node name="BtnSave" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=903793456]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Save & Close"

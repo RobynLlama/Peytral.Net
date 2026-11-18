@@ -7,10 +7,13 @@ using Godot;
 public static class ScannerManager
 {
 
-  private static readonly ScannerPackage DefaultScanners =
-    ResourceLoader.Load<ScannerPackage>(@"res://Resources/Scanners/DefaultScanners.tres");
+  static ScannerManager()
+  {
+    GD.Print($"Loading scanners from {ConfigManager.CurrentConfig.DefaultScanners}");
+    CurrentScanners = ResourceLoader.Load<ScannerPackage>(ConfigManager.CurrentConfig.DefaultScanners, null, ResourceLoader.CacheMode.IgnoreDeep);
+  }
 
-  public static ScannerPackage CurrentScanners { get; private set; } = DefaultScanners;
+  public static ScannerPackage CurrentScanners { get; private set; }
 
   private static ScannerData Build<T>() where T : ScannerData, new() =>
       new T();

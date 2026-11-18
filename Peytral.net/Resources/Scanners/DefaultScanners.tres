@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ScannerPackage" format=3 uid="uid://i2yor8j4atqw"]
+[gd_resource type="Resource" script_class="ScannerPackage" format=3 uid="uid://cstec4vpwcktv"]
 
 [ext_resource type="Resource" uid="uid://dukj3n14kj1k1" path="res://Resources/Scanners/SourceTreeScanner.tres" id="1_hkwo6"]
 [ext_resource type="Script" uid="uid://bhs6ucr68nuf6" path="res://Resources/Defs/ScannerPackage.cs" id="1_msqb3"]
