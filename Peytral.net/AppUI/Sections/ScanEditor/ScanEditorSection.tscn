@@ -191,15 +191,21 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = ExtResource("2_giu0q")
 
-[node name="CurrentScannerLayout" type="VBoxContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/ScrollContainer/PanelContainer" unique_id=888122494 node_paths=PackedStringArray("FloatingButtonGroup", "AddScannerButton", "AddScannersDialog")]
+[node name="CurrentScannerLayout" type="VBoxContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/ScrollContainer/PanelContainer" unique_id=888122494 node_paths=PackedStringArray("FloatingButtonGroup", "AddScannerButton", "BtnSaveScannerPack", "BtnLoadScannerPack", "BtnApplyScannerPack", "BtnResetToCurrentPack", "AddScannersDialog", "SaveScannerPackDialog", "LoadScannerPackDialog")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("5_rwwas")
 FloatingButtonGroup = NodePath("FloatingButtons")
-AddScannerButton = NodePath("FloatingButtons/BtnAddScanner")
-AddScannersDialog = NodePath("../../../../../../../AddScannerBox")
 ScannerPrefab = ExtResource("6_s7g3d")
+AddScannerButton = NodePath("FloatingButtons/BtnAddScanner")
+BtnSaveScannerPack = NodePath("../../../BottomButtonMargins/BottomButtons/BtnSaveScannerPack")
+BtnLoadScannerPack = NodePath("../../../BottomButtonMargins/BottomButtons/BtnLoadScannerPack")
+BtnApplyScannerPack = NodePath("../../../BottomButtonMargins/BottomButtons/BtnApplyScanners")
+BtnResetToCurrentPack = NodePath("../../../BottomButtonMargins/BottomButtons/BtnResetToCurrent")
+AddScannersDialog = NodePath("../../../../../../../AddScannerBox")
+SaveScannerPackDialog = NodePath("../../../../../../../SaveScannerPackageBox")
+LoadScannerPackDialog = NodePath("../../../../../../../LoadScannerPackageBox")
 metadata/_custom_type_script = "uid://v68y2a7u72w"
 
 [node name="FloatingButtons" type="MarginContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/ScrollContainer/PanelContainer/CurrentScannerLayout" unique_id=229409033]
@@ -225,22 +231,28 @@ layout_mode = 2
 [node name="BtnSaveScannerPack" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/BottomButtonMargins/BottomButtons" unique_id=95597244]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Save Scanners List"
+tooltip_text = "Save this entire group of scanners to a file"
+text = "Save Scanners"
 
 [node name="BtnLoadScannerPack" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/BottomButtonMargins/BottomButtons" unique_id=453977624]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Load Scanners List"
+tooltip_text = "Load an entire group of scanners from a file.
 
-[node name="BtnApplyScanners" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/BottomButtonMargins/BottomButtons" unique_id=959949788]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Apply to Scan"
+Note: Does not apply the new scanners, use the [Apply] button for that"
+text = "Load Scanners"
 
 [node name="BtnResetToCurrent" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/BottomButtonMargins/BottomButtons" unique_id=736739348]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Load Current Scanners"
+tooltip_text = "Resets the display to the scanners currently being used by the inspector"
+text = "Reset Scanners"
+
+[node name="BtnApplyScanners" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/BottomButtonMargins/BottomButtons" unique_id=959949788]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Sets the current list of scanners to be used by the scan action in the inspector panel"
+text = "Apply"
 
 [node name="AddScannerBox" type="FileDialog" parent="." unique_id=127283083]
 oversampling_override = 1.0
@@ -261,6 +273,30 @@ mode = 2
 initial_position = 2
 size = Vector2i(1200, 720)
 dialog_hide_on_ok = true
+display_mode = 1
+access = 2
+filters = PackedStringArray("*.tres")
+use_native_dialog = true
+
+[node name="SaveScannerPackageBox" type="FileDialog" parent="." unique_id=990644055]
+oversampling_override = 1.0
+mode = 2
+initial_position = 2
+size = Vector2i(1200, 720)
+dialog_hide_on_ok = true
+display_mode = 1
+access = 2
+filters = PackedStringArray("*.tres")
+use_native_dialog = true
+
+[node name="LoadScannerPackageBox" type="FileDialog" parent="." unique_id=2044462380]
+oversampling_override = 1.0
+mode = 2
+title = "Open a File"
+initial_position = 2
+size = Vector2i(1200, 720)
+dialog_hide_on_ok = true
+file_mode = 0
 display_mode = 1
 access = 2
 filters = PackedStringArray("*.tres")

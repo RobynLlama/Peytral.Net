@@ -16,14 +16,17 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 script = ExtResource("1_wqutp")
-ScannerName = NodePath("Layout/LblScannerName")
-BtnDelete = NodePath("Layout/BtnDelete")
+ScannerName = NodePath("HLayout/Layout/LblScannerName")
+BtnDelete = NodePath("HLayout/Layout/BtnDelete")
 metadata/_custom_type_script = "uid://c73em2pg7j3wf"
 
-[node name="Layout" type="HBoxContainer" parent="." unique_id=1239644713]
+[node name="HLayout" type="VBoxContainer" parent="." unique_id=904129350]
 layout_mode = 2
 
-[node name="LblScannerName" type="Label" parent="Layout" unique_id=1046199664]
+[node name="Layout" type="HBoxContainer" parent="HLayout" unique_id=1239644713]
+layout_mode = 2
+
+[node name="LblScannerName" type="Label" parent="HLayout/Layout" unique_id=1046199664]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 6.0
@@ -31,7 +34,11 @@ text = "Scanner Name"
 label_settings = SubResource("LabelSettings_4kjak")
 horizontal_alignment = 1
 
-[node name="BtnDelete" type="Button" parent="Layout" unique_id=707707714]
+[node name="BtnDelete" type="Button" parent="HLayout/Layout" unique_id=707707714]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Remove"
+
+[node name="HSeparator" type="HSeparator" parent="HLayout" unique_id=771303430]
+layout_mode = 2
+theme_override_constants/separation = 8
