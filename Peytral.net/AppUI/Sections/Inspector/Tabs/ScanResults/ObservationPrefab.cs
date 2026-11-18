@@ -9,6 +9,8 @@ public partial class ObservationPrefab : PanelContainer, IPoolItem
   [Export]
   public Label ContentLabel;
   [Export]
+  public Label ScannerNameLabel;
+  [Export]
   public Label LocationLabel;
   [Export, ExportGroup("Images")]
   public TextureRect AlertIcon;
@@ -21,6 +23,7 @@ public partial class ObservationPrefab : PanelContainer, IPoolItem
   {
     SummaryLabel.Text = obs.Summary;
     ContentLabel.Text = obs.Description;
+    ScannerNameLabel.Text = $"Detected by: {obs.ScannerName}";
     LocationLabel.Text = $"Detected in: {obs.Location}";
 
     AlertIcon.Visible = obs.Severity == SeverityLevel.Alert || obs.Severity == SeverityLevel.Critical;
