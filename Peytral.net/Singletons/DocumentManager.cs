@@ -10,16 +10,9 @@ using Godot;
 public partial class DocumentManager
 {
   public static IEnumerable<ScanResult> LastScanResults { get; private set; }
-  private static readonly string CacheDirectory = ConfigManager.CurrentConfig.CacheDirectory;
   public static event Action<IEnumerable<ScanResult>> OnScanCompleted;
   public static event Action OnDocumentClosed;
   public static event Action<DirectoryInfo, IEnumerable<ScanResult>> OnDocumentSaved;
-
-  static DocumentManager()
-  {
-    GD.Print($"Cache Dir: {CacheDirectory}");
-    AssemblyInspector.SetCacheOptions(ConfigManager.CurrentConfig.CacheEnabled, CacheDirectory);
-  }
 
   public static async Task ScanSingleFile(string path)
   {

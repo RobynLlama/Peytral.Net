@@ -58,30 +58,41 @@ public partial class InspectorSection : VBoxContainer
     foreach (var result in DocumentManager.LastScanResults)
     {
       var prefix = result.Context.VirtualProject.KeyPrefix + '/';
-      foreach (var item in result.Context.VirtualProject)
+
+      if (ConfigManager.CurrentConfig.ExportIncludesFileTrees)
       {
-        var fileName = item.Key.TrimPrefix(prefix);
-        using var writer = new StreamWriter(zip.CreateEntry(Path.Combine(prefix, "project", fileName)).Open());
-        writer.Write(item.Value);
+        foreach (var item in result.Context.VirtualProject)
+        {
+          var fileName = item.Key.TrimPrefix(prefix);
+          using var writer = new StreamWriter(zip.CreateEntry(Path.Combine(prefix, "project", fileName)).Open());
+          writer.Write(item.Value);
+        }
       }
 
-      foreach (var item in result.Observations.OfType<ResourceObservation>())
+      if (ConfigManager.CurrentConfig.ExportIncludesResources)
       {
-        using var writer = zip.CreateEntry(Path.Combine(prefix, "resources", item.ResourceName)).Open();
-        writer.Write(item.ResourceData);
+        foreach (var item in result.Observations.OfType<ResourceObservation>())
+        {
+          using var writer = zip.CreateEntry(Path.Combine(prefix, "resources", item.ResourceName)).Open();
+          writer.Write(item.ResourceData);
+        }
       }
 
-      using var obsWriter = new StreamWriter(zip.CreateEntry(Path.Combine(prefix, "observations.txt")).Open());
-      foreach (var item in result.Observations)
+      if (ConfigManager.CurrentConfig.ExportIncludesObservations)
       {
-        obsWriter.Write($"""
+        using var obsWriter = new StreamWriter(zip.CreateEntry(Path.Combine(prefix, "observations.txt")).Open());
+        foreach (var item in result.Observations)
+        {
+          obsWriter.Write($"""
         {item.GetType().Name} ({item.Severity}) — {item.Summary}
         Detected By: {item.ScannerName}
         Message: {item.Description}
 
 
         """);
+        }
       }
+
     }
   }
 }

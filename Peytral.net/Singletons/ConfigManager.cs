@@ -1,4 +1,5 @@
 using System.IO;
+using AssemblyInspect;
 using Godot;
 
 public static class ConfigManager
@@ -12,13 +13,16 @@ public static class ConfigManager
       {
         GD.Print("Loading existing user config");
         CurrentConfig = config;
-        return;
       }
     }
+    else
+    {
+      GD.Print("Creating a new user config");
+      CurrentConfig = new();
+      SaveConfig();
+    }
 
-    GD.Print("Creating a new user config");
-    CurrentConfig = new();
-    SaveConfig();
+    AssemblyInspector.SetCacheOptions(CurrentConfig.CacheEnabled, CurrentConfig.CacheDirectory);
   }
 
   private static readonly string ConfigLocation = Path.Combine(OS.GetUserDataDir(), "UserConfig.tres");
@@ -26,5 +30,6 @@ public static class ConfigManager
   public static void SaveConfig()
   {
     ResourceSaver.Save(CurrentConfig, ConfigLocation);
+    AssemblyInspector.SetCacheOptions(CurrentConfig.CacheEnabled, CurrentConfig.CacheDirectory);
   }
 }
