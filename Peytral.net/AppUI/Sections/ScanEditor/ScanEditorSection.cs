@@ -48,6 +48,23 @@ public partial class ScanEditorSection : VBoxContainer
       ScannerTypeDropdown.SetItemMetadata(idx, item.Key);
       idx++;
     }
+
+    ScannerTypeDropdown.ItemSelected += ChangeScannerType;
+  }
+
+  private void ChangeScannerType(long index)
+  {
+    if (ScannerManager.TryGetScannerData(ScannerTypeDropdown.GetItemMetadata((int)index).AsString(), out var data) && !data.AcceptsInput)
+    {
+      BtnNewPlain.Disabled = true;
+      BtnNewRegex.Disabled = true;
+      ElementList.Clear();
+    }
+    else
+    {
+      BtnNewPlain.Disabled = false;
+      BtnNewRegex.Disabled = false;
+    }
   }
 
   private void SaveScannerResource(string path)

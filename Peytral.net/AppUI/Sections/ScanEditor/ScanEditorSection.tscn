@@ -103,6 +103,7 @@ text = "Scanner Type:  "
 [node name="OptionButton" type="OptionButton" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/TypeContainer" unique_id=2115081692]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Warning: Items marked with an * do not accept input and will clear the input list when selected!"
 alignment = 1
 
 [node name="LblElements" type="Label" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace" unique_id=798244391]
