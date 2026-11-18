@@ -130,31 +130,32 @@ ElementPrefab = ExtResource("3_doxfh")
 metadata/_custom_type_script = "uid://cx6gtuot61vtu"
 
 [node name="Controls" type="HBoxContainer" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace" unique_id=1897043961]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_vertical = 8
 
 [node name="BtnAddPlain" type="Button" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/Controls" unique_id=2012704414]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 8
+size_flags_vertical = 4
 text = "Add PlainText Rule"
 
 [node name="BtnAddRegex" type="Button" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/Controls" unique_id=1524741781]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 8
+size_flags_vertical = 4
 text = "Add Regex Rule"
 
 [node name="BtnSave" type="Button" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/Controls" unique_id=1199977438]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 8
+size_flags_vertical = 4
 text = "Save Scanner"
 
 [node name="BtnClear" type="Button" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/Controls" unique_id=1205608614]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 8
+size_flags_vertical = 4
 text = "Clear Scanner"
 
 [node name="VSeparator" type="VSeparator" parent="PanelContainer/MainSpace" unique_id=1315354170]
@@ -178,9 +179,6 @@ text = "Scan Setup"
 label_settings = SubResource("LabelSettings_5cs5r")
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace" unique_id=1394534365]
-layout_mode = 2
-
 [node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace" unique_id=919621790]
 layout_mode = 2
 size_flags_vertical = 3
@@ -195,14 +193,15 @@ theme_override_styles/panel = ExtResource("2_giu0q")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/separation = 6
 script = ExtResource("5_rwwas")
 FloatingButtonGroup = NodePath("FloatingButtons")
 ScannerPrefab = ExtResource("6_s7g3d")
 AddScannerButton = NodePath("FloatingButtons/BtnAddScanner")
-BtnSaveScannerPack = NodePath("../../../BottomButtonMargins/BottomButtons/BtnSaveScannerPack")
-BtnLoadScannerPack = NodePath("../../../BottomButtonMargins/BottomButtons/BtnLoadScannerPack")
-BtnApplyScannerPack = NodePath("../../../BottomButtonMargins/BottomButtons/BtnApplyScanners")
-BtnResetToCurrentPack = NodePath("../../../BottomButtonMargins/BottomButtons/BtnResetToCurrent")
+BtnSaveScannerPack = NodePath("../../../BottomButtons/BtnSaveScannerPack")
+BtnLoadScannerPack = NodePath("../../../BottomButtons/BtnLoadScannerPack")
+BtnApplyScannerPack = NodePath("../../../BottomButtons/BtnApplyScanners")
+BtnResetToCurrentPack = NodePath("../../../BottomButtons/BtnResetToCurrent")
 AddScannersDialog = NodePath("../../../../../../../AddScannerBox")
 SaveScannerPackDialog = NodePath("../../../../../../../SaveScannerPackageBox")
 LoadScannerPackDialog = NodePath("../../../../../../../LoadScannerPackageBox")
@@ -218,39 +217,37 @@ layout_mode = 2
 size_flags_horizontal = 6
 text = "[ Add Scanner ]"
 
-[node name="BottomButtonMargins" type="MarginContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace" unique_id=1080256060]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="BottomButtons" type="HBoxContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/BottomButtonMargins" unique_id=1261528687]
+[node name="BottomButtons" type="HBoxContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace" unique_id=1261528687]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="BtnSaveScannerPack" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/BottomButtonMargins/BottomButtons" unique_id=95597244]
+[node name="BtnSaveScannerPack" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/BottomButtons" unique_id=95597244]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 tooltip_text = "Save this entire group of scanners to a file"
 text = "Save Scanners"
 
-[node name="BtnLoadScannerPack" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/BottomButtonMargins/BottomButtons" unique_id=453977624]
+[node name="BtnLoadScannerPack" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/BottomButtons" unique_id=453977624]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 tooltip_text = "Load an entire group of scanners from a file.
 
 Note: Does not apply the new scanners, use the [Apply] button for that"
 text = "Load Scanners"
 
-[node name="BtnResetToCurrent" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/BottomButtonMargins/BottomButtons" unique_id=736739348]
+[node name="BtnResetToCurrent" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/BottomButtons" unique_id=736739348]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 tooltip_text = "Resets the display to the scanners currently being used by the inspector"
 text = "Reset Scanners"
 
-[node name="BtnApplyScanners" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/BottomButtonMargins/BottomButtons" unique_id=959949788]
+[node name="BtnApplyScanners" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/BottomButtons" unique_id=959949788]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 tooltip_text = "Sets the current list of scanners to be used by the scan action in the inspector panel"
 text = "Apply"
 

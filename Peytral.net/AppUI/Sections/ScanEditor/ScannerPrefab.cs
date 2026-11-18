@@ -2,7 +2,7 @@ using System;
 using Godot;
 
 [GlobalClass]
-public partial class ScannerPrefab : MarginContainer, IPoolItem
+public partial class ScannerPrefab : PanelContainer, IPoolItem
 {
   public ScannerData OwnedScanner;
 

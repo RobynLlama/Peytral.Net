@@ -2,43 +2,56 @@
 
 [ext_resource type="Script" uid="uid://c73em2pg7j3wf" path="res://AppUI/Sections/ScanEditor/ScannerPrefab.cs" id="1_wqutp"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_4kjak"]
-font_size = 24
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wqutp"]
+bg_color = Color(0, 0, 0, 0.1254902)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 4
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 0.5019608)
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
-[node name="ScannerPrefab" type="MarginContainer" unique_id=118108002 node_paths=PackedStringArray("ScannerName", "BtnDelete")]
+[sub_resource type="LabelSettings" id="LabelSettings_4kjak"]
+font_size = 20
+
+[node name="ScannerPrefab" type="PanelContainer" unique_id=1074164286 node_paths=PackedStringArray("ScannerName", "BtnDelete")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_wqutp")
 script = ExtResource("1_wqutp")
-ScannerName = NodePath("HLayout/Layout/LblScannerName")
-BtnDelete = NodePath("HLayout/Layout/BtnDelete")
+ScannerName = NodePath("Margin/HLayout/Layout/LblScannerName")
+BtnDelete = NodePath("Margin/HLayout/Layout/BtnDelete")
 metadata/_custom_type_script = "uid://c73em2pg7j3wf"
 
-[node name="HLayout" type="VBoxContainer" parent="." unique_id=904129350]
+[node name="Margin" type="MarginContainer" parent="." unique_id=1203516130]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="HLayout" type="VBoxContainer" parent="Margin" unique_id=904129350]
 layout_mode = 2
 
-[node name="Layout" type="HBoxContainer" parent="HLayout" unique_id=1239644713]
+[node name="Layout" type="HBoxContainer" parent="Margin/HLayout" unique_id=1239644713]
 layout_mode = 2
 
-[node name="LblScannerName" type="Label" parent="HLayout/Layout" unique_id=1046199664]
+[node name="LblScannerName" type="Label" parent="Margin/HLayout/Layout" unique_id=1046199664]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 6.0
 text = "Scanner Name"
 label_settings = SubResource("LabelSettings_4kjak")
-horizontal_alignment = 1
 
-[node name="BtnDelete" type="Button" parent="HLayout/Layout" unique_id=707707714]
+[node name="BtnDelete" type="Button" parent="Margin/HLayout/Layout" unique_id=707707714]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Remove"
-
-[node name="HSeparator" type="HSeparator" parent="HLayout" unique_id=771303430]
-layout_mode = 2
-theme_override_constants/separation = 8

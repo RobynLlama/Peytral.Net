@@ -8,6 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://da0yt3ttuljon" path="res://AppUI/Sections/Inspector/Tabs/ScanResults/ScanResultsTab.tscn" id="5_js41s"]
 [ext_resource type="PackedScene" uid="uid://gsyf4s8pr4dd" path="res://AppUI/Sections/Inspector/Tabs/ResourceView/ResourceViewTab.tscn" id="6_g76l4"]
 [ext_resource type="PackedScene" uid="uid://bu5ioy27taofa" path="res://AppUI/Sections/Inspector/Tabs/SourceView/SourceViewTab.tscn" id="7_12ou4"]
+[ext_resource type="Texture2D" uid="uid://dj7xsk33q74ua" path="res://icon.png" id="9_y56gs"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_l388k"]
+font_size = 18
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="InspectorSection" type="VBoxContainer" unique_id=1511083990 node_paths=PackedStringArray("BtnNew", "BtnSave", "BtnClose", "BtnSwitch", "OpenFileSelector", "SaveReportSelector")]
 custom_minimum_size = Vector2(32, 32)
@@ -98,6 +104,42 @@ layout_mode = 2
 [node name="BotSep" type="HSeparator" parent="." unique_id=1119811043]
 visible = false
 layout_mode = 2
+
+[node name="StatusContainer" type="MarginContainer" parent="." unique_id=1808088833]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="StatusBar" type="HBoxContainer" parent="StatusContainer" unique_id=1204879221]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="CenteredIcon" type="CenterContainer" parent="StatusContainer/StatusBar" unique_id=1563722212]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="IconTexture" type="TextureRect" parent="StatusContainer/StatusBar/CenteredIcon" unique_id=1054469991]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("9_y56gs")
+expand_mode = 1
+
+[node name="TitleLabel" type="Label" parent="StatusContainer/StatusBar" unique_id=1904835442]
+layout_mode = 2
+text = "Peytral.Net Assembly Inspector"
+label_settings = SubResource("LabelSettings_l388k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="StatusContainer/StatusBar" unique_id=80532132]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Ready"
+vertical_alignment = 1
 
 [node name="OpenFileDialog" type="FileDialog" parent="." unique_id=1794270645]
 oversampling_override = 1.0
