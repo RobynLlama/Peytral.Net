@@ -224,3 +224,4 @@ node_modules/
 samples/*.dll
 *.txt
 Peytral.net/.vscode/settings.json
+artifacts/*
