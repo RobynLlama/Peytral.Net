@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://crk7u18wcc2nx" path="res://AppUI/WorkingPanel.tscn" id="4_jeqyd"]
 [ext_resource type="PackedScene" uid="uid://ewjq1stpqp5" path="res://AppUI/Sections/ScanEditor/ScanEditorSection.tscn" id="4_k58v0"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y4xg4"]
+bg_color = Color(0, 0, 0, 0.5019608)
+
 [node name="Main" type="PanelContainer" unique_id=774995434 node_paths=PackedStringArray("Inspector", "ScanEditor")]
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,4 +35,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="WorkingPanel" parent="." unique_id=1360715364 instance=ExtResource("4_jeqyd")]
+visible = true
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y4xg4")
