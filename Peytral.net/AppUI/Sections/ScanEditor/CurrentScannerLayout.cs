@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Godot;
 
+[GlobalClass]
 public partial class CurrentScannerLayout : VBoxContainer
 {
   [Export]

@@ -191,7 +191,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = ExtResource("2_giu0q")
 
-[node name="CurrentScannerLayout" type="VBoxContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/ScrollContainer/PanelContainer" unique_id=75198762 node_paths=PackedStringArray("FloatingButtonGroup", "AddScannerButton", "AddScannersDialog")]
+[node name="CurrentScannerLayout" type="VBoxContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/ScrollContainer/PanelContainer" unique_id=888122494 node_paths=PackedStringArray("FloatingButtonGroup", "AddScannerButton", "AddScannersDialog")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -200,6 +200,7 @@ FloatingButtonGroup = NodePath("FloatingButtons")
 AddScannerButton = NodePath("FloatingButtons/BtnAddScanner")
 AddScannersDialog = NodePath("../../../../../../../AddScannerBox")
 ScannerPrefab = ExtResource("6_s7g3d")
+metadata/_custom_type_script = "uid://v68y2a7u72w"
 
 [node name="FloatingButtons" type="MarginContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/ScrollContainer/PanelContainer/CurrentScannerLayout" unique_id=229409033]
 layout_mode = 2
