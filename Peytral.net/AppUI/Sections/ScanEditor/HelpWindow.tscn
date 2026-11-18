@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://djrcdm2x7ayg8"]
+
+[ext_resource type="Script" uid="uid://dynrbtncssnei" path="res://AppUI/Sections/ScanEditor/HelpWindow.cs" id="1_h58ep"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_h58ep"]
+size = Vector2(0, 0)
+
+[node name="HelpWindow" type="Window" unique_id=5815288 node_paths=PackedStringArray("BtnClose", "TextArea")]
+oversampling_override = 1.0
+title = "Scanner Help"
+position = Vector2i(0, 36)
+size = Vector2i(960, 540)
+visible = false
+force_native = true
+theme_override_icons/close = SubResource("PlaceholderTexture2D_h58ep")
+script = ExtResource("1_h58ep")
+BtnClose = NodePath("PanelContainer/MarginContainer/VBoxContainer/BtnClose")
+TextArea = NodePath("PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/TextContents")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1690967063]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1643655934]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=605881196]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1236898455]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="TextContents" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer" unique_id=148613424]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+
+[node name="BtnClose" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1343365720]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Thanks!"

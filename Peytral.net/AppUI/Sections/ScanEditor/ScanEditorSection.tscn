@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://ewjq1stpqp5"]
 
 [ext_resource type="Script" uid="uid://bxja07od8ymgh" path="res://AppUI/Sections/ScanEditor/ScanEditorSection.cs" id="1_xpt2h"]
+[ext_resource type="Texture2D" uid="uid://b4oo6iegjt4jo" path="res://AppUI/Sections/ScanEditor/Help.png" id="2_3ve15"]
 [ext_resource type="StyleBox" uid="uid://nqxqjv7bf4os" path="res://AppUI/Sections/ScanEditor/PanelBox.tres" id="2_giu0q"]
 [ext_resource type="Script" uid="uid://cx6gtuot61vtu" path="res://AppUI/Sections/ScanEditor/ScannerElementList.cs" id="2_wh3nj"]
 [ext_resource type="PackedScene" uid="uid://bkewrytjb3lvt" path="res://AppUI/Sections/ScanEditor/ScanElementPrefab.tscn" id="3_doxfh"]
 [ext_resource type="Script" uid="uid://v68y2a7u72w" path="res://AppUI/Sections/ScanEditor/CurrentScannerLayout.cs" id="5_rwwas"]
 [ext_resource type="PackedScene" uid="uid://ba3gnfu6t1v6h" path="res://AppUI/Sections/ScanEditor/ScannerPrefab.tscn" id="6_s7g3d"]
+[ext_resource type="PackedScene" uid="uid://djrcdm2x7ayg8" path="res://AppUI/Sections/ScanEditor/HelpWindow.tscn" id="8_up0iv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5cs5r"]
 font_size = 24
@@ -13,7 +15,7 @@ font_size = 24
 [sub_resource type="LabelSettings" id="LabelSettings_wh3nj"]
 font_size = 20
 
-[node name="ScanEditor" type="VBoxContainer" unique_id=270031207 node_paths=PackedStringArray("ElementList", "ScannerTypeDropdown", "SaveDialog", "ScannerName", "BtnSwitch", "BtnNewPlain", "BtnNewRegex", "BtnSave", "BtnClear")]
+[node name="ScanEditor" type="VBoxContainer" unique_id=270031207 node_paths=PackedStringArray("ElementList", "ScannerTypeDropdown", "SaveDialog", "HelpDialog", "ScannerName", "BtnSwitch", "BtnNewPlain", "BtnNewRegex", "BtnSave", "BtnClear", "BtnHelp")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -23,12 +25,14 @@ script = ExtResource("1_xpt2h")
 ElementList = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScrollContainer/Panel/ScannerElementList")
 ScannerTypeDropdown = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/TypeContainer/OptionButton")
 SaveDialog = NodePath("SaveScannerBox")
+HelpDialog = NodePath("HelpWindow")
 ScannerName = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/NameContainer/NameInput")
 BtnSwitch = NodePath("EditorQuickbarPanel/QuickbarLayout/BtnSwitch")
 BtnNewPlain = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/Controls/BtnAddPlain")
 BtnNewRegex = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/Controls/BtnAddRegex")
 BtnSave = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/Controls/BtnSave")
 BtnClear = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/Controls/BtnClear")
+BtnHelp = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/TypeContainer/BtnHelp")
 metadata/_custom_type_script = "uid://bxja07od8ymgh"
 
 [node name="EditorQuickbarPanel" type="MarginContainer" parent="." unique_id=1333291247]
@@ -105,6 +109,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Warning: Items marked with an * do not accept input and will clear the input list when selected!"
 alignment = 1
+
+[node name="BtnHelp" type="Button" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/TypeContainer" unique_id=589589181]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "Provides help information for the currently selected scanner type"
+icon = ExtResource("2_3ve15")
+flat = true
+expand_icon = true
 
 [node name="LblElements" type="Label" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace" unique_id=798244391]
 layout_mode = 2
@@ -299,3 +311,6 @@ display_mode = 1
 access = 2
 filters = PackedStringArray("*.tres")
 use_native_dialog = true
+
+[node name="HelpWindow" parent="." unique_id=5815288 instance=ExtResource("8_up0iv")]
+visible = false

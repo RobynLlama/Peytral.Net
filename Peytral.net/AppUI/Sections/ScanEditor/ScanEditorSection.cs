@@ -12,6 +12,8 @@ public partial class ScanEditorSection : VBoxContainer
   [Export]
   public FileDialog SaveDialog;
   [Export]
+  public HelpWindow HelpDialog;
+  [Export]
   public LineEdit ScannerName;
 
   [Export, ExportGroup("Buttons")]
@@ -24,6 +26,8 @@ public partial class ScanEditorSection : VBoxContainer
   public Button BtnSave;
   [Export]
   public Button BtnClear;
+  [Export]
+  public Button BtnHelp;
 
 
   public override void _Ready()
@@ -50,6 +54,16 @@ public partial class ScanEditorSection : VBoxContainer
     }
 
     ScannerTypeDropdown.ItemSelected += ChangeScannerType;
+    BtnHelp.Pressed += ShowHelpPage;
+  }
+
+  private void ShowHelpPage()
+  {
+    if (!ScannerManager.TryGetScannerData(ScannerTypeDropdown.GetItemMetadata(ScannerTypeDropdown.Selected).AsString(), out var data) && !data.AcceptsInput)
+      return;
+
+    HelpDialog.TextArea.Text = data.HelpText;
+    HelpDialog.PopupCentered();
   }
 
   private void ChangeScannerType(long index)
