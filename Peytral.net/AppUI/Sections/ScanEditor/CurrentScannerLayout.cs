@@ -81,7 +81,7 @@ public partial class CurrentScannerLayout : VBoxContainer
 
   private void LoadScannerPackagePicked(string path)
   {
-    if (ResourceLoader.Load<ScannerPackage>(path) is ScannerPackage pack)
+    if (ResourceLoader.Load<ScannerPackage>(path, null, ResourceLoader.CacheMode.IgnoreDeep) is ScannerPackage pack)
     {
       Clear();
       foreach (var scanner in pack.Scanners)
@@ -127,7 +127,7 @@ public partial class CurrentScannerLayout : VBoxContainer
   {
     foreach (var file in paths)
     {
-      if (ResourceLoader.Load<ScannerData>(file) is not ScannerData data)
+      if (ResourceLoader.Load<ScannerData>(file, null, ResourceLoader.CacheMode.IgnoreDeep) is not ScannerData data)
       {
         GD.PrintErr($"Unable to load scanner from path: {file}");
         continue;
