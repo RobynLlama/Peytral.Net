@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ds7c0on63p52a"
-path="res://.godot/imported/SaveReport.png-7c3d44532cb5f9aa52f6d32a5ae894dd.ctex"
+uid="uid://duxm44sbgjwu1"
+path="res://.godot/imported/Warning.png-b78aedaf898e27bb4928309db6b77feb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/SaveReport.png"
-dest_files=["res://.godot/imported/SaveReport.png-7c3d44532cb5f9aa52f6d32a5ae894dd.ctex"]
+source_file="res://AppUI/Sections/Inspector/Tabs/Warning.png"
+dest_files=["res://.godot/imported/Warning.png-b78aedaf898e27bb4928309db6b77feb.ctex"]
 
 [params]
 
