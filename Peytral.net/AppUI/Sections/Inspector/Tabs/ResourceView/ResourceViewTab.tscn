@@ -1,18 +1,19 @@
 [gd_scene format=3 uid="uid://gsyf4s8pr4dd"]
 
 [ext_resource type="Script" uid="uid://c353ggng73bh7" path="res://AppUI/Sections/Inspector/Tabs/ResourceView/ResourceViewTab.cs" id="1_yhbbn"]
+[ext_resource type="StyleBox" uid="uid://cwcs3j2d6guk6" path="res://AppUI/Sections/Inspector/SharedToptionsBox.tres" id="2_7wwar"]
 [ext_resource type="PackedScene" uid="uid://bbpfrweboh2rr" path="res://AppUI/Sections/Inspector/Tabs/ResourceView/ResourceViewPrefab.tscn" id="2_jggjo"]
 [ext_resource type="Script" uid="uid://cd2fpxad0x3e6" path="res://AppUI/Sections/Inspector/Tabs/ResourceView/ResourceListBox.cs" id="3_a25lw"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yw06a"]
+[sub_resource type="LabelSettings" id="LabelSettings_a25lw"]
+font_size = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7wwar"]
 bg_color = Color(0.6, 0.6, 0.6, 0.09411765)
 border_width_top = 8
 border_color = Color(0.5019608, 0.5019608, 0.5019608, 0.5019608)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
-
-[sub_resource type="LabelSettings" id="LabelSettings_a25lw"]
-font_size = 22
 
 [node name="Resource View" type="MarginContainer" unique_id=1939364646 node_paths=PackedStringArray("ResourcesLabel", "ResourceList")]
 anchors_preset = 15
@@ -25,35 +26,33 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 script = ExtResource("1_yhbbn")
-ResourcesLabel = NodePath("Layout/Header/PanelSep/Toptions/CountLabel")
+ResourcesLabel = NodePath("Layout/Toptions/Toptions/CountLabel")
 ResourceList = NodePath("Layout/ResourceScrollBox/ResourceListBox")
 metadata/_tab_index = 2
 
 [node name="Layout" type="VBoxContainer" parent="." unique_id=2123384490]
 layout_mode = 2
 
-[node name="Header" type="VBoxContainer" parent="Layout" unique_id=1112721381]
+[node name="Toptions" type="PanelContainer" parent="Layout" unique_id=777991921]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_7wwar")
+
+[node name="Toptions" type="VBoxContainer" parent="Layout/Toptions" unique_id=1545254594]
 layout_mode = 2
 
-[node name="PanelSep" type="PanelContainer" parent="Layout/Header" unique_id=777991921]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_yw06a")
-
-[node name="Toptions" type="VBoxContainer" parent="Layout/Header/PanelSep" unique_id=1545254594]
-layout_mode = 2
-
-[node name="HeaderLabel" type="Label" parent="Layout/Header/PanelSep/Toptions" unique_id=505704308]
+[node name="HeaderLabel" type="Label" parent="Layout/Toptions/Toptions" unique_id=505704308]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Assembly Resources"
 label_settings = SubResource("LabelSettings_a25lw")
 horizontal_alignment = 1
 
-[node name="CountLabel" type="Label" parent="Layout/Header/PanelSep/Toptions" unique_id=924424377]
+[node name="CountLabel" type="Label" parent="Layout/Toptions/Toptions" unique_id=924424377]
 layout_mode = 2
 horizontal_alignment = 1
 
-[node name="SaveAllButton" type="CheckButton" parent="Layout/Header/PanelSep/Toptions" unique_id=1305471678]
+[node name="SaveAllButton" type="CheckButton" parent="Layout/Toptions/Toptions" unique_id=1305471678]
+visible = false
 layout_direction = 3
 layout_mode = 2
 size_flags_horizontal = 0
@@ -72,10 +71,10 @@ ResourcePrefab = ExtResource("2_jggjo")
 ResourceFileSelector = NodePath("../../../FileDialog")
 metadata/_custom_type_script = "uid://cd2fpxad0x3e6"
 
-[node name="PanelSep" type="PanelContainer" parent="Layout" unique_id=2070082331]
+[node name="BottomBoard" type="PanelContainer" parent="Layout" unique_id=223183213]
 custom_minimum_size = Vector2(0, 12)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_yw06a")
+theme_override_styles/panel = SubResource("StyleBoxFlat_7wwar")
 
 [node name="FileDialog" type="FileDialog" parent="." unique_id=1582315101]
 oversampling_override = 1.0

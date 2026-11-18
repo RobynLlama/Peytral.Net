@@ -1,8 +1,19 @@
 [gd_scene format=3 uid="uid://da0yt3ttuljon"]
 
 [ext_resource type="Script" uid="uid://b4yjre132nlnf" path="res://AppUI/Sections/Inspector/Tabs/ScanResults/ScanResultsTab.cs" id="1_rssam"]
+[ext_resource type="StyleBox" uid="uid://cwcs3j2d6guk6" path="res://AppUI/Sections/Inspector/SharedToptionsBox.tres" id="2_5rjvy"]
 [ext_resource type="PackedScene" uid="uid://b87vckx4a4yud" path="res://AppUI/Sections/Inspector/Tabs/ScanResults/ObservationPrefab.tscn" id="2_weaon"]
 [ext_resource type="Script" uid="uid://cve6ceo1guin6" path="res://AppUI/Sections/Inspector/Tabs/ScanResults/ObservationList.cs" id="3_q0jd0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5rjvy"]
+font_size = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5rjvy"]
+bg_color = Color(0.6, 0.6, 0.6, 0.09411765)
+border_width_top = 8
+border_color = Color(0.5019608, 0.5019608, 0.5019608, 0.5019608)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
 
 [node name="Scan Results" type="MarginContainer" unique_id=335934787 node_paths=PackedStringArray("ObsContainer")]
 anchors_preset = 15
@@ -23,6 +34,21 @@ metadata/_tab_index = 1
 [node name="Layout" type="VBoxContainer" parent="." unique_id=1630132632]
 layout_mode = 2
 
+[node name="TopBoat" type="PanelContainer" parent="Layout" unique_id=632440680]
+custom_minimum_size = Vector2(0, 66)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_5rjvy")
+
+[node name="Toptions" type="VBoxContainer" parent="Layout/TopBoat" unique_id=474092360]
+layout_mode = 2
+
+[node name="HeaderLabel" type="Label" parent="Layout/TopBoat/Toptions" unique_id=1953744706]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Scan Results"
+label_settings = SubResource("LabelSettings_5rjvy")
+horizontal_alignment = 1
+
 [node name="ScrollContainer" type="ScrollContainer" parent="Layout" unique_id=875102721]
 layout_mode = 2
 size_flags_vertical = 3
@@ -36,3 +62,8 @@ size_flags_vertical = 3
 script = ExtResource("3_q0jd0")
 Prefab = ExtResource("2_weaon")
 metadata/_custom_type_script = "uid://cve6ceo1guin6"
+
+[node name="BottomBoard" type="PanelContainer" parent="Layout" unique_id=51517040]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5rjvy")
