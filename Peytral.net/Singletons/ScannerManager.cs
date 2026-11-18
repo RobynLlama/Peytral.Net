@@ -18,7 +18,10 @@ public static class ScannerManager
   private readonly static Dictionary<string, ScannerInfo> ScannerFactories = new()
   {
     {"sourceTreeScanner", new("Source Tree Scanner", Build<SourceTreeScannerData>)},
-    {"memberRefScanner", new("Member Reference Scanner", Build<MemberReferenceScannerData>)}
+    {"pInvokeScanner", new("P/Invoke Scanner", Build<PInvokeScannerData>)},
+    {"memberRefScanner", new("Member Reference Scanner", Build<MemberReferenceScannerData>)},
+    {"assemblyRefScanner", new("Assembly Reference Scanner", Build<AssemblyReferenceScannerData>)},
+    {"resourceScanner", new("Assembly Resource Scanner", Build<ResourceScannerData>)},
   };
 
   public static IEnumerable<KeyValuePair<string, ScannerInfo>> EnumerateFactories() =>
