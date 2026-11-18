@@ -7,7 +7,7 @@ using Godot;
 public partial class ScannerPackage : Resource
 {
   [Export]
-  ScannerData[] Scanners;
+  public ScannerData[] Scanners;
 
   public IEnumerable<IAssemblyScanner> BuildScanners =>
     Scanners.Select(x => x.BuildScanner());
