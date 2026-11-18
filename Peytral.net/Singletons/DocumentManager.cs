@@ -43,7 +43,7 @@ public partial class DocumentManager
 
     try
     {
-      LastScanResults = [await AssemblyInspector.ScanAssemblyAsync(ctx, ScannerManager.DefaultScanners)];
+      LastScanResults = [await AssemblyInspector.ScanAssemblyAsync(ctx, ScannerManager.CurrentScanners.BuildScanners)];
     }
     catch (Exception ex)
     {
@@ -87,7 +87,7 @@ public partial class DocumentManager
           contexts.Add(new(deflated, item.FullName, new($"{Path.GetFileNameWithoutExtension(item.Name)}~{prefixCount}")));
         }
       }
-      LastScanResults = await AssemblyInspector.ScanAssembliesAsync(contexts, ScannerManager.DefaultScanners);
+      LastScanResults = await AssemblyInspector.ScanAssembliesAsync(contexts, ScannerManager.CurrentScanners.BuildScanners);
     }
     catch (Exception ex)
     {
@@ -102,7 +102,7 @@ public partial class DocumentManager
   public static async Task ScanMany(IEnumerable<ScanContext> contexts)
   {
     CloseDocument();
-    LastScanResults = await AssemblyInspector.ScanAssembliesAsync(contexts, ScannerManager.DefaultScanners);
+    LastScanResults = await AssemblyInspector.ScanAssembliesAsync(contexts, ScannerManager.CurrentScanners.BuildScanners);
     OnScanCompleted?.Invoke(LastScanResults);
   }
 

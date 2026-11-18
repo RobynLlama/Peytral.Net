@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using AssemblyInspect.Scanners;
 using Godot;
 
 public static class ScannerManager
 {
 
-  public static IEnumerable<IAssemblyScanner> DefaultScanners { get; private set; } =
-    ResourceLoader.Load<ScannerPackage>(@"res://Resources/Scanners/DefaultScanners.tres").BuildScanners;
+  private static readonly ScannerPackage DefaultScanners =
+    ResourceLoader.Load<ScannerPackage>(@"res://Resources/Scanners/DefaultScanners.tres");
+
+  public static ScannerPackage CurrentScanners { get; private set; } = DefaultScanners;
 
   private static ScannerData Build<T>() where T : ScannerData, new() =>
       new T();
@@ -25,6 +26,9 @@ public static class ScannerManager
 
   public static void AddScanner(string ID, ScannerInfo info) =>
     ScannerFactories[ID] = info;
+
+  public static void ApplyUserScanners(ScannerPackage package) =>
+    CurrentScanners = package;
 
   public static bool TryCreateScanner(string ID, [NotNullWhen(true)] out ScannerData value)
   {
