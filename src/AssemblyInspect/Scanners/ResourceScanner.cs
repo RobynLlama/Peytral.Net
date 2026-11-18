@@ -126,7 +126,7 @@ public class ResourceScanner : IAssemblyScanner
               if (entry.Key?.ToString() is { } name)
               {
                 reader.GetResourceData(name, out var type, out var data);
-                obs.Add(CheckItem(name, data));
+                obs.Add(CheckItem(name, context.Assembly.Name.Name, data));
               }
             }
           }
@@ -134,17 +134,23 @@ public class ResourceScanner : IAssemblyScanner
 
         //standard embedded resource
         case EmbeddedResource emb:
-          obs.Add(CheckItem(emb.Name, emb.GetResourceData()));
+          obs.Add(CheckItem(emb.Name, context.Assembly.Name.Name, emb.GetResourceData()));
           break;
 
         //link
         case LinkedResource link:
-          obs.Add(new ResourceObservation(ScannerName, SeverityLevel.Message, item.Name, "Linked File", link.File, []));
+          obs.Add(new ResourceObservation(
+            ScannerName, SeverityLevel.Message,
+            item.Name, context.Assembly.Name.Name, "Linked File",
+            $"Linked File points to {link.File}", []));
           break;
 
         //satellite assembly link
         case AssemblyLinkedResource asm:
-          obs.Add(new ResourceObservation(ScannerName, SeverityLevel.Message, item.Name, "Assembly Link", asm.Assembly.FullName, []));
+          obs.Add(new ResourceObservation(
+            ScannerName, SeverityLevel.Message,
+            item.Name, context.Assembly.Name.Name, "Satellite Assembly Link",
+            $"Link Assembly points to {asm.Assembly.FullName}", []));
           break;
       }
     }
@@ -152,14 +158,20 @@ public class ResourceScanner : IAssemblyScanner
     return obs;
   }
 
-  public ResourceObservation CheckItem(string name, byte[] data)
+  public ResourceObservation CheckItem(string name, string location, byte[] data)
   {
     foreach (var pattern in Rules)
     {
       if (pattern.MatchesSequence(data))
-        return pattern.GetObservation(ScannerName, name, data);
+        return new(
+          ScannerName, pattern.Severity,
+          name, location,
+          pattern.Summary, pattern.Analysis, data);
     }
 
-    return new(ScannerName, SeverityLevel.Message, name, "Nothing Unusual", "No unusual signatures in this resource", data);
+    return new(
+      ScannerName, SeverityLevel.Message,
+      name, location,
+      "Nothing Unusual", "No unusual signatures in this resource", data);
   }
 }

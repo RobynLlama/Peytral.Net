@@ -19,6 +19,4 @@ public class BinaryRule(byte[] pattern, string summary, string analysis, Severit
       input.Length >= Pattern.Length &&
       input[..Pattern.Length].SequenceEqual(Pattern);
   }
-
-  public ResourceObservation GetObservation(string scanner, string resourceName, byte[] data) => new(scanner, Severity, resourceName, Summary, Analysis, data);
 }
