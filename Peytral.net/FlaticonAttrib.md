@@ -17,3 +17,5 @@
 <a href="https://www.flaticon.com/free-icons/report" title="report icons">Report icons created by Magnific - Flaticon</a>
 
 <a href="https://www.flaticon.com/free-icons/question-mark" title="question mark icons">Question mark icons created by NajmunNahar - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/in-progress" title="In progress icons">In progress icons created by manshagraphics - Flaticon</a>

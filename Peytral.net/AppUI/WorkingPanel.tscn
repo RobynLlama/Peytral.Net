@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://crk7u18wcc2nx"]
 
 [ext_resource type="Script" uid="uid://cyn854yf1f4do" path="res://AppUI/WorkingPanel.cs" id="1_4j1vx"]
-[ext_resource type="Texture2D" uid="uid://dsyfarv0l5vvr" path="res://Textures/Message.png" id="1_id13x"]
+[ext_resource type="Texture2D" uid="uid://lvuuyqdlpjt8" path="res://AppUI/Spinner.png" id="2_w5syq"]
+[ext_resource type="Script" uid="uid://utf1l7ctjhoc" path="res://AppUI/WorkingSpinner.cs" id="3_fhevk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pw20b"]
 font_size = 48
 
 [node name="WorkingPanel" type="PanelContainer" unique_id=2093562387]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -26,10 +26,11 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="Layout/VBoxContainer/HBoxContainer" unique_id=2019581997]
-custom_minimum_size = Vector2(64, 64)
+custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
-texture = ExtResource("1_id13x")
+texture = ExtResource("2_w5syq")
 expand_mode = 1
+script = ExtResource("3_fhevk")
 
 [node name="WorkingLabel" type="Label" parent="Layout/VBoxContainer/HBoxContainer" unique_id=1583668442]
 layout_mode = 2

@@ -35,6 +35,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="WorkingPanel" parent="." unique_id=1360715364 instance=ExtResource("4_jeqyd")]
-visible = true
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_y4xg4")
