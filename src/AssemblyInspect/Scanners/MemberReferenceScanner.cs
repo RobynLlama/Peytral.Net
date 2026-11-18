@@ -23,12 +23,13 @@ public class MemberReferenceScanner : SimpleScannerBase
       .SelectMany(module => module.GetMemberReferences());
 
     List<Observation> obs = [];
+    var location = $"{context.Assembly.Name.Name} assembly metadata";
 
     foreach (var item in data)
     {
       var name = item.ShortSignature();
-      RunPlainTextMatches(obs, PlainTextRules, name, "Member References");
-      RunRegexMatches(obs, RegexRules, name, "Member References");
+      RunPlainTextMatches(obs, PlainTextRules, name, location);
+      RunRegexMatches(obs, RegexRules, name, location);
     }
 
     return obs;

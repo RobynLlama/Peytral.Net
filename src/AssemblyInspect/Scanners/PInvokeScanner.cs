@@ -27,19 +27,20 @@ public class PInvokeScanner : SimpleScannerBase
       .Where(method => (method.Attributes & MethodAttributes.PInvokeImpl) != 0);
 
     List<Observation> obs = [];
+    var location = $"{context.Assembly.Name.Name} assembly metadata";
 
     foreach (var item in data)
     {
       if (!genericWarning)
       {
         genericWarning = true;
-        obs.Add(new(ScannerName, SeverityLevel.Warning, "Module loads native libraries", "The given module loads native libraries. There are some legitimate reasons for this but any native library use should be scrutinized.", "Assembly Metadata"));
+        obs.Add(new(ScannerName, SeverityLevel.Warning, "Module loads native libraries", "The given module loads native libraries. There are some legitimate reasons for this but any native library use should be scrutinized.", location));
       }
 
       string key = $"{item.PInvokeInfo.Module.Name}::{item.PInvokeInfo.EntryPoint}";
 
-      RunPlainTextMatches(obs, PlainTextRules, key, "P/Invoke References");
-      RunRegexMatches(obs, RegexRules, key, "P/Invoke References");
+      RunPlainTextMatches(obs, PlainTextRules, key, location);
+      RunRegexMatches(obs, RegexRules, key, location);
     }
 
     return obs;

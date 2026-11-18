@@ -30,11 +30,12 @@ public class AssemblyReferencesScanner : SimpleScannerBase
       .ToHashSet();
 
     List<Observation> obs = [];
+    var location = $"{context.Assembly.Name.Name} assembly metadata";
 
     foreach (var item in data)
     {
-      RunPlainTextMatches(obs, PlainTextRules, item, "Assembly References");
-      RunRegexMatches(obs, RegexRules, item, "Assembly References");
+      RunPlainTextMatches(obs, PlainTextRules, item, location);
+      RunRegexMatches(obs, RegexRules, item, location);
     }
 
     return obs;
