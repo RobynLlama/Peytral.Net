@@ -55,7 +55,7 @@ public partial class ProjectTree : Tree
     foreach (var item in depthFirstVTree)
     {
       var fullPath = item.Key;
-      string[] parts = fullPath.Split('/');
+      string[] parts = fullPath.Split(Path.DirectorySeparatorChar);
 
       TreeItem currentParent = root;
       string createdPath = string.Empty;
