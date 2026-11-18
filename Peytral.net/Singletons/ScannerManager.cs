@@ -17,11 +17,11 @@ public static class ScannerManager
 
   private readonly static Dictionary<string, ScannerInfo> ScannerFactories = new()
   {
-    {"sourceTreeScanner", new("Source Tree Scanner", Build<SourceTreeScannerData>)},
-    {"pInvokeScanner", new("P/Invoke Scanner", Build<PInvokeScannerData>)},
-    {"memberRefScanner", new("Member Reference Scanner", Build<MemberReferenceScannerData>)},
-    {"assemblyRefScanner", new("Assembly Reference Scanner", Build<AssemblyReferenceScannerData>)},
-    {"resourceScanner", new("Assembly Resource Scanner", Build<ResourceScannerData>)},
+    {"sourceTreeScanner", new("Source Tree Scanner", Build<SourceTreeScannerData>, true)},
+    {"pInvokeScanner", new("P/Invoke Scanner", Build<PInvokeScannerData>, true)},
+    {"memberRefScanner", new("Member Reference Scanner", Build<MemberReferenceScannerData>, true)},
+    {"assemblyRefScanner", new("Assembly Reference Scanner", Build<AssemblyReferenceScannerData>, true)},
+    {"resourceScanner", new("Assembly Resource Scanner*", Build<ResourceScannerData>, false)},
   };
 
   public static IEnumerable<KeyValuePair<string, ScannerInfo>> EnumerateFactories() =>
@@ -44,5 +44,17 @@ public static class ScannerManager
 
     return false;
   }
+
+  public static bool TryGetScannerData(string ID, out ScannerInfo value)
+  {
+    if (ScannerFactories.TryGetValue(ID, out var data))
+    {
+      value = data;
+      return true;
+    }
+
+    value = new();
+    return false;
+  }
 }
-public record struct ScannerInfo(string FriendlyName, Func<ScannerData> Constructor);
+public record struct ScannerInfo(string FriendlyName, Func<ScannerData> Constructor, bool AcceptsInput);
