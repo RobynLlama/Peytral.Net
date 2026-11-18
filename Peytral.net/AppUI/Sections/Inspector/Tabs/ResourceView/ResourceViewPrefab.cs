@@ -11,6 +11,8 @@ public partial class ResourceViewPrefab : PanelContainer, IPoolItem
   [Export, ExportGroup("Text")]
   public Label LblName;
   [Export]
+  public Label LblLocation;
+  [Export]
   public Label LblSize;
   [Export]
   public Label LblAnalysis;
@@ -28,6 +30,7 @@ public partial class ResourceViewPrefab : PanelContainer, IPoolItem
   {
     CurrentResource = resource;
     LblName.Text = $"Name: {resource.ResourceName}";
+    LblLocation.Text = $"Location: {resource.ResourceLocation}";
     LblSize.Text = $"Size: {resource.ResourceData.Length:N0} bytes";
     LblAnalysis.Text = $"Analysis: [{resource.Severity}] {resource.Description}";
   }
