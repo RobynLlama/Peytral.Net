@@ -27,6 +27,15 @@ public partial class DocumentManager
     try
     {
       ctx = new(path);
+      Log.LogMessage($"Loading and scanning {Path.GetFileName(path)}");
+    }
+    catch (BadImageFormatException)
+    {
+      Log.LogWarning($"""
+        Unable to scan {Path.GetFileName(path)} it doesn't appear to contain a managed assembly.
+        This is expected when examining native libraries or DLLs from non-dotnet sources.
+        """);
+      return;
     }
     catch (Exception ex)
     {
@@ -80,12 +89,16 @@ public partial class DocumentManager
           {
             contexts.Add(new(deflated, item.FullName, new($"{Path.GetFileNameWithoutExtension(item.Name)}~{prefixCount}")));
           }
-          catch (Exception)
+          catch (BadImageFormatException)
           {
             Log.LogWarning($"""
             Skipping {item.FullName}, it doesn't appear to contain a managed assembly.
             This is expected when examining native libraries or DLLs from non-dotnet sources.
             """);
+          }
+          catch (Exception ex)
+          {
+            Log.LogError($"Encountered a {ex.GetType().Name} while loading {item.FullName}.\n{ex}");
           }
         }
       }
@@ -101,10 +114,38 @@ public partial class DocumentManager
     OnScanCompleted?.Invoke(LastScanResults);
   }
 
-  public static async Task ScanMany(IEnumerable<ScanContext> contexts)
+  public static async Task ScanMany(IEnumerable<string> paths)
   {
     CloseDocument();
-    LastScanResults = await AssemblyInspector.ScanAssembliesAsync(contexts, ScannerManager.CurrentScanners.BuildScanners);
+
+    //validate files
+    List<ScanContext> ctxs = [];
+
+    int prefixes = 0;
+    foreach (var file in paths)
+      if (Path.GetExtension(file).Equals(".dll", StringComparison.OrdinalIgnoreCase))
+      {
+        try
+        {
+          ctxs.Add(new(file, new($"{Path.GetFileNameWithoutExtension(file)}~{++prefixes}")));
+          Log.LogMessage($"Loading and scanning {Path.GetFileName(file)}");
+        }
+        catch (BadImageFormatException)
+        {
+          Log.LogWarning($"""
+            Skipping {file}, it doesn't appear to contain a managed assembly.
+            This is expected when examining native libraries or DLLs from non-dotnet sources.
+            """);
+        }
+        catch (Exception ex)
+        {
+          Log.LogError($"Encountered a {ex.GetType().Name} while loading {file}.\n{ex}");
+        }
+      }
+      else
+        Log.LogWarning($"Ignoring non-assembly file {file}");
+
+    LastScanResults = await AssemblyInspector.ScanAssembliesAsync(ctxs, ScannerManager.CurrentScanners.BuildScanners);
     OnScanCompleted?.Invoke(LastScanResults);
   }
 

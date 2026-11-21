@@ -37,35 +37,13 @@ public partial class MainUI : PanelContainer
           await DocumentManager.ScanZipArchive(file);
           break;
         default:
-          Log.LogWarning($"Unable to service file: {file}");
+          Log.LogMessage($"Unable to service file: {file}");
           break;
       }
     }
     else
     {
-      //validate files
-      List<ScanContext> ctxs = [];
-      int prefixes = 0;
-      foreach (var file in files)
-        if (Path.GetExtension(file).Equals(".dll", StringComparison.OrdinalIgnoreCase))
-        {
-          try
-          {
-            Log.LogMessage($"Loading and scanning {file}");
-            ctxs.Add(new(file, new($"{Path.GetFileNameWithoutExtension(file)}~{++prefixes}")));
-          }
-          catch (Exception)
-          {
-            Log.LogWarning($"""
-            Skipping {file}, it doesn't appear to contain a managed assembly.
-            This is expected when examining native libraries or DLLs from non-dotnet sources.
-            """);
-          }
-        }
-        else
-          Log.LogWarning($"Ignoring non-assembly file {file}");
-
-      await DocumentManager.ScanMany(ctxs);
+      await DocumentManager.ScanMany(files);
     }
   }
 

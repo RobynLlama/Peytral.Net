@@ -48,7 +48,7 @@ public partial class InspectorSection : VBoxContainer
         await DocumentManager.ScanZipArchive(path);
         break;
       default:
-        Log.LogWarning($"Unable to service file file from path: {path}");
+        Log.LogMessage($"Unable to service file file from path: {path}");
         break;
     }
   }
