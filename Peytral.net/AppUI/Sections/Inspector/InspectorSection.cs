@@ -36,7 +36,19 @@ public partial class InspectorSection : VBoxContainer
   private async void AssemblySelected(string path)
   {
     using var busy = WorkingPanel.Instance.GetBusyLock();
-    await DocumentManager.ScanSingleFile(path);
+    var ext = Path.GetExtension(path).ToLowerInvariant();
+    switch (ext)
+    {
+      case ".dll":
+        await DocumentManager.ScanSingleFile(path);
+        break;
+      case ".zip":
+        await DocumentManager.ScanZipArchive(path);
+        break;
+      default:
+        GD.PrintErr($"Unable to service file file from path: {path}");
+        break;
+    }
   }
 
   private void SaveReport(string path)
