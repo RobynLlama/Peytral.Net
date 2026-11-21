@@ -24,6 +24,7 @@ public partial class CurrentScannerLayout : VBoxContainer
   public Button BtnResetToCurrentPack;
 
   private ItemPool<ScannerPrefab> Pool;
+  private Logger.LogSink Log = new("Scanner Layout");
 
   public override void _Ready()
   {
@@ -79,7 +80,7 @@ public partial class CurrentScannerLayout : VBoxContainer
         AddItemToScannerList(scanner);
     }
     else
-      GD.PrintErr($"Unable to load scanners from {path}");
+      Log.LogError($"Unable to load scanners from {path}");
   }
 
   private void SaveScannerPackagePicked(string path)
@@ -91,7 +92,7 @@ public partial class CurrentScannerLayout : VBoxContainer
 
     Error error;
     if ((error = ResourceSaver.Save(package, path)) != Error.Ok)
-      GD.PrintErr($"Unable to save package to {path}\n  Error {error}");
+      Log.LogError($"Unable to save package to {path}\n  Error {error}");
   }
 
   private void ShowScannerPackLoadDialogue()
@@ -120,7 +121,7 @@ public partial class CurrentScannerLayout : VBoxContainer
     {
       if (ResourceLoader.Load<ScannerData>(file, null, ResourceLoader.CacheMode.IgnoreDeep) is not ScannerData data)
       {
-        GD.PrintErr($"Unable to load scanner from path: {file}");
+        Log.LogError($"Unable to load scanner from path: {file}");
         continue;
       }
 

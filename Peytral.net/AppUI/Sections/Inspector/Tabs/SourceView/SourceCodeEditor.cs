@@ -167,7 +167,6 @@ public partial class SourceCodeEditor : CodeEdit
 
     foreach (var item in LastInHighlights)
     {
-      GD.Print($"Item Location: {item.Location}");
       var line = item.LineNumber;
 
       switch (item.Severity)

@@ -114,17 +114,14 @@ public partial class ProjectTree : Tree
     //I bet AsString() and ToString() call the same method tbh
     //but its good to be in the habit for when I expand this later
     var path = selected.GetMetadata(0).AsString();
-    GD.Print($"Selected: {path}");
 
     if (path.Equals(FOLD_ACTION))
     {
-      GD.Print("Performing FOLD_ACTION on item");
       selected.Collapsed = !selected.Collapsed;
       return;
     }
     else if (path.Equals(NO_EDIT))
     {
-      GD.Print("Skipping NO_EDIT item");
       return;
     }
 

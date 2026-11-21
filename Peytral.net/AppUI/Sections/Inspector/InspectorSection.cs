@@ -19,6 +19,8 @@ public partial class InspectorSection : VBoxContainer
   public Button BtnSwitch;
   [Export, ExportGroup("Other")]
   public ConfigWindow Config;
+
+  private readonly Logger.LogSink Log = new("Inspector");
   public override void _Ready()
   {
     BtnNew.Pressed += OpenDialogue;
@@ -46,7 +48,7 @@ public partial class InspectorSection : VBoxContainer
         await DocumentManager.ScanZipArchive(path);
         break;
       default:
-        GD.PrintErr($"Unable to service file file from path: {path}");
+        Log.LogWarning($"Unable to service file file from path: {path}");
         break;
     }
   }
@@ -58,7 +60,7 @@ public partial class InspectorSection : VBoxContainer
 
     if (DocumentManager.LastScanResults is null)
     {
-      GD.PrintErr("Last Scan Results is null in export, did you forget to scan something?");
+      Log.LogError("Last Scan Results is null in export, did you forget to scan something?");
       return;
     }
 

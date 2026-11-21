@@ -14,6 +14,8 @@ public partial class DocumentManager
   public static event Action OnDocumentClosed;
   public static event Action<DirectoryInfo, IEnumerable<ScanResult>> OnDocumentSaved;
 
+  private static readonly Logger.LogSink Log = new("Document Manager");
+
   public static async Task ScanSingleFile(string path)
   {
 
@@ -28,8 +30,7 @@ public partial class DocumentManager
     }
     catch (Exception ex)
     {
-      //Todo: user-facing error handling
-      GD.PrintErr(ex);
+      Log.LogError(ex.ToString());
       return;
     }
 
@@ -39,8 +40,7 @@ public partial class DocumentManager
     }
     catch (Exception ex)
     {
-      //Todo: user-facing error handling
-      GD.PrintErr(ex);
+      Log.LogError(ex.ToString());
       return;
     }
 
@@ -54,7 +54,7 @@ public partial class DocumentManager
 
     if (!info.Exists)
     {
-      GD.PrintErr($"Zip archive does not exist at path: {zipPath}");
+      Log.LogError($"Zip archive does not exist at path: {zipPath}");
       return;
     }
 
@@ -73,7 +73,7 @@ public partial class DocumentManager
           using var itemStream = item.Open();
           var deflated = new MemoryStream();
           itemStream.CopyTo(deflated);
-          GD.Print($"Extracting and scanning {item.FullName}, {deflated.Length}");
+          Log.LogMessage($"Extracting and scanning {item.FullName}, {deflated.Length}");
           deflated.Position = 0;
 
           contexts.Add(new(deflated, item.FullName, new($"{Path.GetFileNameWithoutExtension(item.Name)}~{prefixCount}")));
@@ -84,7 +84,7 @@ public partial class DocumentManager
     catch (Exception ex)
     {
       //todo: care more about this
-      GD.PrintErr(ex);
+      Log.LogError(ex.ToString());
       return;
     }
 

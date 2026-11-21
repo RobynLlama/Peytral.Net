@@ -10,6 +10,8 @@ public partial class MainUI : PanelContainer
   public InspectorSection Inspector;
   [Export]
   public ScanEditorSection ScanEditor;
+
+  private readonly Logger.LogSink Log = new("Main GUI");
   public override void _Ready()
   {
     Inspector.BtnSwitch.Pressed += SwitchToEditor;
@@ -35,7 +37,7 @@ public partial class MainUI : PanelContainer
           await DocumentManager.ScanZipArchive(file);
           break;
         default:
-          GD.PushWarning($"Unable to service file: {file}");
+          Log.LogWarning($"Unable to service file: {file}");
           break;
       }
     }
@@ -48,7 +50,7 @@ public partial class MainUI : PanelContainer
         if (Path.GetExtension(file).Equals(".dll", StringComparison.OrdinalIgnoreCase))
           ctxs.Add(new(file, new($"{Path.GetFileNameWithoutExtension(file)}~{++prefixes}")));
         else
-          GD.PushWarning($"Ignoring non-assembly file {file}");
+          Log.LogWarning($"Ignoring non-assembly file {file}");
 
       await DocumentManager.ScanMany(ctxs);
     }

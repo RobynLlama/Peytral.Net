@@ -4,6 +4,9 @@ using Godot;
 
 public static class ConfigManager
 {
+
+  private static readonly Logger.LogSink Log = new("Config Manager");
+
   static ConfigManager()
   {
     FileInfo cfg = new(ConfigLocation);
@@ -11,13 +14,13 @@ public static class ConfigManager
     {
       if (ResourceLoader.Load<UserConfig>(ConfigLocation, null, ResourceLoader.CacheMode.IgnoreDeep) is UserConfig config)
       {
-        GD.Print("Loading existing user config");
+        Log.LogMessage("Loading existing user config");
         CurrentConfig = config;
       }
     }
     else
     {
-      GD.Print("Creating a new user config");
+      Log.LogMessage("Creating a new user config");
       CurrentConfig = new();
       SaveConfig();
     }

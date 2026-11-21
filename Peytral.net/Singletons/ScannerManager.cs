@@ -9,7 +9,6 @@ public static class ScannerManager
 
   static ScannerManager()
   {
-    GD.Print($"Loading scanners from {ConfigManager.CurrentConfig.DefaultScanners}");
     CurrentScanners = ResourceLoader.Load<ScannerPackage>(ConfigManager.CurrentConfig.DefaultScanners, null, ResourceLoader.CacheMode.IgnoreDeep);
   }
 

@@ -27,6 +27,7 @@ public partial class ScanEditorSection : VBoxContainer
   [Export]
   public Button BtnHelp;
 
+  private readonly Logger.LogSink Log = new("Scan Editor");
 
   public override void _Ready()
   {
@@ -82,11 +83,9 @@ public partial class ScanEditorSection : VBoxContainer
 
   private void SaveScannerResource(string path)
   {
-    GD.Print($"Save resource here: {path}");
-
     if (!ScannerManager.TryCreateScanner(ScannerTypeDropdown.GetItemMetadata(ScannerTypeDropdown.Selected).AsString(), out var scanner))
     {
-      GD.PrintErr("Invalid scanner ID");
+      Log.LogError("Invalid scanner ID!");
       return;
     }
 
