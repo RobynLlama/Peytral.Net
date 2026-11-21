@@ -9,15 +9,12 @@ public partial class ResourceListBox : VBoxContainer
   public PackedScene ResourcePrefab;
   [Export]
   public int InitialPoolSize = 50;
-  [Export]
-  public FileDialog ResourceFileSelector;
 
   private ResourceObservation CurrentResource;
   private ItemPool<ResourceViewPrefab> Pool;
 
   public override void _Ready()
   {
-    ResourceFileSelector.FileSelected += FileSelected;
     Pool = new(CreatePoolItem);
     Pool.SetMinCapacity(InitialPoolSize);
   }
@@ -28,9 +25,10 @@ public partial class ResourceListBox : VBoxContainer
   private void RequestSaveResource(ResourceObservation resource)
   {
     CurrentResource = resource;
-    ResourceFileSelector.CurrentDir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-    ResourceFileSelector.CurrentFile = resource.ResourceName;
-    ResourceFileSelector.PopupCentered();
+    DialogManager.RequestSaveFile(
+      FileSelected,
+      [],
+      Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), resource.ResourceName));
   }
 
   private ResourceViewPrefab CreatePoolItem()

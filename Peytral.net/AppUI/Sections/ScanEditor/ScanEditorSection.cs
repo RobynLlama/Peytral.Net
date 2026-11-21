@@ -10,8 +10,6 @@ public partial class ScanEditorSection : VBoxContainer
   [Export]
   public OptionButton ScannerTypeDropdown;
   [Export]
-  public FileDialog SaveDialog;
-  [Export]
   public HelpWindow HelpDialog;
   [Export]
   public LineEdit ScannerName;
@@ -32,16 +30,17 @@ public partial class ScanEditorSection : VBoxContainer
 
   public override void _Ready()
   {
-    BtnNewPlain.Pressed += () => ElementList.AddNewElement(false);
-    BtnNewRegex.Pressed += () => ElementList.AddNewElement(true);
-    BtnClear.Pressed += ElementList.Clear;
-    BtnSave.Pressed += () => SaveDialog.PopupCentered();
-
     var dataPath = new DirectoryInfo(Path.Combine(OS.GetUserDataDir(), "scanners"));
     dataPath.Create();
 
-    SaveDialog.CurrentPath = Path.Combine(dataPath.FullName, "scanner.tres");
-    SaveDialog.FileSelected += SaveScannerResource;
+    BtnNewPlain.Pressed += () => ElementList.AddNewElement(false);
+    BtnNewRegex.Pressed += () => ElementList.AddNewElement(true);
+    BtnClear.Pressed += ElementList.Clear;
+    BtnSave.Pressed += () =>
+      DialogManager.RequestSaveFile(
+        SaveScannerResource,
+        ["*.tres"],
+        Path.Combine(dataPath.FullName, "scanner.tres"));
 
     var idx = 0;
     ScannerTypeDropdown.Clear();

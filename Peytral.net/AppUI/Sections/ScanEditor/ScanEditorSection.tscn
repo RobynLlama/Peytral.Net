@@ -24,7 +24,7 @@ grow_vertical = 2
 script = ExtResource("1_xpt2h")
 ElementList = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScrollContainer/Panel/ScannerElementList")
 ScannerTypeDropdown = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/TypeContainer/OptionButton")
-SaveDialog = NodePath("SaveScannerBox")
+SaveDialog = NodePath("")
 HelpDialog = NodePath("HelpWindow")
 ScannerName = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/NameContainer/NameInput")
 BtnSwitch = NodePath("EditorQuickbarPanel/QuickbarLayout/BtnSwitch")
@@ -215,9 +215,9 @@ BtnSaveScannerPack = NodePath("../../../BottomButtons/BtnSaveScannerPack")
 BtnLoadScannerPack = NodePath("../../../BottomButtons/BtnLoadScannerPack")
 BtnApplyScannerPack = NodePath("../../../BottomButtons/BtnApplyScanners")
 BtnResetToCurrentPack = NodePath("../../../BottomButtons/BtnResetToCurrent")
-AddScannersDialog = NodePath("../../../../../../../AddScannerBox")
-SaveScannerPackDialog = NodePath("../../../../../../../SaveScannerPackageBox")
-LoadScannerPackDialog = NodePath("../../../../../../../LoadScannerPackageBox")
+AddScannersDialog = NodePath("")
+SaveScannerPackDialog = NodePath("")
+LoadScannerPackDialog = NodePath("")
 metadata/_custom_type_script = "uid://v68y2a7u72w"
 
 [node name="FloatingButtons" type="MarginContainer" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/ScrollContainer/PanelContainer/CurrentScannerLayout" unique_id=229409033]
@@ -264,53 +264,4 @@ size_flags_vertical = 4
 tooltip_text = "Sets the current list of scanners to be used by the scan action in the inspector panel"
 text = "Apply"
 
-[node name="AddScannerBox" type="FileDialog" parent="." unique_id=127283083]
-oversampling_override = 1.0
-mode = 2
-title = "Open File(s)"
-initial_position = 2
-size = Vector2i(1200, 720)
-dialog_hide_on_ok = true
-file_mode = 1
-display_mode = 1
-access = 2
-filters = PackedStringArray("*.tres")
-use_native_dialog = true
-
-[node name="SaveScannerBox" type="FileDialog" parent="." unique_id=193736417]
-oversampling_override = 1.0
-mode = 2
-initial_position = 2
-size = Vector2i(1200, 720)
-dialog_hide_on_ok = true
-display_mode = 1
-access = 2
-filters = PackedStringArray("*.tres")
-use_native_dialog = true
-
-[node name="SaveScannerPackageBox" type="FileDialog" parent="." unique_id=990644055]
-oversampling_override = 1.0
-mode = 2
-initial_position = 2
-size = Vector2i(1200, 720)
-dialog_hide_on_ok = true
-display_mode = 1
-access = 2
-filters = PackedStringArray("*.tres")
-use_native_dialog = true
-
-[node name="LoadScannerPackageBox" type="FileDialog" parent="." unique_id=2044462380]
-oversampling_override = 1.0
-mode = 2
-title = "Open a File"
-initial_position = 2
-size = Vector2i(1200, 720)
-dialog_hide_on_ok = true
-file_mode = 0
-display_mode = 1
-access = 2
-filters = PackedStringArray("*.tres")
-use_native_dialog = true
-
 [node name="HelpWindow" parent="." unique_id=5815288 instance=ExtResource("8_up0iv")]
-visible = false

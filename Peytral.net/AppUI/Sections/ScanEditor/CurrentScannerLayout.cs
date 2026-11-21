@@ -23,24 +23,13 @@ public partial class CurrentScannerLayout : VBoxContainer
   [Export]
   public Button BtnResetToCurrentPack;
 
-  [Export, ExportGroup("Dialogs")]
-  public FileDialog AddScannersDialog;
-  [Export]
-  public FileDialog SaveScannerPackDialog;
-  [Export]
-  public FileDialog LoadScannerPackDialog;
-
   private ItemPool<ScannerPrefab> Pool;
 
   public override void _Ready()
   {
     AddScannerButton.Pressed += ShowScannerFilePicker;
-    AddScannersDialog.FilesSelected += ScannerFilesPicked;
-    AddScannersDialog.FileSelected += file => ScannerFilesPicked([file]);
     BtnLoadScannerPack.Pressed += ShowScannerPackLoadDialogue;
-    LoadScannerPackDialog.FileSelected += LoadScannerPackagePicked;
     BtnSaveScannerPack.Pressed += ShowScannerPackSaveDialogue;
-    SaveScannerPackDialog.FileSelected += SaveScannerPackagePicked;
     BtnApplyScannerPack.Pressed += ApplyScanners;
     BtnResetToCurrentPack.Pressed += ResetScannerPack;
     Pool = new(Constructor);
@@ -75,8 +64,10 @@ public partial class CurrentScannerLayout : VBoxContainer
     var path = new DirectoryInfo(Path.Combine(OS.GetUserDataDir(), "ScannerPacks"));
     path.Create();
 
-    SaveScannerPackDialog.CurrentPath = Path.Combine(path.FullName, "ScannerPack.tres");
-    SaveScannerPackDialog.PopupCentered();
+    DialogManager.RequestSaveFile(
+      SaveScannerPackagePicked,
+      ["*.tres"],
+      Path.Combine(path.FullName, "ScannerPack.tres"));
   }
 
   private void LoadScannerPackagePicked(string path)
@@ -108,11 +99,11 @@ public partial class CurrentScannerLayout : VBoxContainer
     var path = new DirectoryInfo(Path.Combine(OS.GetUserDataDir(), "ScannerPacks"));
     path.Create();
 
-    LoadScannerPackDialog.CurrentPath = Path.Combine(path.FullName, "ScannerPack.tres");
-    LoadScannerPackDialog.PopupCentered();
+    DialogManager.RequestFile(
+      LoadScannerPackagePicked,
+      ["*.tres"],
+      Path.Combine(path.FullName, "ScannerPack.tres"));
   }
-
-
 
   private ScannerPrefab Constructor()
   {
@@ -152,7 +143,9 @@ public partial class CurrentScannerLayout : VBoxContainer
   private void ShowScannerFilePicker()
   {
     var path = Path.Combine(OS.GetUserDataDir(), "scanners", "scanner.tres");
-    AddScannersDialog.CurrentPath = path;
-    AddScannersDialog.PopupCentered();
+    DialogManager.RequestFiles(
+      ScannerFilesPicked,
+      ["*.tres"],
+      path);
   }
 }

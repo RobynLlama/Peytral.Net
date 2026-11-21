@@ -18,32 +18,20 @@ public partial class InspectorSection : VBoxContainer
   [Export]
   public Button BtnSwitch;
   [Export, ExportGroup("Other")]
-  public FileDialog OpenFileSelector;
-  [Export]
-  public FileDialog SaveReportSelector;
-  [Export]
   public ConfigWindow Config;
   public override void _Ready()
   {
     BtnNew.Pressed += OpenDialogue;
     BtnSave.Pressed += OpenExportDialogue;
     BtnClose.Pressed += DocumentManager.CloseDocument;
-    OpenFileSelector.FileSelected += AssemblySelected;
-    SaveReportSelector.FileSelected += SaveReport;
     BtnConfig.Pressed += () => Config.PopupCentered();
   }
 
-  private void OpenDialogue()
-  {
-    OpenFileSelector.CurrentDir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-    OpenFileSelector.PopupCentered();
-  }
+  private void OpenDialogue() =>
+    DialogManager.RequestFile(AssemblySelected, ["*.dll, *.zip"], System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments));
 
-  private void OpenExportDialogue()
-  {
-    SaveReportSelector.CurrentDir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-    SaveReportSelector.PopupCentered();
-  }
+  private void OpenExportDialogue() =>
+    DialogManager.RequestSaveFile(SaveReport, ["*.zip"], Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "results.zip"));
 
   private async void AssemblySelected(string path)
   {
@@ -55,6 +43,13 @@ public partial class InspectorSection : VBoxContainer
   {
     using var working = WorkingPanel.Instance.GetBusyLock();
     using ZipArchive zip = new(new FileStream(path, FileMode.Create, System.IO.FileAccess.ReadWrite), ZipArchiveMode.Create);
+
+    if (DocumentManager.LastScanResults is null)
+    {
+      GD.PrintErr("Last Scan Results is null in export, did you forget to scan something?");
+      return;
+    }
+
     foreach (var result in DocumentManager.LastScanResults)
     {
       var prefix = result.Context.VirtualProject.KeyPrefix + '/';

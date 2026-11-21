@@ -17,7 +17,7 @@ font_size = 18
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
-[node name="InspectorSection" type="VBoxContainer" unique_id=1511083990 node_paths=PackedStringArray("BtnNew", "BtnSave", "BtnClose", "BtnConfig", "BtnSwitch", "OpenFileSelector", "SaveReportSelector", "Config")]
+[node name="InspectorSection" type="VBoxContainer" unique_id=1511083990 node_paths=PackedStringArray("BtnNew", "BtnSave", "BtnClose", "BtnConfig", "BtnSwitch", "Config")]
 custom_minimum_size = Vector2(32, 32)
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,8 +31,6 @@ BtnSave = NodePath("QuickbarPanel/QuickbarLayout/BtnSave")
 BtnClose = NodePath("QuickbarPanel/QuickbarLayout/BtnClose")
 BtnConfig = NodePath("QuickbarPanel/QuickbarLayout/BtnSettings")
 BtnSwitch = NodePath("QuickbarPanel/QuickbarLayout/RightButtons/BtnSwitch")
-OpenFileSelector = NodePath("OpenFileDialog")
-SaveReportSelector = NodePath("SaveProjectDialog")
 Config = NodePath("ConfigWindow")
 metadata/_custom_type_script = "uid://dy2nsqbpo6e8u"
 
@@ -151,31 +149,6 @@ layout_mode = 2
 size_flags_horizontal = 10
 text = "Ready"
 vertical_alignment = 1
-
-[node name="OpenFileDialog" type="FileDialog" parent="." unique_id=1794270645]
-oversampling_override = 1.0
-mode = 2
-title = "Open a File"
-initial_position = 2
-size = Vector2i(1200, 720)
-dialog_hide_on_ok = true
-file_mode = 0
-display_mode = 1
-access = 2
-filters = PackedStringArray("*.dll", "*.exe")
-use_native_dialog = true
-
-[node name="SaveProjectDialog" type="FileDialog" parent="." unique_id=1339724328]
-oversampling_override = 1.0
-mode = 2
-title = "Save Report"
-initial_position = 2
-size = Vector2i(1200, 720)
-dialog_hide_on_ok = true
-display_mode = 1
-access = 2
-filters = PackedStringArray("*.zip")
-use_native_dialog = true
 
 [node name="ConfigWindow" parent="." unique_id=870933045 instance=ExtResource("11_0mamn")]
 visible = false

@@ -68,20 +68,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("3_a25lw")
 ResourcePrefab = ExtResource("2_jggjo")
-ResourceFileSelector = NodePath("../../../FileDialog")
+ResourceFileSelector = NodePath("")
 metadata/_custom_type_script = "uid://cd2fpxad0x3e6"
 
 [node name="BottomBoard" type="PanelContainer" parent="Layout" unique_id=223183213]
 custom_minimum_size = Vector2(0, 12)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_7wwar")
-
-[node name="FileDialog" type="FileDialog" parent="." unique_id=1582315101]
-oversampling_override = 1.0
-mode = 2
-initial_position = 2
-size = Vector2i(1200, 720)
-dialog_hide_on_ok = true
-display_mode = 1
-access = 2
-use_native_dialog = true
