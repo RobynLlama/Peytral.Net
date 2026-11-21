@@ -1,12 +1,7 @@
-# AssemblyInspect
+# Peytral.Net Assembly Scanner
 
-Some code that does junk and stuff.
+Todo List:
+ - Readme file
 
 > [!IMPORTANT]
-> The example tasks are designed for VSCode, if you're using VStudio then all bets are off, sorry
-
-Make sure to see [Samples](samples/ReadMe.md) for task usage or just run the app without arguments for app usage.
-
-```plaintext
-Usage: AssemblyInspect <assembly path>
-```
+> Peytral.GUI is currently in prerelease beta and only ships with example scanners. You will need to create your own to get any use out of it
