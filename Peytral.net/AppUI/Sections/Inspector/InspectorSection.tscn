@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://gsyf4s8pr4dd" path="res://AppUI/Sections/Inspector/Tabs/ResourceView/ResourceViewTab.tscn" id="6_g76l4"]
 [ext_resource type="PackedScene" uid="uid://bu5ioy27taofa" path="res://AppUI/Sections/Inspector/Tabs/SourceView/SourceViewTab.tscn" id="7_12ou4"]
 [ext_resource type="Texture2D" uid="uid://dj7xsk33q74ua" path="res://icon.png" id="9_y56gs"]
+[ext_resource type="PackedScene" uid="uid://c7vaf1nt4o1f1" path="res://AppUI/Sections/Inspector/Tabs/Logging/LoggingTab.tscn" id="10_xwm5q"]
 [ext_resource type="PackedScene" uid="uid://dlrm2oh06w2ov" path="res://AppUI/Sections/Inspector/ConfigWindow/ConfigWindow.tscn" id="11_0mamn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l388k"]
@@ -93,22 +94,31 @@ size_flags_vertical = 3
 [node name="AssemblyDisplay" type="TabContainer" parent="MainSpace" unique_id=31059238]
 layout_mode = 2
 size_flags_horizontal = 3
-current_tab = 0
+current_tab = 1
+
+[node name="Log" parent="MainSpace/AssemblyDisplay" unique_id=1212926837 instance=ExtResource("10_xwm5q")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="Assembly Meta" parent="MainSpace/AssemblyDisplay" unique_id=1159870531 instance=ExtResource("4_x41n8")]
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Scan Results" parent="MainSpace/AssemblyDisplay" unique_id=335934787 instance=ExtResource("5_js41s")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 2
 
 [node name="Resource View" parent="MainSpace/AssemblyDisplay" unique_id=1939364646 instance=ExtResource("6_g76l4")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 3
 
 [node name="Source View" parent="MainSpace/AssemblyDisplay" unique_id=1483884746 instance=ExtResource("7_12ou4")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 4
 
 [node name="BotSep" type="HSeparator" parent="." unique_id=1119811043]
 visible = false

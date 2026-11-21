@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://c7vaf1nt4o1f1"]
+
+[ext_resource type="Script" uid="uid://cqm3srawruw0e" path="res://AppUI/Sections/Inspector/Tabs/Logging/LoggingTab.cs" id="1_ex2vx"]
+[ext_resource type="PackedScene" uid="uid://babudd5vndsu" path="res://AppUI/Sections/Inspector/Tabs/Logging/LogPrefab.tscn" id="2_7omlp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sbmbu"]
+font_size = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7omlp"]
+bg_color = Color(0.6, 0.6, 0.6, 0.1254902)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.13319641, 0.13319641, 0.13319638, 1)
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="LoggingTab" type="MarginContainer" unique_id=1212926837 node_paths=PackedStringArray("BtnOpenLogs", "ItemContainer")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("1_ex2vx")
+BtnOpenLogs = NodePath("PanelContainer/VBoxContainer/HBoxContainer/BtnOpen")
+Prefab = ExtResource("2_7omlp")
+ItemContainer = NodePath("PanelContainer/VBoxContainer/LogScroller/MarginContainer/PanelContainer/ElementContainer")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=287533755]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1572273405]
+layout_mode = 2
+
+[node name="LblSection" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1717074598]
+layout_mode = 2
+text = "Log Output"
+label_settings = SubResource("LabelSettings_sbmbu")
+
+[node name="LogScroller" type="ScrollContainer" parent="PanelContainer/VBoxContainer" unique_id=2051919024]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/LogScroller" unique_id=691143841]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer/LogScroller/MarginContainer" unique_id=1144707607]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_7omlp")
+
+[node name="ElementContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/LogScroller/MarginContainer/PanelContainer" unique_id=2011254073]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1331787657]
+layout_mode = 2
+
+[node name="BtnOpen" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=377013687]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Open Log Folder →"
