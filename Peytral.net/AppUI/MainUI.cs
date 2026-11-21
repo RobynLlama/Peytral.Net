@@ -48,7 +48,20 @@ public partial class MainUI : PanelContainer
       int prefixes = 0;
       foreach (var file in files)
         if (Path.GetExtension(file).Equals(".dll", StringComparison.OrdinalIgnoreCase))
-          ctxs.Add(new(file, new($"{Path.GetFileNameWithoutExtension(file)}~{++prefixes}")));
+        {
+          try
+          {
+            Log.LogMessage($"Loading and scanning {file}");
+            ctxs.Add(new(file, new($"{Path.GetFileNameWithoutExtension(file)}~{++prefixes}")));
+          }
+          catch (Exception)
+          {
+            Log.LogWarning($"""
+            Skipping {file}, it doesn't appear to contain a managed assembly.
+            This is expected when examining native libraries or DLLs from non-dotnet sources.
+            """);
+          }
+        }
         else
           Log.LogWarning($"Ignoring non-assembly file {file}");
 

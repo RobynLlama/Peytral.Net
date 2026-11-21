@@ -76,7 +76,17 @@ public partial class DocumentManager
           Log.LogMessage($"Extracting and scanning {item.FullName}, {deflated.Length}");
           deflated.Position = 0;
 
-          contexts.Add(new(deflated, item.FullName, new($"{Path.GetFileNameWithoutExtension(item.Name)}~{prefixCount}")));
+          try
+          {
+            contexts.Add(new(deflated, item.FullName, new($"{Path.GetFileNameWithoutExtension(item.Name)}~{prefixCount}")));
+          }
+          catch (Exception)
+          {
+            Log.LogWarning($"""
+            Skipping {item.FullName}, it doesn't appear to contain a managed assembly.
+            This is expected when examining native libraries or DLLs from non-dotnet sources.
+            """);
+          }
         }
       }
       LastScanResults = await AssemblyInspector.ScanAssembliesAsync(contexts, ScannerManager.CurrentScanners.BuildScanners);
