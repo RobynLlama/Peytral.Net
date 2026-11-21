@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Godot;
 
-public partial class LoggingTab : MarginContainer
+[GlobalClass]
+public partial class LoggingTab : PanelContainer
 {
   [Export]
   public Button BtnOpenLogs;
@@ -11,7 +12,12 @@ public partial class LoggingTab : MarginContainer
   public PackedScene Prefab;
   [Export]
   public VBoxContainer ItemContainer;
+  [Export]
+  public ScrollContainer Scroller;
+  [Export]
+  public CheckButton BtnAutoScroll;
   private readonly Queue<LogPrefab> LogItems = [];
+  private bool ScrollNeedsUpdate = false;
 
   public override void _Ready()
   {
@@ -24,6 +30,16 @@ public partial class LoggingTab : MarginContainer
       LogItems.Enqueue(child);
     }
     Logger.OnReceivedLog += HandleLog;
+    Scroller.GetVScrollBar().Changed += ScrollView;
+  }
+
+  private void ScrollView()
+  {
+    if (ScrollNeedsUpdate)
+    {
+      Scroller.GetVScrollBar().Value = int.MaxValue;
+      ScrollNeedsUpdate = false;
+    }
   }
 
   private void HandleLog(LogEventArgs args)
@@ -32,6 +48,9 @@ public partial class LoggingTab : MarginContainer
     entry.DisplayLog(args);
     ItemContainer.MoveChild(entry, -1);
     entry.Visible = true;
+
+    if (BtnAutoScroll.ButtonPressed)
+      ScrollNeedsUpdate = true;
   }
 
   private LogPrefab NextChild()

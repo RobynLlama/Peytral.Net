@@ -19,35 +19,55 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="LoggingTab" type="MarginContainer" unique_id=1212926837 node_paths=PackedStringArray("BtnOpenLogs", "ItemContainer")]
+[node name="LoggingTab" type="PanelContainer" unique_id=1081420817 node_paths=PackedStringArray("BtnOpenLogs", "ItemContainer", "Scroller", "BtnAutoScroll")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
 script = ExtResource("1_ex2vx")
 BtnOpenLogs = NodePath("PanelContainer/VBoxContainer/HBoxContainer/BtnOpen")
 Prefab = ExtResource("2_7omlp")
 ItemContainer = NodePath("PanelContainer/VBoxContainer/LogScroller/MarginContainer/PanelContainer/ElementContainer")
+Scroller = NodePath("PanelContainer/VBoxContainer/LogScroller")
+BtnAutoScroll = NodePath("PanelContainer/VBoxContainer/Header/AutoScrollBox/ChkScroll")
+metadata/_custom_type_script = "uid://cqm3srawruw0e"
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=287533755]
+[node name="PanelContainer" type="MarginContainer" parent="." unique_id=348826778]
 layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1572273405]
 layout_mode = 2
 
-[node name="LblSection" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1717074598]
+[node name="Header" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1192623500]
+layout_mode = 2
+
+[node name="LblSection" type="Label" parent="PanelContainer/VBoxContainer/Header" unique_id=1717074598]
 layout_mode = 2
 text = "Log Output"
 label_settings = SubResource("LabelSettings_sbmbu")
 
+[node name="AutoScrollBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer/Header" unique_id=1577825737]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="LblAutoScroll" type="Label" parent="PanelContainer/VBoxContainer/Header/AutoScrollBox" unique_id=451441035]
+layout_mode = 2
+text = "Auto Scroll"
+
+[node name="ChkScroll" type="CheckButton" parent="PanelContainer/VBoxContainer/Header/AutoScrollBox" unique_id=1139026750]
+layout_mode = 2
+size_flags_horizontal = 10
+button_pressed = true
+
 [node name="LogScroller" type="ScrollContainer" parent="PanelContainer/VBoxContainer" unique_id=2051919024]
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/LogScroller" unique_id=691143841]
 layout_mode = 2
