@@ -6,6 +6,8 @@ using Godot;
 public partial class LogPrefab : PanelContainer
 {
   [Export]
+  public Label SenderLabel;
+  [Export]
   public RichTextLabel MessageContent;
 
   public void DisplayLog(LogEventArgs log)
@@ -16,6 +18,7 @@ public partial class LogPrefab : PanelContainer
       SeverityLevel.Warning => "[color=yellow]",
       _ => "[color=lightblue]",
     };
-    MessageContent.Text = $"[{log.Sender}]{color} {log.Message}[/color]";
+    SenderLabel.Text = $"[{log.Sender}]";
+    MessageContent.Text = $"{color}{log.Message}[/color]";
   }
 }

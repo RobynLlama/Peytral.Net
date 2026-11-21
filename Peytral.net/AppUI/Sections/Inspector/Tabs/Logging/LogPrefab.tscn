@@ -2,7 +2,10 @@
 
 [ext_resource type="Script" uid="uid://g3a8ufvnlliy" path="res://AppUI/Sections/Inspector/Tabs/Logging/LogPrefab.cs" id="2_cma42"]
 
-[node name="LogPrefab" type="PanelContainer" unique_id=2134919351 node_paths=PackedStringArray("MessageContent")]
+[sub_resource type="LabelSettings" id="LabelSettings_0cfxm"]
+font_size = 20
+
+[node name="LogPrefab" type="PanelContainer" unique_id=2134919351 node_paths=PackedStringArray("SenderLabel", "MessageContent")]
 custom_minimum_size = Vector2(0, 32)
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +14,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("2_cma42")
-MessageContent = NodePath("Margins/MessageContents")
+SenderLabel = NodePath("Margins/VBoxContainer/LblSender")
+MessageContent = NodePath("Margins/VBoxContainer/MarginContainer/MessageContents")
 metadata/_custom_type_script = "uid://g3a8ufvnlliy"
 
 [node name="Margins" type="MarginContainer" parent="." unique_id=852707088]
@@ -21,10 +25,24 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 12
 
-[node name="MessageContents" type="RichTextLabel" parent="Margins" unique_id=471681724]
+[node name="VBoxContainer" type="VBoxContainer" parent="Margins" unique_id=831104089]
+layout_mode = 2
+
+[node name="LblSender" type="Label" parent="Margins/VBoxContainer" unique_id=263336714]
+layout_mode = 2
+text = "[Sender Name]"
+label_settings = SubResource("LabelSettings_0cfxm")
+
+[node name="MarginContainer" type="MarginContainer" parent="Margins/VBoxContainer" unique_id=1339277005]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 12
+
+[node name="MessageContents" type="RichTextLabel" parent="Margins/VBoxContainer/MarginContainer" unique_id=471681724]
 clip_contents = false
 layout_mode = 2
 size_flags_vertical = 0
-theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
+text = "CONTENTS"
 fit_content = true
