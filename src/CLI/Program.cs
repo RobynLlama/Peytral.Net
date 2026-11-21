@@ -1,12 +1,12 @@
 using System;
 using System.IO;
-using AssemblyInspect;
-using AssemblyInspect.Scanners;
-using AssemblyInspect.Scanners.Models;
+using Peytral;
+using Peytral.Scanners;
+using Peytral.Scanners.Models;
 
 if (args.Length == 0)
 {
-  Console.WriteLine("Usage: AssemblyInspect <assembly path>");
+  Console.WriteLine("Usage: Peytral <assembly path>");
   Environment.ExitCode = -1;
   return;
 }
@@ -24,10 +24,10 @@ IAssemblyScanner[] scanners = [
   new SourceTreeScanner()
   {
     RegexRules = [
-      new(@"using.*;", "Example Regex Rule", "Using statement detected", AssemblyInspect.Observations.SeverityLevel.Message)
+      new(@"using.*;", "Example Regex Rule", "Using statement detected", Peytral.Observations.SeverityLevel.Message)
     ],
     PlainTextRules = [
-      new(@"System.", "Example Plaintext Rule", "System.* detected", AssemblyInspect.Observations.SeverityLevel.Message)
+      new(@"System.", "Example Plaintext Rule", "System.* detected", Peytral.Observations.SeverityLevel.Message)
     ],
   },
   new MemberReferenceScanner()

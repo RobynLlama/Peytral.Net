@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Peytral.Net</AssemblyName>
+
+    <Version>1.0.0</Version>
+    <Nullable>enable</Nullable>
+    <TargetFramework>net8.0</TargetFramework>
+
+    <Authors>Robyn</Authors>
+    <Description>Peytral.Net Assembly Inspection Library</Description>
+    <LangVersion>latest</LangVersion>
+
+    <Product>$(AssemblyName)</Product>
+    <RootNamespace>$(Product)</RootNamespace>
+    <TargetName>$(Product)</TargetName>
+    <AssemblyName>$(Product)</AssemblyName>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ICSharpCode.Decompiler" Version="11.1.0.9782" />
+    <PackageReference Include="Mono.Cecil" Version="0.11.6" />
+  </ItemGroup>
+
+</Project>

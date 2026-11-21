@@ -1,6 +1,6 @@
-using AssemblyInspect.Observations;
-using AssemblyInspect.Scanners;
-using AssemblyInspect.Scanners.Rules;
+using Peytral.Observations;
+using Peytral.Scanners;
+using Peytral.Scanners.Rules;
 
 public static class DemoLists
 {
