@@ -25,6 +25,10 @@ public partial class ConfigWindow : Window
   public Button ResetButton;
   [Export]
   public Button SaveButton;
+  [Export]
+  public Button BtnChooseCacheDir;
+  [Export]
+  public Button BtnChooseDefaultScanners;
   public override void _Ready()
   {
     VisibilityChanged += UpdateValues;
@@ -32,6 +36,17 @@ public partial class ConfigWindow : Window
     ResetButton.Pressed += () => Visible = false;
     ClearCache.Pressed += ClearCacheNow;
     ResetScanners.Pressed += () => DefaultScanners.Text = @"res://Resources/Scanners/DefaultScanners.tres";
+
+    BtnChooseCacheDir.Pressed += () => DialogManager.RequestDirectory(
+      path => CacheLocation.Text = path,
+      Path.Combine(CacheLocation.Text, "dummyFolder")
+    );
+
+    BtnChooseDefaultScanners.Pressed += () => DialogManager.RequestFile(
+      path => DefaultScanners.Text = path,
+      ["*.tres"],
+      Path.Combine(OS.GetUserDataDir(), "ScannerPacks", "MyScanner.tres")
+    );
   }
 
   private void ClearCacheNow()

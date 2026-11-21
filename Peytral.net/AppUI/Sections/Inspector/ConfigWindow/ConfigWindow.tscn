@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dlrm2oh06w2ov"]
 
 [ext_resource type="Script" uid="uid://cc82reedqabk6" path="res://AppUI/Sections/Inspector/ConfigWindow/ConfigWindow.cs" id="1_lf578"]
+[ext_resource type="Texture2D" uid="uid://bjjbky4yb0x3w" path="res://AppUI/Sections/Inspector/ConfigWindow/Folder.png" id="2_17j8m"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7i35y"]
 font_size = 22
@@ -18,7 +19,7 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="ConfigWindow" type="Window" unique_id=870933045 node_paths=PackedStringArray("CacheEnabled", "CacheLocation", "ClearCache", "DefaultScanners", "ResetScanners", "ExportObs", "ExportRes", "ExportSource", "ResetButton", "SaveButton")]
+[node name="ConfigWindow" type="Window" unique_id=870933045 node_paths=PackedStringArray("CacheEnabled", "CacheLocation", "ClearCache", "DefaultScanners", "ResetScanners", "ExportObs", "ExportRes", "ExportSource", "ResetButton", "SaveButton", "BtnChooseCacheDir", "BtnChooseDefaultScanners")]
 oversampling_override = 1.0
 title = "Peytral - Config"
 position = Vector2i(0, 36)
@@ -34,6 +35,8 @@ ExportRes = NodePath("PanelContainer/MarginContainer/VBoxContainer/InnerBorder/S
 ExportSource = NodePath("PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemExport3/BtnFiles")
 ResetButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BtnCancel")
 SaveButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BtnSave")
+BtnChooseCacheDir = NodePath("PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemCacheDir/BtnCacheDir")
+BtnChooseDefaultScanners = NodePath("PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemScannerFile/BtnScannerFile")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=830224022]
 anchors_preset = 15
@@ -108,6 +111,13 @@ custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 text = "Cache Directory:"
 
+[node name="BtnCacheDir" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemCacheDir" unique_id=932537211]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("2_17j8m")
+flat = true
+expand_icon = true
+
 [node name="EditCacheDir" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemCacheDir" unique_id=948703165]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -133,6 +143,13 @@ layout_mode = 2
 [node name="LblScannerFile" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemScannerFile" unique_id=1139571529]
 layout_mode = 2
 text = "Default Scanner File:"
+
+[node name="BtnScannerFile" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemScannerFile" unique_id=80977109]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("2_17j8m")
+flat = true
+expand_icon = true
 
 [node name="EditScannerFile" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/InnerBorder/ScrollContainer/InnerMargins/InnerControls/ItemScannerFile" unique_id=1222074528]
 layout_mode = 2

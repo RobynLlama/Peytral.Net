@@ -10,3 +10,4 @@
 <a href="https://www.flaticon.com/free-icons/question-mark" title="question mark icons">Question mark icons created by NajmunNahar - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/in-progress" title="In progress icons">In progress icons created by manshagraphics - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/ui" title="ui icons">Ui icons created by FR_Media - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/open-folder" title="open folder icons">Open folder icons created by kmg design - Flaticon</a>
