@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Threading.Tasks;
-using Godot;
 using Peytral;
 using Peytral.Scanners.Models;
 
@@ -16,10 +16,26 @@ public partial class DocumentManager
 
   private static readonly Logger.LogSink Log = new("Document Manager");
 
+  public static async Task ScanSingleFile(ScanContext ctx)
+  {
+    CloseDocument();
+
+    try
+    {
+      Log.LogMessage($"Scanning {ctx.Assembly.Name.Name}");
+      LastScanResults = [await AssemblyInspector.ScanAssemblyAsync(ctx, ScannerManager.CurrentScanners.BuildScanners)];
+    }
+    catch (Exception ex)
+    {
+      Log.LogError(ex.ToString());
+      return;
+    }
+
+    OnScanCompleted?.Invoke(LastScanResults);
+  }
+
   public static async Task ScanSingleFile(string path)
   {
-
-    CloseDocument();
     ScanContext ctx;
 
     //This will be needed later after I add proper validation
@@ -27,7 +43,7 @@ public partial class DocumentManager
     try
     {
       ctx = new(path);
-      Log.LogMessage($"Loading and scanning {Path.GetFileName(path)}");
+      Log.LogMessage($"Loading {Path.GetFileName(path)}");
     }
     catch (BadImageFormatException)
     {
@@ -43,17 +59,7 @@ public partial class DocumentManager
       return;
     }
 
-    try
-    {
-      LastScanResults = [await AssemblyInspector.ScanAssemblyAsync(ctx, ScannerManager.CurrentScanners.BuildScanners)];
-    }
-    catch (Exception ex)
-    {
-      Log.LogError(ex.ToString());
-      return;
-    }
-
-    OnScanCompleted?.Invoke(LastScanResults);
+    await ScanSingleFile(ctx);
   }
 
   public static async Task ScanZipArchive(string zipPath)
@@ -67,11 +73,12 @@ public partial class DocumentManager
       return;
     }
 
+    List<ScanContext> contexts = [];
+
     try
     {
       var archiveStream = info.OpenRead();
       using var archive = new ZipArchive(archiveStream);
-      List<ScanContext> contexts = [];
       int prefixCount = 0;
 
       foreach (var item in archive.Entries)
@@ -82,7 +89,7 @@ public partial class DocumentManager
           using var itemStream = item.Open();
           var deflated = new MemoryStream();
           itemStream.CopyTo(deflated);
-          Log.LogMessage($"Extracting and scanning {item.FullName}, {deflated.Length}");
+          Log.LogMessage($"Extracting {item.FullName}, {deflated.Length}");
           deflated.Position = 0;
 
           try
@@ -102,7 +109,6 @@ public partial class DocumentManager
           }
         }
       }
-      LastScanResults = await AssemblyInspector.ScanAssembliesAsync(contexts, ScannerManager.CurrentScanners.BuildScanners);
     }
     catch (Exception ex)
     {
@@ -111,13 +117,26 @@ public partial class DocumentManager
       return;
     }
 
+    await ScanMany(contexts);
+  }
+
+  public static async Task ScanMany(IEnumerable<ScanContext> contexts)
+  {
+    CloseDocument();
+    try
+    {
+      LastScanResults = await AssemblyInspector.ScanAssembliesAsync(contexts, ScannerManager.CurrentScanners.BuildScanners);
+    }
+    catch (Exception ex)
+    {
+      Log.LogError(ex.ToString());
+      return;
+    }
     OnScanCompleted?.Invoke(LastScanResults);
   }
 
   public static async Task ScanMany(IEnumerable<string> paths)
   {
-    CloseDocument();
-
     //validate files
     List<ScanContext> ctxs = [];
 
@@ -128,7 +147,7 @@ public partial class DocumentManager
         try
         {
           ctxs.Add(new(file, new($"{Path.GetFileNameWithoutExtension(file)}~{++prefixes}")));
-          Log.LogMessage($"Loading and scanning {Path.GetFileName(file)}");
+          Log.LogMessage($"Loading {Path.GetFileName(file)}");
         }
         catch (BadImageFormatException)
         {
@@ -145,14 +164,16 @@ public partial class DocumentManager
       else
         Log.LogWarning($"Ignoring non-assembly file {file}");
 
-    LastScanResults = await AssemblyInspector.ScanAssembliesAsync(ctxs, ScannerManager.CurrentScanners.BuildScanners);
-    OnScanCompleted?.Invoke(LastScanResults);
+    await ScanMany(ctxs);
   }
 
   public static void CloseDocument()
   {
     if (LastScanResults is null)
       return;
+
+    foreach (var item in LastScanResults)
+      item.Context.Dispose();
 
     LastScanResults = null;
     OnDocumentClosed?.Invoke();
