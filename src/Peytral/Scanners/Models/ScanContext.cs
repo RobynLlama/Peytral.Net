@@ -12,11 +12,12 @@ using Peytral.VirtualTree;
 
 namespace Peytral.Scanners.Models;
 
-public partial class ScanContext : IDisposable
+public sealed partial class ScanContext : IDisposable
 {
   public readonly AssemblyDefinition Assembly;
-  protected MemoryStream? BackingStream;
-  protected readonly PEFile AssemblyModule;
+  private bool _disposed = false;
+  private readonly MemoryStream? BackingStream;
+  private readonly PEFile AssemblyModule;
 
   public readonly string FullName;
   public readonly long Length;
@@ -156,6 +157,10 @@ public partial class ScanContext : IDisposable
 
   public void Dispose()
   {
-
+    ObjectDisposedException.ThrowIf(_disposed, this);
+    BackingStream?.Dispose();
+    AssemblyModule.Dispose();
+    _disposed = true;
   }
+
 }
