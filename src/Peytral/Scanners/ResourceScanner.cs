@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Resources;
 using Mono.Cecil;
@@ -129,6 +130,20 @@ public class ResourceScanner : IAssemblyScanner
                 obs.Add(CheckItem(name, context.Assembly.Name.Name, data));
               }
             }
+          }
+          break;
+
+        //compressed costura item
+        case EmbeddedResource emb when emb.Name.StartsWith("costura", StringComparison.OrdinalIgnoreCase) && emb.Name.EndsWith(".compressed", StringComparison.OrdinalIgnoreCase):
+          {
+            //account for costura32/costura64 name scheme
+            var logicalName = emb.Name[(emb.Name.IndexOf('.') + 1)..^11];
+            var stream = emb.GetResourceStream();
+            using DeflateStream gunzip = new(stream, CompressionMode.Decompress);
+            using MemoryStream data = new();
+            gunzip.CopyTo(data);
+            data.Position = 0;
+            obs.Add(CheckItem(logicalName, context.Assembly.Name.Name, data.ToArray()));
           }
           break;
 
