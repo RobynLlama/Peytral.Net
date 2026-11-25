@@ -20,12 +20,10 @@ public partial class ScanElementPrefab : MarginContainer, IPoolItem
   public LineEdit MessageInput;
   [Export]
   public OptionButton SeverityInput;
-  public event Action<ScanElementPrefab> OnRemovePressed;
 
   public override void _Ready()
   {
     VisibilityChanged += UpdateTitle;
-    BtnDelete.Pressed += () => OnRemovePressed?.Invoke(this);
   }
 
   private void UpdateTitle()

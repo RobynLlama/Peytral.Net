@@ -47,7 +47,7 @@ public partial class ScannerElementList : VBoxContainer
   {
     var child = ElementPrefab.Instantiate<ScanElementPrefab>();
     child.Visible = false;
-    child.OnRemovePressed += PrefabPool.ReturnToPool;
+    child.BtnDelete.Pressed += () => PrefabPool.ReturnToPool(child);
     AddChild(child);
     return child;
   }
