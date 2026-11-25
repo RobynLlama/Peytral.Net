@@ -13,6 +13,8 @@ public partial class ScanEditorSection : VBoxContainer
   public HelpWindow HelpDialog;
   [Export]
   public LineEdit ScannerName;
+  [Export]
+  public LineEdit ScannerDesc;
 
   [Export, ExportGroup("Buttons")]
   public Button BtnSwitch;
@@ -43,6 +45,7 @@ public partial class ScanEditorSection : VBoxContainer
     {
       ElementList.Clear();
       ScannerName.Text = string.Empty;
+      ScannerDesc.Text = string.Empty;
     };
     BtnSave.Pressed += () =>
       DialogManager.RequestSaveFile(
@@ -81,6 +84,7 @@ public partial class ScanEditorSection : VBoxContainer
 
     ElementList.Clear();
     ScannerName.Text = data.ScannerNameOverride;
+    ScannerDesc.Text = data.ScannerEditorDescription;
     var scannerTypeName = data.GetType().Name;
 
     var maxItems = ScannerTypeDropdown.ItemCount;
@@ -144,6 +148,7 @@ public partial class ScanEditorSection : VBoxContainer
     }
 
     scanner.ScannerNameOverride = ScannerName.Text;
+    scanner.ScannerEditorDescription = ScannerDesc.Text;
     scanner.RegexRules = [.. ElementList.GetRegexRules()];
     scanner.PlainTextRules = [.. ElementList.GetPlainTextRules()];
 

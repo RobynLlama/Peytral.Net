@@ -136,6 +136,7 @@ public partial class CurrentScannerLayout : VBoxContainer
     var child = Pool.Checkout();
     child.OwnedScanner = item;
     child.ScannerName.Text = item.ScannerNameOverride;
+    child.ScannerDesc.Text = item.ScannerEditorDescription;
     child.Visible = true;
     MoveChild(child, -1);
 

@@ -9,6 +9,8 @@ public partial class ScannerPrefab : PanelContainer, IPoolItem
   [Export]
   public Label ScannerName;
   [Export]
+  public Label ScannerDesc;
+  [Export]
   public Button BtnDelete;
 
   public void EnterPool()
@@ -16,6 +18,7 @@ public partial class ScannerPrefab : PanelContainer, IPoolItem
     Visible = false;
     OwnedScanner = null;
     ScannerName.Text = string.Empty;
+    ScannerDesc.Text = string.Empty;
   }
 
 

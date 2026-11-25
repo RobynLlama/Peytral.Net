@@ -18,7 +18,13 @@ corner_radius_bottom_left = 4
 [sub_resource type="LabelSettings" id="LabelSettings_4kjak"]
 font_size = 20
 
-[node name="ScannerPrefab" type="PanelContainer" unique_id=1074164286 node_paths=PackedStringArray("ScannerName", "BtnDelete")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nw01j"]
+bg_color = Color(0.65190357, 0, 0.020146426, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jmf1x"]
+bg_color = Color(0.99978536, 0.2729891, 0.2258344, 1)
+
+[node name="ScannerPrefab" type="PanelContainer" unique_id=1074164286 node_paths=PackedStringArray("ScannerName", "ScannerDesc", "BtnDelete")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -27,8 +33,9 @@ grow_vertical = 2
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_wqutp")
 script = ExtResource("1_wqutp")
-ScannerName = NodePath("Margin/HLayout/Layout/LblScannerName")
-BtnDelete = NodePath("Margin/HLayout/Layout/BtnDelete")
+ScannerName = NodePath("Margin/HBoxContainer/HLayout/LblScannerName")
+ScannerDesc = NodePath("Margin/HBoxContainer/HLayout/MarginContainer/LblScannerDesc")
+BtnDelete = NodePath("Margin/HBoxContainer/BtnDelete")
 metadata/_custom_type_script = "uid://c73em2pg7j3wf"
 
 [node name="Margin" type="MarginContainer" parent="." unique_id=1203516130]
@@ -38,20 +45,36 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 4
 
-[node name="HLayout" type="VBoxContainer" parent="Margin" unique_id=904129350]
+[node name="HBoxContainer" type="HBoxContainer" parent="Margin" unique_id=1536608851]
 layout_mode = 2
 
-[node name="Layout" type="HBoxContainer" parent="Margin/HLayout" unique_id=1239644713]
-layout_mode = 2
-
-[node name="LblScannerName" type="Label" parent="Margin/HLayout/Layout" unique_id=1046199664]
+[node name="HLayout" type="VBoxContainer" parent="Margin/HBoxContainer" unique_id=904129350]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 6.0
+size_flags_stretch_ratio = 7.0
+
+[node name="LblScannerName" type="Label" parent="Margin/HBoxContainer/HLayout" unique_id=1046199664]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 7.0
 text = "Scanner Name"
 label_settings = SubResource("LabelSettings_4kjak")
 
-[node name="BtnDelete" type="Button" parent="Margin/HLayout/Layout" unique_id=707707714]
+[node name="MarginContainer" type="MarginContainer" parent="Margin/HBoxContainer/HLayout" unique_id=319864157]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+
+[node name="LblScannerDesc" type="Label" parent="Margin/HBoxContainer/HLayout/MarginContainer" unique_id=1880392387]
+custom_minimum_size = Vector2(120, 18)
+layout_mode = 2
+text = "scanner desc"
+autowrap_mode = 2
+
+[node name="BtnDelete" type="Button" parent="Margin/HBoxContainer" unique_id=707707714]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Remove"
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.5
+theme_override_styles/normal = SubResource("StyleBoxFlat_nw01j")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jmf1x")
+text = "X"
