@@ -25,6 +25,8 @@ public partial class ScanEditorSection : VBoxContainer
   [Export]
   public Button BtnClear;
   [Export]
+  public Button BtnLoad;
+  [Export]
   public Button BtnHelp;
 
   private readonly Logger.LogSink Log = new("Scan Editor");
@@ -36,6 +38,7 @@ public partial class ScanEditorSection : VBoxContainer
 
     BtnNewPlain.Pressed += () => ElementList.AddNewElement(false);
     BtnNewRegex.Pressed += () => ElementList.AddNewElement(true);
+    BtnLoad.Pressed += () => DialogManager.RequestFile(LoadScanner, ["*.tres"], Path.Combine(OS.GetUserDataDir(), "scanners", "scanner.tres"));
     BtnClear.Pressed += () =>
     {
       ElementList.Clear();
@@ -59,6 +62,53 @@ public partial class ScanEditorSection : VBoxContainer
 
     ScannerTypeDropdown.ItemSelected += ChangeScannerType;
     BtnHelp.Pressed += ShowHelpPage;
+  }
+
+  private void LoadScanner(string path)
+  {
+    FileInfo info = new(path);
+    if (!info.Exists)
+    {
+      Log.LogWarning($"Unable to load scanner from path: {path}, file does not exist");
+      return;
+    }
+
+    if (ResourceLoader.Load<ScannerData>(path, null, ResourceLoader.CacheMode.IgnoreDeep) is not ScannerData data)
+    {
+      Log.LogError($"Resource at location {path} is not a valid scanner data or is corrupted");
+      return;
+    }
+
+    ElementList.Clear();
+    ScannerName.Text = data.ScannerNameOverride;
+    var scannerTypeName = data.GetType().Name;
+
+    var maxItems = ScannerTypeDropdown.ItemCount;
+    var finalItem = maxItems - 1;
+
+    for (int i = 0; i < maxItems; i++)
+    {
+      var item = ScannerTypeDropdown.GetItemMetadata(i).AsString();
+
+      if (!scannerTypeName.Equals(item))
+      {
+        //final item without finding the match
+        if (i == finalItem)
+        {
+          Log.LogError($"Unable to find a valid type for {scannerTypeName}, aborting scanner load.");
+          return;
+        }
+        continue;
+      }
+
+      ScannerTypeDropdown.Selected = i;
+      break;
+    }
+
+    foreach (var item in data.PlainTextRules)
+      ElementList.AddNewElement(false, item.Summary, item.Pattern, item.Description, item.Severity);
+    foreach (var item in data.RegexRules)
+      ElementList.AddNewElement(true, item.Summary, item.Pattern, item.Description, item.Severity);
   }
 
   private void ShowHelpPage()
