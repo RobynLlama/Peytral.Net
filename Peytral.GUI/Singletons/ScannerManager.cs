@@ -19,7 +19,7 @@ public static class ScannerManager
 
   private readonly static Dictionary<string, ScannerInfo> ScannerFactories = new()
   {
-    {"sourceTreeScanner", new("Source Tree Scanner", Build<SourceTreeScannerData>, true, """
+    {nameof(SourceTreeScannerData), new("Source Tree Scanner", Build<SourceTreeScannerData>, true, """
     [font_size=22][center][b]Source Tree Scanner[/b][font_size=18][left]
     Decompiles the assembly in memory and scans the raw C# source text file by file for plaintext or regex matches.
 
@@ -36,7 +36,7 @@ public static class ScannerManager
     [ul]No semantic awareness at all, just plain matching[/ul]
     [ul]Slower and noisier than other scanners[/ul]
     """)},
-    {"pInvokeScanner", new("P/Invoke Scanner", Build<PInvokeScannerData>, true, """
+    {nameof(PInvokeScannerData), new("P/Invoke Scanner", Build<PInvokeScannerData>, true, """
     [font_size=22][center][b]P/Invoke Scanner[/b][font_size=18][left]
     Matches external native P/Invoke calls formatted as "dllname::EntryPoint" (e.g., "kernel32.dll::VirtualAlloc").
 
@@ -53,7 +53,7 @@ public static class ScannerManager
     [ul]High false-positive rate; developers often use native calls for legitimate tasks even when managed alternatives exist[/ul]
     [ul]Best used as a weighted heuristic indicator rather than a standalone blocker[/ul]
     """)},
-    {"memberRefScanner", new("Member Reference Scanner", Build<MemberReferenceScannerData>, true, """
+    {nameof(MemberReferenceScannerData), new("Member Reference Scanner", Build<MemberReferenceScannerData>, true, """
     [font_size=22][center][b]Member Reference Scanner[/b][font_size=18][left]
     Matches specific types, methods, fields, and constructors using fully qualified names without assembly info (e.g., "Namespace.Type::Method").
 
@@ -69,7 +69,7 @@ public static class ScannerManager
     Drawbacks:
     [ul]Only detects direct references; misses reflection or dynamic invocation[/ul]
     """)},
-    {"assemblyRefScanner", new("Assembly Reference Scanner", Build<AssemblyReferenceScannerData>, true, """
+    {nameof(AssemblyReferenceScannerData), new("Assembly Reference Scanner", Build<AssemblyReferenceScannerData>, true, """
     [font_size=22][center][b]Assembly Reference Scanner[/b][font_size=18][left]
     Matches top-level assembly and namespace names formatted like using directives (e.g., "System.Text.Json").
 
@@ -85,7 +85,7 @@ public static class ScannerManager
     [ul]Very broad; flags the whole reference, not specific usage[/ul]
     [ul]For targeting specific classes or methods, use MemberReferences instead.[/ul]
     """)},
-    {"resourceScanner", new("Assembly Resource Scanner*", Build<ResourceScannerData>, false, """
+    {nameof(ResourceScannerData), new("Assembly Resource Scanner*", Build<ResourceScannerData>, false, """
     [font_size=22][center][b]Assembly Resource Scanner[/b][font_size=18][left]
     Inspects the leading header bytes ("magic bytes") of embedded manifest resources against built-in file signatures to identify hidden payloads.
 
