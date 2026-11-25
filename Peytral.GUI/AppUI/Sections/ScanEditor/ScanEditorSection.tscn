@@ -270,10 +270,10 @@ text = "Save Pack"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-tooltip_text = "Load an entire group of scanners from a file.
+tooltip_text = "Load a saved scanner package from a file, choose 1 or more scanner packages to merge them into one in this list
 
 Note: Does not apply the new scanners, use the [Apply] button for that"
-text = "Load Pack"
+text = "Load Pack(s)"
 
 [node name="BtnResetToCurrent" type="Button" parent="PanelContainer/MainSpace/ScannerMargins/ScanWorkspace/BottomButtons" unique_id=736739348]
 layout_mode = 2

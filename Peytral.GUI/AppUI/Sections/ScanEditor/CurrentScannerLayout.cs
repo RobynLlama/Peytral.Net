@@ -71,16 +71,18 @@ public partial class CurrentScannerLayout : VBoxContainer
       Path.Combine(path.FullName, "ScannerPack.tres"));
   }
 
-  private void LoadScannerPackagePicked(string path)
+  private void LoadScannerPackagePicked(string[] paths)
   {
-    if (ResourceLoader.Load<ScannerPackage>(path, null, ResourceLoader.CacheMode.IgnoreDeep) is ScannerPackage pack)
-    {
-      Clear();
-      foreach (var scanner in pack.Scanners)
-        AddItemToScannerList(scanner);
-    }
-    else
-      Log.LogError($"Unable to load scanners from {path}");
+    Clear();
+
+    foreach (var path in paths)
+      if (ResourceLoader.Load<ScannerPackage>(path, null, ResourceLoader.CacheMode.IgnoreDeep) is ScannerPackage pack)
+      {
+        foreach (var scanner in pack.Scanners)
+          AddItemToScannerList(scanner);
+      }
+      else
+        Log.LogError($"Unable to load scanners from {path}");
   }
 
   private void SaveScannerPackagePicked(string path)
@@ -100,7 +102,7 @@ public partial class CurrentScannerLayout : VBoxContainer
     var path = new DirectoryInfo(Path.Combine(OS.GetUserDataDir(), "ScannerPacks"));
     path.Create();
 
-    DialogManager.RequestFile(
+    DialogManager.RequestFiles(
       LoadScannerPackagePicked,
       ["*.tres"],
       Path.Combine(path.FullName, "ScannerPack.tres"));
