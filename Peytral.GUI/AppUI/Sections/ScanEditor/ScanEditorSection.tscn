@@ -12,6 +12,8 @@
 [sub_resource type="LabelSettings" id="LabelSettings_5cs5r"]
 font_size = 24
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_up0iv"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_wh3nj"]
 font_size = 20
 
@@ -23,17 +25,17 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xpt2h")
 ElementList = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScrollContainer/Panel/ScannerElementList")
-ScannerTypeDropdown = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/TypeContainer/OptionButton")
+ScannerTypeDropdown = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder/MarginContainer/VBoxContainer/TypeContainer/OptionButton")
 HelpDialog = NodePath("HelpWindow")
-ScannerName = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/NameContainer/NameInput")
-ScannerDesc = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/DescContainer/DescInput")
+ScannerName = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder/MarginContainer/VBoxContainer/NameContainer/NameInput")
+ScannerDesc = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder/MarginContainer/VBoxContainer/DescContainer/DescInput")
 BtnSwitch = NodePath("EditorQuickbarPanel/QuickbarLayout/BtnSwitch")
 BtnNewPlain = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/Controls/CtrlRules/BtnAddPlain")
 BtnNewRegex = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/Controls/CtrlRules/BtnAddRegex")
 BtnSave = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/Controls/CtrlScanners/BtnSave")
 BtnClear = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/Controls/CtrlScanners/BtnClear")
 BtnLoad = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/Controls/CtrlScanners/BtnLoad")
-BtnHelp = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/TypeContainer/BtnHelp")
+BtnHelp = NodePath("PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder/MarginContainer/VBoxContainer/TypeContainer/BtnHelp")
 metadata/_custom_type_script = "uid://bxja07od8ymgh"
 
 [node name="EditorQuickbarPanel" type="MarginContainer" parent="." unique_id=1333291247]
@@ -83,15 +85,30 @@ horizontal_alignment = 1
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace" unique_id=50431566]
 layout_mode = 2
 
-[node name="NameContainer" type="HBoxContainer" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace" unique_id=6632327]
+[node name="ScannerMetaFolder" type="FoldableContainer" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace" unique_id=2100090214]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_up0iv")
+title = "Scanner Meta"
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder" unique_id=1292611097]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder/MarginContainer" unique_id=620425469]
 layout_mode = 2
 
-[node name="NameLabel" type="Label" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/NameContainer" unique_id=657985821]
+[node name="NameContainer" type="HBoxContainer" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder/MarginContainer/VBoxContainer" unique_id=6632327]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder/MarginContainer/VBoxContainer/NameContainer" unique_id=657985821]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Name:"
 
-[node name="NameInput" type="LineEdit" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/NameContainer" unique_id=880966488]
+[node name="NameInput" type="LineEdit" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder/MarginContainer/VBoxContainer/NameContainer" unique_id=880966488]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Scanner name here"
@@ -99,15 +116,15 @@ context_menu_enabled = false
 emoji_menu_enabled = false
 clear_button_enabled = true
 
-[node name="DescContainer" type="HBoxContainer" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace" unique_id=1728596221]
+[node name="DescContainer" type="HBoxContainer" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder/MarginContainer/VBoxContainer" unique_id=1728596221]
 layout_mode = 2
 
-[node name="DescLabel" type="Label" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/DescContainer" unique_id=1273899107]
+[node name="DescLabel" type="Label" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder/MarginContainer/VBoxContainer/DescContainer" unique_id=1273899107]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Description:"
 
-[node name="DescInput" type="LineEdit" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/DescContainer" unique_id=809752757]
+[node name="DescInput" type="LineEdit" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder/MarginContainer/VBoxContainer/DescContainer" unique_id=809752757]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "This will be shown in the scanner list, be descriptive!"
@@ -115,21 +132,21 @@ context_menu_enabled = false
 emoji_menu_enabled = false
 clear_button_enabled = true
 
-[node name="TypeContainer" type="HBoxContainer" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace" unique_id=82781148]
+[node name="TypeContainer" type="HBoxContainer" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder/MarginContainer/VBoxContainer" unique_id=82781148]
 layout_mode = 2
 
-[node name="TypeLabel" type="Label" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/TypeContainer" unique_id=398882983]
+[node name="TypeLabel" type="Label" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder/MarginContainer/VBoxContainer/TypeContainer" unique_id=398882983]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Type:  "
 
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/TypeContainer" unique_id=2115081692]
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder/MarginContainer/VBoxContainer/TypeContainer" unique_id=2115081692]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Warning: Items marked with an * do not accept input and will clear the input list when selected!"
 alignment = 1
 
-[node name="BtnHelp" type="Button" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/TypeContainer" unique_id=589589181]
+[node name="BtnHelp" type="Button" parent="PanelContainer/MainSpace/EditorMargins/ScannerWorkspace/ScannerMetaFolder/MarginContainer/VBoxContainer/TypeContainer" unique_id=589589181]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 tooltip_text = "Provides help information for the currently selected scanner type"
