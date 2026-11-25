@@ -10,5 +10,7 @@ public abstract partial class ScannerData : Resource
   public PlainTextRuleResource[] PlainTextRules;
   [Export]
   public string ScannerNameOverride;
+  [Export]
+  public string ScannerEditorDescription = "No description given";
   public abstract IAssemblyScanner BuildScanner();
 }

@@ -56,4 +56,5 @@ script = ExtResource("2_8dmgs")
 RegexRules = Array[Object]([])
 PlainTextRules = Array[Object]([SubResource("Resource_au1lk"), SubResource("Resource_anmot"), SubResource("Resource_8dmgs"), SubResource("Resource_u1l0v"), SubResource("Resource_tcxfo"), SubResource("Resource_1cdy5")])
 ScannerNameOverride = "Default Assembly Reference Scanner"
+ScannerEditorDescription = "An example scanner that detects dangerous assembly refs such as cryptography and registry access"
 metadata/_custom_type_script = "uid://0ow33xj46ipu"

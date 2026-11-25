@@ -12,6 +12,7 @@ script = ExtResource("5_2ogsg")
 RegexRules = Array[Object]([])
 PlainTextRules = Array[Object]([])
 ScannerNameOverride = "Default Resource Scanner"
+ScannerEditorDescription = "The resource scanner checks resource headers against known magic byte signatures. It cannot be configured"
 metadata/_custom_type_script = "uid://bim7jd8bvde2l"
 
 [resource]

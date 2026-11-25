@@ -23,4 +23,5 @@ script = ExtResource("1_jiqnm")
 RegexRules = Array[Object]([SubResource("Resource_eym8a")])
 PlainTextRules = Array[Object]([SubResource("Resource_5pvhv")])
 ScannerNameOverride = "Default Source Tree Scanner"
+ScannerEditorDescription = "An example scanner that highlights System using directives in the source view"
 metadata/_custom_type_script = "uid://crfhpf25lvcbi"
