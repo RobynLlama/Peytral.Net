@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Peytral.Observations;
 
 [GlobalClass]
 public partial class ScannerElementList : VBoxContainer
@@ -21,6 +22,17 @@ public partial class ScannerElementList : VBoxContainer
     var item = PrefabPool.Checkout();
     item.IsRegex = regex;
     MoveChild(item, -1);
+    item.Visible = true;
+  }
+
+  public void AddNewElement(bool regex, string summary, string pattern, string description, SeverityLevel severity)
+  {
+    var item = PrefabPool.Checkout();
+    item.IsRegex = regex;
+    item.SummaryInput.Text = summary;
+    item.PatternInput.Text = pattern;
+    item.MessageInput.Text = description;
+    item.SeverityInput.Selected = (int)severity;
     item.Visible = true;
   }
 
