@@ -36,7 +36,11 @@ public partial class ScanEditorSection : VBoxContainer
 
     BtnNewPlain.Pressed += () => ElementList.AddNewElement(false);
     BtnNewRegex.Pressed += () => ElementList.AddNewElement(true);
-    BtnClear.Pressed += ElementList.Clear;
+    BtnClear.Pressed += () =>
+    {
+      ElementList.Clear();
+      ScannerName.Text = string.Empty;
+    };
     BtnSave.Pressed += () =>
       DialogManager.RequestSaveFile(
         SaveScannerResource,
